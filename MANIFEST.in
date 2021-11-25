@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include mietrecht_ch *.css
+recursive-include mietrecht_ch *.csv
+recursive-include mietrecht_ch *.html
+recursive-include mietrecht_ch *.ico
+recursive-include mietrecht_ch *.js
+recursive-include mietrecht_ch *.json
+recursive-include mietrecht_ch *.md
+recursive-include mietrecht_ch *.png
+recursive-include mietrecht_ch *.py
+recursive-include mietrecht_ch *.svg
+recursive-include mietrecht_ch *.txt
+recursive-exclude mietrecht_ch *.pyc

@@ -1,3 +1,7 @@
-# mietrecht-ch-app
+## mietrecht-ch
 
 Backend to mietrecht.ch
+
+#### License
+
+AGPL
