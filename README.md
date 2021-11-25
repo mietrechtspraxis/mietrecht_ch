@@ -4,4 +4,4 @@ Backend to mietrecht.ch
 
 #### License
 
-AGPL
+AGPL (Waiting for final decision)
