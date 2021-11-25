@@ -9,4 +9,4 @@ def healthcheck():
         "code": 200,
         "message": "Alive"
         }
-    return ['200 OK', answer]
+    return answer
