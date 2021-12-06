@@ -1,0 +1,11 @@
+stages:
+  - deploy
+
+deploy-job:
+  stage: deploy
+  only:
+    - main
+  script:
+    - echo "New commit on the app detected, triggering docker pipeline"
+  trigger:
+    project: mietrecht/mietrecht-ch-backend
