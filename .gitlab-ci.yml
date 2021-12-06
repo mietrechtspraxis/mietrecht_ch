@@ -3,6 +3,7 @@ stages:
 
 deploy-job:
   stage: deploy
+  image: curlimages/curl
   tags:
     - docker-nonswiss-ok
   only:
