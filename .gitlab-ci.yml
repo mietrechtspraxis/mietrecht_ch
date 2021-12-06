@@ -3,6 +3,8 @@ stages:
 
 deploy-job:
   stage: deploy
+  tags:
+    - docker-nonswiss-ok
   only:
     - main
   script:
