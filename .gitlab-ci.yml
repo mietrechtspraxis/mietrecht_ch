@@ -1,0 +1,13 @@
+stages:
+  - deploy
+
+deploy-job:
+  stage: deploy
+  image: curlimages/curl
+  tags:
+    - docker-nonswiss-ok
+  only:
+    - main
+  script:
+    - echo "New commit on the app detected, triggering docker pipeline"
+    - "curl -X POST -F token=$ERPNEXT_DOCKER_PUBLISH_TRIGGER_TOKEN -F ref=REF_NAME https://gitlab.liip.ch/api/v4/projects/2781/trigger/pipeline"
