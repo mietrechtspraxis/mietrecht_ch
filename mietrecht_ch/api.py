@@ -11,7 +11,8 @@ def healthcheck():
     answer = {
         "code": 200,
         "message": "Alive",
-        "timeStamp": dt_string
+        "timeStamp": dt_string,
+        "version": "0.0.1"
         }
     return answer
 
