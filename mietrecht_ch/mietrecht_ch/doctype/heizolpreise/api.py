@@ -5,7 +5,7 @@ import frappe
 def get_single_oil_price(quantity, year, month):
     return frappe.db.sql("""SELECT `monat` as `month`, `{quantity}` as `price`, '{quantity}' as `quantity`
                             FROM `tabHeizolpreise` 
-                            WHERE `monat` LIKE '{year}-{month}-01';""".format(quantity=quantity, year=year, month=str.zfill(month, 2)), as_dict=True)
+                            WHERE `monat` LIKE '{date}';""".format(quantity=quantity, date=__buildFullDate(year, month)), as_dict=True)
 
 @frappe.whitelist(allow_guest=True)
 def get_multiple_oil_price(quantity, fromYear, fromMonth, toYear, toMonth):
