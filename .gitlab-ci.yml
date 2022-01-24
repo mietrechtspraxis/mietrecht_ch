@@ -10,4 +10,7 @@ deploy-job:
     - develop
   script:
     - echo "New commit on the app detected, triggering docker pipeline"
-    - "curl -X POST -F token=$ERPNEXT_DOCKER_PUBLISH_TRIGGER_TOKEN -F ref=develop https://gitlab.liip.ch/api/v4/projects/2781/trigger/pipeline"
+    - "curl -X POST \
+     -F token=$ERPNEXT_DOCKER_PUBLISH_TRIGGER_TOKEN \
+     -F 'variables[version]='$APP_VERSION.$CI_COMMIT_SHORT_SHA \
+     -F ref=develop https://gitlab.liip.ch/api/v4/projects/2781/trigger/pipeline"
