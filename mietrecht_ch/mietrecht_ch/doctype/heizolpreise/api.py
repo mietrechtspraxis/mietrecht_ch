@@ -10,7 +10,7 @@ def get_single_oil_price(quantity, year, month):
 @frappe.whitelist(allow_guest=True)
 def get_multiple_oil_price(quantity, fromYear, fromMonth, toYear, toMonth):
     fromFull = __buildFullDate(fromYear, fromMonth)
-    toFull = __buildFullDate(toYear, fromYear)
+    toFull = __buildFullDate(toYear, toMonth)
 
     if fromFull > toFull :
         tmp = toFull
