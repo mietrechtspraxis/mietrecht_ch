@@ -12,10 +12,9 @@ def get_multiple_oil_price(quantity, fromYear, fromMonth, toYear, toMonth):
     fromFull = __buildFullDate(fromYear, fromMonth)
     toFull = __buildFullDate(toYear, toMonth)
 
+    #If user inverted the date, don't bother and just swap them
     if fromFull > toFull :
-        tmp = toFull
-        toFull = fromFull
-        fromFull = tmp
+        toFull, fromFull = fromFull, toFull
 
     return frappe.db.sql("""SELECT `monat` as `month`, `{quantity}` as `price`, '{quantity}' as `quantity`
                             FROM `tabHeizolpreise` 
