@@ -1,0 +1,96 @@
+{
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format:Heizolpreise-{monat}",
+ "creation": "2022-01-20 22:01:05.607083",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "monat",
+  "800to1500",
+  "1501to3000",
+  "3001to6000",
+  "6001to9000",
+  "9001to14000",
+  "14001to20000",
+  "20001"
+ ],
+ "fields": [
+  {
+   "fieldname": "monat",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Monat",
+   "reqd": 1
+  },
+  {
+   "fieldname": "800to1500",
+   "fieldtype": "Float",
+   "label": "800-1500"
+  },
+  {
+   "fieldname": "1501to3000",
+   "fieldtype": "Float",
+   "label": "1501-3000"
+  },
+  {
+   "fieldname": "3001to6000",
+   "fieldtype": "Float",
+   "label": "3001-6000"
+  },
+  {
+   "fieldname": "6001to9000",
+   "fieldtype": "Float",
+   "label": "6001-9000"
+  },
+  {
+   "fieldname": "9001to14000",
+   "fieldtype": "Float",
+   "label": "9001-14000"
+  },
+  {
+   "fieldname": "14001to20000",
+   "fieldtype": "Float",
+   "label": "14001-20000"
+  },
+  {
+   "fieldname": "20001",
+   "fieldtype": "Float",
+   "label": "20001-"
+  }
+ ],
+ "modified": "2022-01-20 22:20:04.121032",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "Heizolpreise",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1
+  }
+ ],
+ "search_fields": "monat",
+ "sort_field": "monat",
+ "sort_order": "DESC",
+ "title_field": "monat",
+ "track_changes": 1
+}
