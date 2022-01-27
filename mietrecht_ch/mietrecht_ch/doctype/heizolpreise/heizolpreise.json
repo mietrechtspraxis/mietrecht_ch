@@ -22,7 +22,8 @@
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Monat",
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "fieldname": "800to1500",
@@ -60,7 +61,7 @@
    "label": "20001-"
   }
  ],
- "modified": "2022-01-20 22:20:04.121032",
+ "modified": "2022-01-27 14:56:49.087298",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Heizolpreise",
