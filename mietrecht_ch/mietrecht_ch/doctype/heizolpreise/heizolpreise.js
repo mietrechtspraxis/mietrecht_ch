@@ -2,7 +2,10 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Heizolpreise', {
-	// refresh: function(frm) {
-
-	// }
+	onload: function(frm) {
+		if (!frm.doc.monat) {
+			var today = new Date();
+			frm.set_value('monat', new Date(today.getFullYear(), today.getMonth(), 1));
+		}
+	}
 });
