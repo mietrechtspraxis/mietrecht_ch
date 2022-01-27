@@ -11,8 +11,15 @@ def get_data():
                 {
                     "type": "doctype",
                     "name": "Heizolpreise",
-                    "label": _("Heizolpreise"),
-                    "description": _("Heizolpreise")
+                    "label": _("Heizolpreise Liste"),
+                    "description": _("Heizolpreise Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Heizolpreise",
+                    "label": _("Neue Heizolpreise"),
+                    "description": _("Neue Heizolpreise"),
+                    "link": _("Form/Heizolpreise/New Heizolpreise 1")
                 }
             ]
         }
