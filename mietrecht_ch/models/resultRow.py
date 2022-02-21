@@ -1,3 +1,3 @@
 class ResultRow(dict):
-    def __init__(self, type, values) -> None:
-        dict.__init__(self, type=type, values=values)
+    def __init__(self, values: list,  isSuperResult: bool = False) -> None:
+        dict.__init__(self, values=values, isSuperResult=isSuperResult)
