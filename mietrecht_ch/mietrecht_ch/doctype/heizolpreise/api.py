@@ -5,7 +5,6 @@ from mietrecht_ch.models.resultTable import ResultTable
 from mietrecht_ch.models.resultTableDescription import ResultTableDescription
 from mietrecht_ch.models.resultRow import ResultRow
 
-
 @frappe.whitelist(allow_guest=True)
 def get_single_oil_price(quantity, year, month):
     oilPrice  = frappe.db.sql("""SELECT `monat` as `month`, `{quantity}` as `price`, '{quantity}' as `quantity`
