@@ -5,12 +5,13 @@ from mietrecht_ch.models.resultTable import ResultTable
 from mietrecht_ch.models.resultTableDescription import ResultTableDescription
 from mietrecht_ch.models.resultRow import ResultRow
 from mietrecht_ch.utils.dateUtils import buildFullDate
+from mietrecht_ch.utils.queryExecutor import execute_query
 
 @frappe.whitelist(allow_guest=True)
 def get_single_oil_price(quantity, year, month):
-    oilPrice  = frappe.db.sql("""SELECT `monat` as `month`, `{quantity}` as `price`, '{quantity}' as `quantity`
+    oilPrice  = execute_query("""SELECT `monat` as `month`, `{quantity}` as `price`, '{quantity}' as `quantity`
                             FROM `tabHeizolpreise` 
-                            WHERE `monat` LIKE '{date}';""".format(quantity=quantity, date=buildFullDate(year, month)), as_dict=True)
+                            WHERE `monat` LIKE '{date}';""".format(quantity=quantity, date=buildFullDate(year, month)))
 
     calculatorResult = CalculatorResult(oilPrice[0] if oilPrice else None, None)
 
@@ -28,10 +29,10 @@ def get_multiple_oil_price(quantity, fromYear, fromMonth, toYear, toMonth):
     if fromFull > toFull :
         toFull, fromFull = fromFull, toFull
 
-    oilPrices = frappe.db.sql("""SELECT `monat` as `month`, `{quantity}` as `price`, '{quantity}' as `quantity`
+    oilPrices = execute_query("""SELECT `monat` as `month`, `{quantity}` as `price`, '{quantity}' as `quantity`
                             FROM `tabHeizolpreise` 
                             WHERE `monat` BETWEEN '{fromFull}' AND '{toFull}' ;"""
-                            .format(quantity=quantity, fromFull=fromFull, toFull=toFull), as_dict=True) 
+                            .format(quantity=quantity, fromFull=fromFull, toFull=toFull)) 
 
     resultTableDescriptions = [
         ResultTableDescription("Monat", "month"),
@@ -40,9 +41,9 @@ def get_multiple_oil_price(quantity, fromYear, fromMonth, toYear, toMonth):
     ]
     
     results = []
-
-    for oilPrice in oilPrices:
-        results.append(ResultRow([oilPrice.month.month, oilPrice.month.year, oilPrice.price]))
+    if oilPrices:
+        for oilPrice in oilPrices:
+            results.append(ResultRow([oilPrice.month.month, oilPrice.month.year, oilPrice.price]))
 
     resultTable = ResultTable(resultTableDescriptions, results)
 
