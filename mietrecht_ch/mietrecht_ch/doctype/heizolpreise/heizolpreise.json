@@ -1,7 +1,6 @@
 {
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "format:Heizolpreise-{monat}",
  "creation": "2022-01-20 22:01:05.607083",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -61,7 +60,7 @@
    "label": "20001-"
   }
  ],
- "modified": "2022-01-27 15:29:22.561313",
+ "modified": "2022-02-23 15:40:19.507536",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Heizolpreise",
