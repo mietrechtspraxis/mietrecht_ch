@@ -4,12 +4,13 @@ from mietrecht_ch.models.calculatorResult import CalculatorResult
 from mietrecht_ch.models.resultTable import ResultTable
 from mietrecht_ch.models.resultTableDescription import ResultTableDescription
 from mietrecht_ch.models.resultRow import ResultRow
+from mietrecht_ch.utils.dateUtils import buildFullDate
 
 @frappe.whitelist(allow_guest=True)
 def get_single_oil_price(quantity, year, month):
     oilPrice  = frappe.db.sql("""SELECT `monat` as `month`, `{quantity}` as `price`, '{quantity}' as `quantity`
                             FROM `tabHeizolpreise` 
-                            WHERE `monat` LIKE '{date}';""".format(quantity=quantity, date=__buildFullDate(year, month)), as_dict=True)
+                            WHERE `monat` LIKE '{date}';""".format(quantity=quantity, date=buildFullDate(year, month)), as_dict=True)
 
     calculatorResult = CalculatorResult(oilPrice[0] if oilPrice else None, None)
 
@@ -20,8 +21,8 @@ def get_single_oil_price(quantity, year, month):
 
 @frappe.whitelist(allow_guest=True)
 def get_multiple_oil_price(quantity, fromYear, fromMonth, toYear, toMonth):
-    fromFull = __buildFullDate(fromYear, fromMonth)
-    toFull = __buildFullDate(toYear, toMonth)
+    fromFull = buildFullDate(fromYear, fromMonth)
+    toFull = buildFullDate(toYear, toMonth)
 
     #If user inverted the date, don't bother and just swap them
     if fromFull > toFull :
@@ -51,6 +52,3 @@ def get_multiple_oil_price(quantity, fromYear, fromMonth, toYear, toMonth):
         {'quantity':quantity, 'fromYear':fromYear, 'fromMonth':fromMonth, 'toYear':toYear, 'toMonth':toMonth},
         [calculatorResult]
     )
-
-def __buildFullDate(year, month):
-    return year + '-' + str.zfill(month, 2) + '-01'
