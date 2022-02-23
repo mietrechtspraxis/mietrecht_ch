@@ -37,6 +37,7 @@ app_license = "AGPL"
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 doctype_js = {
 	"Heizgradtagzahlen" : "common/javascript/doctype_utils.js",
+	"Heizolpreise" : "common/javascript/doctype_utils.js",
 }
 
 
