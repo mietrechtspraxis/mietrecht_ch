@@ -22,8 +22,6 @@ def get_single_oil_price(quantity, year, month):
 
 @frappe.whitelist(allow_guest=True)
 def get_multiple_oil_price(quantity, fromYear, fromMonth, toYear, toMonth):
-    fromFull = buildFullDate(fromYear, fromMonth)
-    toFull = buildFullDate(toYear, toMonth)
 
     fromFull, toFull = buildDatesInChronologicalOrder(fromYear, fromMonth, toYear, toMonth)
     
