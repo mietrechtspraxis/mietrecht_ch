@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Heizgradtagzahlen', {
-	// refresh: function(frm) {
-
-	// }
+	onload: function(frm) {
+		setMonthToSecondToLast(frm);
+	}
 });
