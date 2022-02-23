@@ -1,6 +1,9 @@
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
+from mietrecht_ch.models.resultRow import ResultRow
+from mietrecht_ch.models.resultTable import ResultTable
+from mietrecht_ch.models.resultTableDescription import ResultTableDescription
 from mietrecht_ch.utils.dateUtils import buildDatesInChronologicalOrder, buildFullDate
 from mietrecht_ch.utils.queryExecutor import execute_query
 
@@ -28,6 +31,36 @@ def get_sum_for_period(location, fromYear, fromMonth, toYear, toMonth):
                                 .format(location=location, fromFull=fromFull, toFull=toFull))
     
     calculatorResult = CalculatorResult(coldDays[0] if coldDays else None, None)
+
+    return CalculatorMasterResult(
+        {'location':location, 'fromYear':fromYear, 'fromMonth':fromMonth, 'toYear':toYear, 'toMonth':toMonth},
+        [calculatorResult]
+    )
+
+@frappe.whitelist(allow_guest=True)
+def get_list_for_period(location, fromYear, fromMonth, toYear, toMonth):
+
+    fromFull, toFull = buildDatesInChronologicalOrder(fromYear, fromMonth, toYear, toMonth)
+    
+    coldDays  = execute_query("""SELECT `monat` as `month`, `{location}` as `sum`
+                                FROM `tabHeizgradtagzahlen`
+                                WHERE `monat` BETWEEN '{fromFull}' AND '{toFull}';"""
+                                .format(location=location, fromFull=fromFull, toFull=toFull))
+
+    resultTableDescriptions = [
+        ResultTableDescription("Monat", "month"),
+        ResultTableDescription("Jahr", "number"),
+        ResultTableDescription("Tage", "number"),
+    ]
+    
+    results = []
+    if coldDays:
+        for coldDay in coldDays:
+            results.append(ResultRow([coldDay.month.month, coldDay.month.year, coldDay.sum]))
+
+    resultTable = ResultTable(resultTableDescriptions, results)
+
+    calculatorResult = CalculatorResult(None, resultTable)
 
     return CalculatorMasterResult(
         {'location':location, 'fromYear':fromYear, 'fromMonth':fromMonth, 'toYear':toYear, 'toMonth':toMonth},
