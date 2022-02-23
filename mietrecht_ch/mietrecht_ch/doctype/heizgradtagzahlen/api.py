@@ -1,7 +1,7 @@
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
-from mietrecht_ch.utils.dateUtils import buildFullDate, swapDateIfNeeded
+from mietrecht_ch.utils.dateUtils import buildDatesInChronologicalOrder, buildFullDate
 from mietrecht_ch.utils.queryExecutor import execute_query
 
 @frappe.whitelist(allow_guest=True)
@@ -20,10 +20,8 @@ def get_sum_for_month(location, year, month):
 @frappe.whitelist(allow_guest=True)
 def get_sum_for_period(location, fromYear, fromMonth, toYear, toMonth):
 
-    fromFull = buildFullDate(fromYear, fromMonth)
-    toFull = buildFullDate(toYear, toMonth)
+    fromFull, toFull = buildDatesInChronologicalOrder(fromYear, fromMonth, toYear, toMonth)
 
-    fromFull, toFull = swapDateIfNeeded(fromFull, toFull)
     coldDays  = execute_query("""SELECT `monat` as `month`, SUM(`{location}`) as `sum`
                                 FROM `tabHeizgradtagzahlen`
                                 WHERE `monat` BETWEEN '{fromFull}' AND '{toFull}';"""
