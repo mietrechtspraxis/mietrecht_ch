@@ -1,0 +1,343 @@
+{
+ "autoname": "format:Heizgradtagzahlen-{monat}",
+ "creation": "2022-02-23 14:57:06.475822",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "monat",
+  "adelboden",
+  "aigle",
+  "altdorf",
+  "basel_binningen",
+  "bern_zollikofen",
+  "buchs_aarau",
+  "la_chaux_de_fonds",
+  "chur",
+  "cimetta",
+  "davos",
+  "disentis_sedrun",
+  "la_dole",
+  "engelberg",
+  "fahy",
+  "col_du_gd_st_bernard",
+  "geneve_cointrin",
+  "glarus",
+  "gutsch_ob_andermatt",
+  "guttingen",
+  "interlaken",
+  "jungfraujoch_sphinx",
+  "locarno_monti",
+  "lugano",
+  "luzern",
+  "le_moleson",
+  "montana",
+  "napf",
+  "neuchatel",
+  "payerne",
+  "pilatus",
+  "pully",
+  "poschiavo_robbia",
+  "runenberg",
+  "samedan_flugplatz",
+  "san_bernardino",
+  "santis",
+  "schaffhausen",
+  "scuol",
+  "sion",
+  "st_gallen",
+  "stabio",
+  "aardorf_tanikon",
+  "vaduz",
+  "visp",
+  "wadenswil",
+  "weissfluhjoch",
+  "wynau",
+  "zermatt",
+  "zurich_kloten",
+  "zurich_fluntern"
+ ],
+ "fields": [
+  {
+   "fieldname": "monat",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Monat",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "adelboden",
+   "fieldtype": "Float",
+   "label": "Adelboden"
+  },
+  {
+   "fieldname": "aigle",
+   "fieldtype": "Float",
+   "label": "Aigle"
+  },
+  {
+   "fieldname": "altdorf",
+   "fieldtype": "Float",
+   "label": "Altdorf"
+  },
+  {
+   "fieldname": "basel_binningen",
+   "fieldtype": "Float",
+   "label": "Basel-Binningen"
+  },
+  {
+   "fieldname": "bern_zollikofen",
+   "fieldtype": "Float",
+   "label": "Bern / Zollikofen"
+  },
+  {
+   "fieldname": "buchs_aarau",
+   "fieldtype": "Float",
+   "label": "Buchs-Aarau"
+  },
+  {
+   "fieldname": "la_chaux_de_fonds",
+   "fieldtype": "Float",
+   "label": "La Chaux-de-Fonds"
+  },
+  {
+   "fieldname": "chur",
+   "fieldtype": "Float",
+   "label": "Chur"
+  },
+  {
+   "fieldname": "cimetta",
+   "fieldtype": "Float",
+   "label": "Cimetta"
+  },
+  {
+   "fieldname": "davos",
+   "fieldtype": "Float",
+   "label": "Davos"
+  },
+  {
+   "fieldname": "disentis_sedrun",
+   "fieldtype": "Float",
+   "label": "Disentis / Sedrun"
+  },
+  {
+   "fieldname": "la_dole",
+   "fieldtype": "Float",
+   "label": "La D\u00f4le"
+  },
+  {
+   "fieldname": "engelberg",
+   "fieldtype": "Float",
+   "label": "Engelberg"
+  },
+  {
+   "fieldname": "fahy",
+   "fieldtype": "Float",
+   "label": "Fahy"
+  },
+  {
+   "fieldname": "col_du_gd_st_bernard",
+   "fieldtype": "Float",
+   "label": "Col du Gd-St-Bernard"
+  },
+  {
+   "fieldname": "geneve_cointrin",
+   "fieldtype": "Float",
+   "label": "Gen\u00e8ve-Cointrin"
+  },
+  {
+   "fieldname": "glarus",
+   "fieldtype": "Float",
+   "label": "Glarus"
+  },
+  {
+   "fieldname": "gutsch_ob_andermatt",
+   "fieldtype": "Float",
+   "label": "G\u00fctsch ob Andermatt"
+  },
+  {
+   "fieldname": "guttingen",
+   "fieldtype": "Float",
+   "label": "G\u00fcttingen"
+  },
+  {
+   "fieldname": "interlaken",
+   "fieldtype": "Float",
+   "label": "Interlaken"
+  },
+  {
+   "fieldname": "jungfraujoch_sphinx",
+   "fieldtype": "Float",
+   "label": "Jungfraujoch Sphinx"
+  },
+  {
+   "fieldname": "locarno_monti",
+   "fieldtype": "Float",
+   "label": "Locarno / Monti"
+  },
+  {
+   "fieldname": "lugano",
+   "fieldtype": "Float",
+   "label": "Lugano"
+  },
+  {
+   "fieldname": "luzern",
+   "fieldtype": "Float",
+   "label": "Luzern"
+  },
+  {
+   "fieldname": "le_moleson",
+   "fieldtype": "Float",
+   "label": "Le Mol\u00e9son"
+  },
+  {
+   "fieldname": "montana",
+   "fieldtype": "Float",
+   "label": "Montana"
+  },
+  {
+   "fieldname": "napf",
+   "fieldtype": "Float",
+   "label": "Napf"
+  },
+  {
+   "fieldname": "neuchatel",
+   "fieldtype": "Float",
+   "label": "Neuch\u00e2tel"
+  },
+  {
+   "fieldname": "payerne",
+   "fieldtype": "Float",
+   "label": "Payerne"
+  },
+  {
+   "fieldname": "pilatus",
+   "fieldtype": "Float",
+   "label": "Pilatus"
+  },
+  {
+   "fieldname": "pully",
+   "fieldtype": "Float",
+   "label": "Pully"
+  },
+  {
+   "fieldname": "poschiavo_robbia",
+   "fieldtype": "Float",
+   "label": "Poschiavo / Robbia"
+  },
+  {
+   "fieldname": "runenberg",
+   "fieldtype": "Float",
+   "label": "R\u00fcnenberg"
+  },
+  {
+   "fieldname": "samedan_flugplatz",
+   "fieldtype": "Float",
+   "label": "Samedan-Flugplatz"
+  },
+  {
+   "fieldname": "san_bernardino",
+   "fieldtype": "Float",
+   "label": "San Bernardino"
+  },
+  {
+   "fieldname": "santis",
+   "fieldtype": "Float",
+   "label": "S\u00e4ntis"
+  },
+  {
+   "fieldname": "schaffhausen",
+   "fieldtype": "Float",
+   "label": "Schaffhausen"
+  },
+  {
+   "fieldname": "scuol",
+   "fieldtype": "Float",
+   "label": "Scuol"
+  },
+  {
+   "fieldname": "sion",
+   "fieldtype": "Float",
+   "label": "Sion"
+  },
+  {
+   "fieldname": "st_gallen",
+   "fieldtype": "Float",
+   "label": "St. Gallen"
+  },
+  {
+   "fieldname": "stabio",
+   "fieldtype": "Float",
+   "label": "Stabio"
+  },
+  {
+   "fieldname": "aardorf_tanikon",
+   "fieldtype": "Float",
+   "label": "Aadorf / T\u00e4nikon"
+  },
+  {
+   "fieldname": "vaduz",
+   "fieldtype": "Float",
+   "label": "Vaduz"
+  },
+  {
+   "fieldname": "visp",
+   "fieldtype": "Float",
+   "label": "Visp"
+  },
+  {
+   "fieldname": "wadenswil",
+   "fieldtype": "Float",
+   "label": "W\u00e4denswil"
+  },
+  {
+   "fieldname": "weissfluhjoch",
+   "fieldtype": "Float",
+   "label": "Weissfluhjoch"
+  },
+  {
+   "fieldname": "wynau",
+   "fieldtype": "Float",
+   "label": "Wynau"
+  },
+  {
+   "fieldname": "zermatt",
+   "fieldtype": "Float",
+   "label": "Zermatt"
+  },
+  {
+   "fieldname": "zurich_kloten",
+   "fieldtype": "Float",
+   "label": "Z\u00fcrich / Kloten"
+  },
+  {
+   "fieldname": "zurich_fluntern",
+   "fieldtype": "Float",
+   "label": "Z\u00fcrich / Fluntern"
+  }
+ ],
+ "modified": "2022-02-23 14:57:06.475822",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "Heizgradtagzahlen",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
