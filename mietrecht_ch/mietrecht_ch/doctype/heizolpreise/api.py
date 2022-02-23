@@ -4,7 +4,7 @@ from mietrecht_ch.models.calculatorResult import CalculatorResult
 from mietrecht_ch.models.resultTable import ResultTable
 from mietrecht_ch.models.resultTableDescription import ResultTableDescription
 from mietrecht_ch.models.resultRow import ResultRow
-from mietrecht_ch.utils.dateUtils import buildFullDate
+from mietrecht_ch.utils.dateUtils import buildFullDate, swapDateIfNeeded
 from mietrecht_ch.utils.queryExecutor import execute_query
 
 @frappe.whitelist(allow_guest=True)
@@ -25,10 +25,8 @@ def get_multiple_oil_price(quantity, fromYear, fromMonth, toYear, toMonth):
     fromFull = buildFullDate(fromYear, fromMonth)
     toFull = buildFullDate(toYear, toMonth)
 
-    #If user inverted the date, don't bother and just swap them
-    if fromFull > toFull :
-        toFull, fromFull = fromFull, toFull
-
+    fromFull, toFull = swapDateIfNeeded(fromFull, toFull)
+    
     oilPrices = execute_query("""SELECT `monat` as `month`, `{quantity}` as `price`, '{quantity}' as `quantity`
                             FROM `tabHeizolpreise` 
                             WHERE `monat` BETWEEN '{fromFull}' AND '{toFull}' ;"""
