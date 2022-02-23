@@ -5,7 +5,7 @@ from mietrecht_ch.utils.dateUtils import buildFullDate
 from mietrecht_ch.utils.queryExecutor import execute_query
 
 @frappe.whitelist(allow_guest=True)
-def get_single_month(location, year, month):
+def get_sum_for_month(location, year, month):
     coldDays  = execute_query("""SELECT `monat` as `month`, `{location}` as `days`
                                 FROM `tabHeizgradtagzahlen` 
                                 WHERE `monat` LIKE '{date}';""".format(location=location, date=buildFullDate(year, month)))
