@@ -35,15 +35,15 @@ def get_multiple_oil_price(quantity, fromYear, fromMonth, toYear, toMonth):
                             .format(quantity=quantity, fromFull=fromFull, toFull=toFull), as_dict=True) 
 
     resultTableDescriptions = [
-        ResultTableDescription("year", "number"),
-        ResultTableDescription("month", "month"),
-        ResultTableDescription("price", "number"),
+        ResultTableDescription("Monat", "month"),
+        ResultTableDescription("Jahr", "number"),
+        ResultTableDescription("Preis in CHF", "number"),
     ]
     
     results = []
 
     for oilPrice in oilPrices:
-        results.append(ResultRow([oilPrice.month.year, oilPrice.month.month, oilPrice.price]))
+        results.append(ResultRow([oilPrice.month.month, oilPrice.month.year, oilPrice.price]))
 
     resultTable = ResultTable(resultTableDescriptions, results)
 
