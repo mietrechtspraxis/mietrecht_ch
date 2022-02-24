@@ -27,7 +27,7 @@
    "unique": 1
   }
  ],
- "modified": "2022-02-23 23:43:53.559389",
+ "modified": "2022-02-24 01:00:20.406440",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Ortschaft",
@@ -46,7 +46,7 @@
    "write": 1
   }
  ],
- "sort_field": "modified",
- "sort_order": "DESC",
+ "sort_field": "name",
+ "sort_order": "ASC",
  "track_changes": 1
 }

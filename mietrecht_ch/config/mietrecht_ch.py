@@ -35,5 +35,24 @@ def get_data():
                     "link": _("Form/Heizgradtagzahlen/New Heizgradtagzahlen 1")
                 }
             ]
+        },
+        {
+            "label": _("Einstellungen"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "Ortschaft",
+                    "label": _("Ortschaft Liste"),
+                    "description": _("Ortschaft Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Ortschaft",
+                    "label": _("Neue Ortschaft"),
+                    "description": _("Neue Ortschaft"),
+                    "link": _("Form/Ortschaft/New Ortschaft 1")
+                }
+            ]
         }
     ]
