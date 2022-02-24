@@ -42,16 +42,16 @@ def get_data():
             "items": [
                 {
                     "type": "doctype",
-                    "name": "Ortschaft",
-                    "label": _("Ortschaft Liste"),
-                    "description": _("Ortschaft Liste")
+                    "name": "Wetterstationen",
+                    "label": _("Wetterstationen Liste"),
+                    "description": _("Wetterstationen Liste")
                 },
                 {
                     "type": "doctype",
-                    "name": "Ortschaft",
-                    "label": _("Neue Ortschaft"),
-                    "description": _("Neue Ortschaft"),
-                    "link": _("Form/Ortschaft/New Ortschaft 1")
+                    "name": "Wetterstationen",
+                    "label": _("Neue Wetterstationen"),
+                    "description": _("Neue Wetterstationen"),
+                    "link": _("Form/Wetterstationen/New Wetterstationen 1")
                 }
             ]
         }

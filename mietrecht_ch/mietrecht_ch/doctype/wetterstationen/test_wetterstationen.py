@@ -6,5 +6,5 @@ from __future__ import unicode_literals
 # import frappe
 import unittest
 
-class TestOrtschaft(unittest.TestCase):
+class TestWetterstationen(unittest.TestCase):
 	pass

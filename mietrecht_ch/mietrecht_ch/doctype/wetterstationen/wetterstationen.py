@@ -6,5 +6,5 @@ from __future__ import unicode_literals
 # import frappe
 from frappe.model.document import Document
 
-class Ortschaft(Document):
+class Wetterstationen(Document):
 	pass
