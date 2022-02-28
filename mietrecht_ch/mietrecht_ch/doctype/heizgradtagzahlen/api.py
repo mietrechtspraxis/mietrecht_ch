@@ -12,7 +12,7 @@ def get_sum_for_month(location, year, month):
     coldDays  = execute_query("""SELECT `monat` as `month`, HEIZ.`cold_days` as `sum`
                                 FROM `tabHeizgradtagzahlen` AS HEIZ
                                 JOIN `tabWetterstationen` AS LOC ON HEIZ.`location` = LOC.`label`
-                                WHERE HEIZ.`monat` LIKE '{date}' AND LOC.`label` LIKE '{location}';""".format(location=location, date=buildFullDate(year, month)))
+                                WHERE HEIZ.`monat` LIKE '{date}' AND LOC.`value` LIKE '{location}';""".format(location=location, date=buildFullDate(year, month)))
     
     calculatorResult = CalculatorResult(coldDays[0] if coldDays else None, None)
 
@@ -29,7 +29,7 @@ def get_sum_for_period(location, fromYear, fromMonth, toYear, toMonth):
     coldDays  = execute_query("""SELECT HEIZ.`monat` as `month`, SUM(HEIZ.`cold_days`) as `sum`
                                 FROM `tabHeizgradtagzahlen` AS HEIZ
                                 JOIN `tabWetterstationen` AS LOC ON HEIZ.`location` = LOC.`label`
-                                WHERE LOC.`label` LIKE '{location}' AND HEIZ.`monat` BETWEEN '{fromFull}' AND '{toFull}';"""
+                                WHERE LOC.`value` LIKE '{location}' AND HEIZ.`monat` BETWEEN '{fromFull}' AND '{toFull}';"""
                                 .format(location=location, fromFull=fromFull, toFull=toFull))
     
     calculatorResult = CalculatorResult(coldDays[0] if coldDays else None, None)
@@ -47,7 +47,7 @@ def get_list_for_period(location, fromYear, fromMonth, toYear, toMonth):
     coldDays  = execute_query("""SELECT HEIZ.`monat` as `month`, HEIZ.`cold_days` as `sum`
                                 FROM `tabHeizgradtagzahlen` AS HEIZ
                                 JOIN `tabWetterstationen` AS LOC ON HEIZ.`location` = LOC.`label`
-                                WHERE LOC.`label` LIKE '{location}' AND HEIZ.`monat` BETWEEN '{fromFull}' AND '{toFull}';"""
+                                WHERE LOC.`value` LIKE '{location}' AND HEIZ.`monat` BETWEEN '{fromFull}' AND '{toFull}';"""
                                 .format(location=location, fromFull=fromFull, toFull=toFull))
 
     resultTableDescriptions = [
