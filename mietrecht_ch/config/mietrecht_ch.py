@@ -20,6 +20,38 @@ def get_data():
                     "label": _("Neue Heizolpreise"),
                     "description": _("Neue Heizolpreise"),
                     "link": _("Form/Heizolpreise/New Heizolpreise 1")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Heizgradtagzahlen",
+                    "label": _("Heizgradtagzahlen Liste"),
+                    "description": _("Heizgradtagzahlen Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Heizgradtagzahlen",
+                    "label": _("Neue Heizgradtagzahlen"),
+                    "description": _("Neue Heizgradtagzahlen"),
+                    "link": _("Form/Heizgradtagzahlen/New Heizgradtagzahlen 1")
+                }
+            ]
+        },
+        {
+            "label": _("Einstellungen"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "Wetterstationen",
+                    "label": _("Wetterstationen Liste"),
+                    "description": _("Wetterstationen Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Wetterstationen",
+                    "label": _("Neue Wetterstationen"),
+                    "description": _("Neue Wetterstationen"),
+                    "link": _("Form/Wetterstationen/New Wetterstationen 1")
                 }
             ]
         }
