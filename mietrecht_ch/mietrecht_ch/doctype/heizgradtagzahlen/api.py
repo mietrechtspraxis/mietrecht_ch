@@ -32,7 +32,7 @@ def get_sum_for_period(location, fromYear, fromMonth, toYear, toMonth):
                                 WHERE LOC.`value` LIKE '{location}' AND HEIZ.`monat` BETWEEN '{fromFull}' AND '{toFull}';"""
                                 .format(location=location, fromFull=fromFull, toFull=toFull))
     
-    calculatorResult = CalculatorResult(coldDays[0] if coldDays else None, None)
+    calculatorResult = CalculatorResult( {'sum':coldDays[0].sum} if coldDays and coldDays[0] and coldDays[0].month else None, None)
 
     return CalculatorMasterResult(
         {'location':location, 'fromYear':fromYear, 'fromMonth':fromMonth, 'toYear':toYear, 'toMonth':toMonth},
