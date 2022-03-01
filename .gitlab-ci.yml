@@ -1,5 +1,35 @@
 stages:
+  - test
   - deploy
+
+test:
+  stage: test
+  tags:
+    - docker-nonswiss-ok
+  image: &test_image 'python:3.7.4-buster'
+  # services:
+    # - name: postgres:9.4
+      # alias: db
+  # variables:
+    #Define env var here
+  cache:
+    key: *test_image
+    paths:
+      - .cache/pip
+  script:
+    - apt-get update && apt-get -y upgrade && pip install --upgrade pip && pip install -r requirements.txt && pip install -r dev-requirements.txt
+    - pip list --outdated
+    - flake8
+    - bandit -r ./
+    - pytest mietrecht_ch/
+  tags:
+    - docker
+    - not-roadrunner # workaround to avoid the flaky roadrunner-lxc-03
+  only:
+    - branches
+    - tags
+  interruptible: true
+
 
 deploy-job:
   stage: deploy
