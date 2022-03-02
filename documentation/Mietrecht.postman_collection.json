@@ -1,0 +1,497 @@
+{
+	"info": {
+		"_postman_id": "d6522791-6815-4352-a148-dbe10bd80af4",
+		"name": "Mietrecht",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Heizölpreise",
+			"item": [
+				{
+					"name": "Get Sum For Month",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Api-Key",
+								"value": "Bf4UBL2l6l24dj2XRz27TlwK7tKVJdrE",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "text",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER_URL}}/api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_month?month=1&year=1998&location=aigle",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_month"
+							],
+							"query": [
+								{
+									"key": "month",
+									"value": "1"
+								},
+								{
+									"key": "year",
+									"value": "1998"
+								},
+								{
+									"key": "location",
+									"value": "aigle"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Multpile Oil Price",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER_URL}}/api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_multiple_oil_price?quantity=800to1500&fromMonth=10&fromYear=1997&toMonth=12&toYear=1998",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_multiple_oil_price"
+							],
+							"query": [
+								{
+									"key": "quantity",
+									"value": "800to1500"
+								},
+								{
+									"key": "fromMonth",
+									"value": "10"
+								},
+								{
+									"key": "fromYear",
+									"value": "1997"
+								},
+								{
+									"key": "toMonth",
+									"value": "12"
+								},
+								{
+									"key": "toYear",
+									"value": "1998"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Healthcheck",
+			"item": [
+				{
+					"name": "Helthcheck",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Api-Key",
+								"value": "Bf4UBL2l6l24dj2XRz27TlwK7tKVJdrE",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "text",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER_URL}}/api/method/mietrecht_ch.api.healthcheck",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"mietrecht_ch.api.healthcheck"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Heizgradtagzahlen",
+			"item": [
+				{
+					"name": "Get Sum For Month",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Api-Key",
+								"value": "Bf4UBL2l6l24dj2XRz27TlwK7tKVJdrE",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "text",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER_URL}}/api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_month?month=12&year=2021&location=bern_zollikofen",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_month"
+							],
+							"query": [
+								{
+									"key": "month",
+									"value": "12"
+								},
+								{
+									"key": "year",
+									"value": "2021"
+								},
+								{
+									"key": "location",
+									"value": "bern_zollikofen"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sum For Period",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Api-Key",
+								"value": "Bf4UBL2l6l24dj2XRz27TlwK7tKVJdrE",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "text",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER_URL}}/api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_period?fromMonth=12&fromYear=2021&location=napf&toMonth=3&toYear=2021",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_period"
+							],
+							"query": [
+								{
+									"key": "fromMonth",
+									"value": "12"
+								},
+								{
+									"key": "fromYear",
+									"value": "2021"
+								},
+								{
+									"key": "location",
+									"value": "napf"
+								},
+								{
+									"key": "toMonth",
+									"value": "3"
+								},
+								{
+									"key": "toYear",
+									"value": "2021"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get List For Period",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Api-Key",
+								"value": "Bf4UBL2l6l24dj2XRz27TlwK7tKVJdrE",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "text",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER_URL}}/api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_list_for_period?fromMonth=3&fromYear=2000&location=napf&toMonth=5&toYear=2017",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_list_for_period"
+							],
+							"query": [
+								{
+									"key": "fromMonth",
+									"value": "3"
+								},
+								{
+									"key": "fromYear",
+									"value": "2000"
+								},
+								{
+									"key": "location",
+									"value": "napf"
+								},
+								{
+									"key": "toMonth",
+									"value": "5"
+								},
+								{
+									"key": "toYear",
+									"value": "2017"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ortschaft",
+			"item": [
+				{
+					"name": "Get All",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Api-Key",
+								"value": "Bf4UBL2l6l24dj2XRz27TlwK7tKVJdrE",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "text",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER_URL}}/api/method/mietrecht_ch.mietrecht_ch.doctype.wetterstationen.api.get_all",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"mietrecht_ch.mietrecht_ch.doctype.wetterstationen.api.get_all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Gebaudeteilen",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER_URL}}/api/method/mietrecht_ch.mietrecht_ch.doctype.gebaudeteilen.api.get_all",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"mietrecht_ch.mietrecht_ch.doctype.gebaudeteilen.api.get_all"
+							],
+							"query": [
+								{
+									"key": "fromYear",
+									"value": "2021",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
