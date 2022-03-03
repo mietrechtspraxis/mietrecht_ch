@@ -11,7 +11,11 @@ from mietrecht_ch.utils.queryExecutor import execute_query
 def get_single_oil_price(quantity, year, month):
     oilPrice = frappe.get_all(
         'Heizolpreise', 
-        fields = ['monat', quantity], 
+        fields = [
+            'monat as month', 
+            """{} as price""".format(quantity),
+            """'{}' as quantity""".format(quantity)
+            ], 
         filters = {
             "monat": ("like", buildFullDate(year, month))
         }
@@ -28,12 +32,20 @@ def get_single_oil_price(quantity, year, month):
 def get_multiple_oil_price(quantity, fromYear, fromMonth, toYear, toMonth):
 
     fromFull, toFull = buildDatesInChronologicalOrder(fromYear, fromMonth, toYear, toMonth)
-    
-    oilPrices = execute_query("""SELECT `monat` as `month`, `{quantity}` as `price`, '{quantity}' as `quantity`
-                            FROM `tabHeizolpreise` 
-                            WHERE `monat` BETWEEN '{fromFull}' AND '{toFull}' ;"""
-                            .format(quantity=quantity, fromFull=fromFull, toFull=toFull)) 
-
+    oilPrices = frappe.get_all(
+        'Heizolpreise',
+        fields = [
+            'monat as month', 
+            """{} as price""".format(quantity),
+            """'{} as quantity'""".format(quantity)
+            ], 
+        filters = [
+            ["monat", ">=", fromFull],
+            ["monat", "<=", toFull],
+        ],
+        order_by = 'monat ASC'
+    )
+   
     resultTableDescriptions = [
         ResultTableDescription("Monat", "month"),
         ResultTableDescription("Jahr", "number"),
