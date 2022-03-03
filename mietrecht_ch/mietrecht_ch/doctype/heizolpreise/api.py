@@ -9,9 +9,13 @@ from mietrecht_ch.utils.queryExecutor import execute_query
 
 @frappe.whitelist(allow_guest=True)
 def get_single_oil_price(quantity, year, month):
-    oilPrice  = execute_query("""SELECT `monat` as `month`, `{quantity}` as `price`, '{quantity}' as `quantity`
-                            FROM `tabHeizolpreise` 
-                            WHERE `monat` LIKE '{date}';""".format(quantity=quantity, date=buildFullDate(year, month)))
+    oilPrice = frappe.get_all(
+        'Heizolpreise', 
+        fields = ['monat', quantity], 
+        filters = {
+            "monat": ("like", buildFullDate(year, month))
+        }
+        )
 
     calculatorResult = CalculatorResult(oilPrice[0] if oilPrice else None, None)
 
