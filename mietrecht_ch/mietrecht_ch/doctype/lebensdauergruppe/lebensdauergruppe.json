@@ -6,7 +6,8 @@
  "engine": "InnoDB",
  "field_order": [
   "label",
-  "comment"
+  "comment",
+  "value"
  ],
  "fields": [
   {
@@ -18,9 +19,14 @@
    "fieldname": "comment",
    "fieldtype": "Data",
    "label": "Bemerkung"
+  },
+  {
+   "fieldname": "value",
+   "fieldtype": "Data",
+   "label": "Kennung"
   }
  ],
- "modified": "2022-03-09 11:43:43.596655",
+ "modified": "2022-03-09 11:52:42.933181",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "LebensdauerGruppe",
