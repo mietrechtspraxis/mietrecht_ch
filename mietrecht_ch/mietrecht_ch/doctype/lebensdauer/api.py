@@ -30,10 +30,23 @@ def get_fake_data():
         LebensdauerEntry('Schamottsteinauskleidung', lifetime=15, remedy=LebensdauerRemedy('Neuauskleidung', 'm²', 800))
     ]
 
-    entries = [
+    chemineeEntries = [
         LebensdauerEntry('Aggregate', agregateChildren),
         LebensdauerEntry('Cheminéeabschluss', comment="Metallgitter, Glas"),
         LebensdauerEntry('Cheminées', chemineeChildren),
         LebensdauerEntry('Ventilator', comment='Zu Rauchabzug', lifetime=20),
     ]
-    return [LebensdauerResult('Cheminée', entries)]
+
+    otherChildren = [
+        LebensdauerEntry('Kunststoft', lifetime=15, remedy=LebensdauerRemedy('Ersatz', 'Stk.', 75)),
+        LebensdauerEntry('Metall', lifetime=20, remedy=LebensdauerRemedy('Ersatz', 'Stk.', 75)),
+    ]
+
+    otherEntries = [
+        LebensdauerEntry('Abdeckungen zu Lüftungsanlagen/-gittern:', otherChildren),
+    ]
+
+    return [
+        LebensdauerResult('Cheminée', chemineeEntries),
+        LebensdauerResult('Heizung / Lüftung / Klima', otherEntries),
+        ]
