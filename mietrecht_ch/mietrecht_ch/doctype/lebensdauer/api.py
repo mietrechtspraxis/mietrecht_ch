@@ -7,7 +7,7 @@ from mietrecht_ch.models.lebensdauer import LebensdauerEntry, LebensdauerRemedy,
 def get_all_by_group(groupId):
     return CalculatorMasterResult( 
         {'groupId':groupId}, 
-        CalculatorResult(get_fake_data(), None)
+        [CalculatorResult(get_fake_data(), None)]
     )
 
 
@@ -15,7 +15,7 @@ def get_all_by_group(groupId):
 def get_all_by_keyword(keyword):
     return CalculatorMasterResult( 
         {'keyword':keyword}, 
-        CalculatorResult(get_fake_data(), None)
+        [CalculatorResult(get_fake_data(), None)]
     )
 
 
@@ -36,4 +36,4 @@ def get_fake_data():
         LebensdauerEntry('Cheminées', chemineeChildren),
         LebensdauerEntry('Ventilator', comment='Zu Rauchabzug', lifetime=20),
     ]
-    return [LebensdauerResult('Cheminée', entries)]
+    return LebensdauerResult('Cheminée', entries)
