@@ -36,4 +36,4 @@ def get_fake_data():
         LebensdauerEntry('Cheminées', chemineeChildren),
         LebensdauerEntry('Ventilator', comment='Zu Rauchabzug', lifetime=20),
     ]
-    return LebensdauerResult('Cheminée', entries)
+    return [LebensdauerResult('Cheminée', entries)]
