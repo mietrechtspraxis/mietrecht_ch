@@ -1,7 +1,6 @@
 from numpy import number
 from typing import List
 
-
 class LebensdauerRemedy(dict):
     def __init__(self, label:str, unit: str, price:number):
         dict.__init__(self, label, unit, price)
