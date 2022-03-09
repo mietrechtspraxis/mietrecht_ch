@@ -4,3 +4,5 @@
 *.swp
 tags
 mietrecht_ch/docs/current
+__pycache__/
+*.pyc
