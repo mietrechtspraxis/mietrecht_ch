@@ -1,0 +1,85 @@
+{
+ "autoname": "format:{label}",
+ "creation": "2022-03-09 15:40:46.312387",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "label",
+  "value",
+  "object",
+  "comment",
+  "life_time",
+  "remedy",
+  "unit",
+  "price"
+ ],
+ "fields": [
+  {
+   "fieldname": "label",
+   "fieldtype": "Table MultiSelect",
+   "label": "Stichworte",
+   "options": "LebensdauerStichworte",
+   "reqd": 1
+  },
+  {
+   "fieldname": "value",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "BKP"
+  },
+  {
+   "fieldname": "object",
+   "fieldtype": "Data",
+   "label": "Objekt"
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Data",
+   "label": "Kommentar"
+  },
+  {
+   "fieldname": "life_time",
+   "fieldtype": "Data",
+   "label": "Lebensdauer"
+  },
+  {
+   "fieldname": "remedy",
+   "fieldtype": "Data",
+   "label": "Behebung"
+  },
+  {
+   "fieldname": "unit",
+   "fieldtype": "Data",
+   "label": "Einheit"
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Int",
+   "label": "Preis"
+  }
+ ],
+ "modified": "2022-03-09 16:08:48.575167",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "LebensdauerObjekte",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
