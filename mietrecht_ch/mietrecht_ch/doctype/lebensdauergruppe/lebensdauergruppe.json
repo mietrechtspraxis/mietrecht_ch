@@ -26,7 +26,7 @@
    "label": "Kennung"
   }
  ],
- "modified": "2022-03-09 11:52:42.933181",
+ "modified": "2022-03-09 12:11:09.416503",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "LebensdauerGruppe",
@@ -46,7 +46,7 @@
   }
  ],
  "quick_entry": 1,
- "sort_field": "modified",
- "sort_order": "DESC",
+ "sort_field": "label",
+ "sort_order": "ASC",
  "track_changes": 1
 }
