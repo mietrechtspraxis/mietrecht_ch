@@ -32,7 +32,7 @@ def get_fake_data():
 
     chemineeEntries = [
         LebensdauerEntry('Aggregate', agregateChildren),
-        LebensdauerEntry('Cheminéeabschluss', comment="Metallgitter, Glas"),
+        LebensdauerEntry('Cheminéeabschluss', comment="Metallgitter, Glas", lifetime=20),
         LebensdauerEntry('Cheminées', chemineeChildren),
         LebensdauerEntry('Ventilator', comment='Zu Rauchabzug', lifetime=20),
     ]
