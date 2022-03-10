@@ -1,47 +1,33 @@
 {
- "autoname": "format:{label}",
+ "autoname": "format:{object}",
  "creation": "2022-03-09 15:40:46.312387",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "label",
-  "value",
+  "group",
+  "bkp",
   "object",
+  "child_object",
   "comment",
-  "life_time",
+  "lifetime",
   "remedy",
   "unit",
-  "price"
+  "unit_comment",
+  "price",
+  "keywords"
  ],
  "fields": [
   {
-   "fieldname": "label",
-   "fieldtype": "Table MultiSelect",
-   "label": "Stichworte",
-   "options": "LebensdauerStichworte",
-   "reqd": 1
-  },
-  {
-   "fieldname": "value",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "BKP"
-  },
-  {
    "fieldname": "object",
    "fieldtype": "Data",
-   "label": "Objekt"
+   "label": "Objekt",
+   "reqd": 1
   },
   {
    "fieldname": "comment",
    "fieldtype": "Data",
    "label": "Kommentar"
-  },
-  {
-   "fieldname": "life_time",
-   "fieldtype": "Data",
-   "label": "Lebensdauer"
   },
   {
    "fieldname": "remedy",
@@ -54,12 +40,57 @@
    "label": "Einheit"
   },
   {
+   "default": "0",
    "fieldname": "price",
-   "fieldtype": "Int",
-   "label": "Preis"
+   "fieldtype": "Float",
+   "label": "Preis",
+   "reqd": 1
+  },
+  {
+   "fieldname": "group",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Gruppe",
+   "options": "LebensdauerGruppe",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "keywords",
+   "fieldtype": "Table MultiSelect",
+   "label": "Stichworte",
+   "options": "LebensdauerStichworte"
+  },
+  {
+   "fieldname": "bkp",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "BKP",
+   "reqd": 1
+  },
+  {
+   "fieldname": "child_object",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Unterobjekt"
+  },
+  {
+   "description": "Geben Sie entweder die Lebensdauer in Ziffern oder in Einheiten ein",
+   "fieldname": "lifetime",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Lebensdauer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "unit_comment",
+   "fieldtype": "Data",
+   "label": "Einheit Anmerkung"
   }
  ],
- "modified": "2022-03-09 16:08:48.575167",
+ "modified": "2022-03-10 10:26:31.269366",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "LebensdauerObjekte",
@@ -78,8 +109,7 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
- "sort_field": "modified",
- "sort_order": "DESC",
+ "sort_field": "object",
+ "sort_order": "ASC",
  "track_changes": 1
 }
