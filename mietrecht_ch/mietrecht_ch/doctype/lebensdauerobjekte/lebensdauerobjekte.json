@@ -1,5 +1,5 @@
 {
- "autoname": "format:{object}",
+ "autoname": "format:object-{naming}",
  "creation": "2022-03-09 15:40:46.312387",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -15,7 +15,8 @@
   "unit",
   "unit_comment",
   "price",
-  "keywords"
+  "keywords",
+  "naming"
  ],
  "fields": [
   {
@@ -88,9 +89,15 @@
    "fieldname": "unit_comment",
    "fieldtype": "Data",
    "label": "Einheit Anmerkung"
+  },
+  {
+   "fieldname": "naming",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "naming"
   }
  ],
- "modified": "2022-03-10 10:26:31.269366",
+ "modified": "2022-03-10 16:24:55.287741",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "LebensdauerObjekte",
