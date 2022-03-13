@@ -12,7 +12,7 @@ def get_all():
     return frappe.get_all(
         'Aktualisierungsdaten', 
         fields=['index_date' ,'update_date'],
-        # filters = [
-        #      ["update", ">=", threeDaysAgo],
-        # ]
+        filters = [
+             ["update_date", ">=", threeDaysAgo],
+        ]
     )
