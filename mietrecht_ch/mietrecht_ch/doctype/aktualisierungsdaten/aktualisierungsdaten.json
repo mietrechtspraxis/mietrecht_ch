@@ -1,31 +1,31 @@
 {
- "autoname": "format:{index}",
+ "autoname": "format:{index_date}",
  "creation": "2022-03-13 07:53:41.449523",
  "description": "Aktualisierungsdaten Landesindex",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "index",
-  "update"
+  "index_date",
+  "update_date"
  ],
  "fields": [
   {
-   "fieldname": "index",
+   "fieldname": "index_date",
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Landesindex vom",
    "reqd": 1
   },
   {
-   "fieldname": "update",
+   "fieldname": "update_date",
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Erscheinungstermin",
    "reqd": 1
   }
  ],
- "modified": "2022-03-13 08:14:49.411359",
+ "modified": "2022-03-13 08:38:09.584565",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Aktualisierungsdaten",
@@ -45,8 +45,8 @@
   }
  ],
  "quick_entry": 1,
- "sort_field": "index",
- "sort_order": "DESC",
- "title_field": "index",
+ "sort_field": "index_date",
+ "sort_order": "ASC",
+ "title_field": "index_date",
  "track_changes": 1
 }
