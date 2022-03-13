@@ -22,5 +22,24 @@ def get_data():
                     "link": _("Form/Heizolpreise/New Heizolpreise 1")
                 }
             ]
+        },
+        {
+            "label": _("Landesindex"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "Aktualisierungsdaten",
+                    "label": _("Aktualisierungsdaten Liste"),
+                    "description": _("Aktualisierungsdaten Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Aktualisierungsdaten",
+                    "label": _("Neue Aktualisierungsdaten"),
+                    "description": _("Neue Aktualisierungsdaten"),
+                    "link": _("Form/Aktualisierungsdaten/New Aktualisierungsdaten 1")
+                }
+            ]
         }
     ]
