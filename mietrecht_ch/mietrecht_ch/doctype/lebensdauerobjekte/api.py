@@ -43,7 +43,7 @@ def get_fake_data():
     ]
 
     otherEntries = [
-        LebensdauerEntry('Abdeckungen zu Lüftungsanlagen/-gittern:', otherChildren),
+        LebensdauerEntry('Abdeckungen zu Lüftungsanlagen/-gittern', otherChildren),
     ]
 
     return [
