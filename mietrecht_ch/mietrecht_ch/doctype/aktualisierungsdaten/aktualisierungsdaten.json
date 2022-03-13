@@ -7,7 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "index",
-  "actualisation"
+  "update"
  ],
  "fields": [
   {
@@ -18,14 +18,14 @@
    "reqd": 1
   },
   {
-   "fieldname": "actualisation",
+   "fieldname": "update",
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Erscheinungstermin",
    "reqd": 1
   }
  ],
- "modified": "2022-03-13 08:10:07.740625",
+ "modified": "2022-03-13 08:14:49.411359",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Aktualisierungsdaten",
