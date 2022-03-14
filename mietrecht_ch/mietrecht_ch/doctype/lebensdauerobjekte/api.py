@@ -1,7 +1,4 @@
 from ast import List
-from audioop import reverse
-from dataclasses import field, fields
-from traceback import print_tb
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
@@ -22,7 +19,7 @@ def get_all_by_group(groupId):
     if len(groups) == 0:
         return CalculatorMasterResult(
             {'groupId': groupId},
-            [CalculatorResult([], None)]
+            [CalculatorResult(None, None)]
         )
 
     group = groups[0]
@@ -32,28 +29,18 @@ def get_all_by_group(groupId):
         fields=['*'],
         filters={
             "group": ("like", group.label)
-
         }
     )
 
     groupEntries = []
 
-    # TODO : TROUVER les parents d'abord, puis les enfant
-    #   Soit trier en code pour mettre les parents en premier
-    #
-    #   Sinon : filter pour sortir tous les parents puis tous les enfants
-    #
-
-    reversedObjects = __reverse_list__(groupObjects)
-    # return reversedObjects
-    for objekte in reversedObjects:
-
-        if objekte['child_object']:
-            __insert_child_object__(groupEntries, objekte)
-        else:
-            __insert_parent_object__(groupEntries, objekte)
-
-    # END TODO
+    parents = filter(lambda o : o['child_object'] == '', groupObjects)
+    children = filter(lambda o : o['child_object'] != '', groupObjects)
+    
+    for obj in parents:
+            __insert_parent_object__(groupEntries, obj)
+    for obj in children:
+            __insert_child_object__(groupEntries, obj)
 
     lebensdauerResult = LebensdauerResult(group.label, groupEntries)
 
@@ -63,26 +50,13 @@ def get_all_by_group(groupId):
     )
 
 
-def __reverse_list__(objects):
-    result = []
-    for object in objects:
-        if object.child_object == None:
-            result.insert(0, object)
-        if object.child_object != None:
-            result.append(object)
-
-    return result
-
-
 def __insert_child_object__(groupEntries, obj):
-    # parent = next(x for x in groupEntries if x['label'] == obj['object'])
+    parent = next(x for x in groupEntries if x['label'] == obj['object'])
 
-    parent = list(filter(lambda x: x['label'] == obj['object'], groupEntries ))
-   
-    if not parent.children:
-        parent.children = []
+    if not parent['children']:
+        parent['children'] = []
 
-    parent.children.append(__createEntry__(obj))
+    parent['children'].append(__createEntry__(obj))
 
 
 def __createEntry__(obj):
@@ -94,7 +68,7 @@ def __insert_parent_object__(groupEntries, obj):
 
 
 def __get_remedy__(obj):
-    if (obj.remedy != ""):
+    if (obj.remedy != None):
         return LebensdauerRemedy(obj['remedy'], obj['unit'], obj['price'])
 
     return None
