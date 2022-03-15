@@ -22,6 +22,7 @@
   {
    "fieldname": "object",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Objekt",
    "reqd": 1
   },
@@ -97,7 +98,7 @@
    "label": "naming"
   }
  ],
- "modified": "2022-03-10 16:24:55.287741",
+ "modified": "2022-03-15 21:28:02.139650",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "LebensdauerObjekte",
@@ -118,5 +119,6 @@
  ],
  "sort_field": "object",
  "sort_order": "ASC",
+ "title_field": "object",
  "track_changes": 1
 }

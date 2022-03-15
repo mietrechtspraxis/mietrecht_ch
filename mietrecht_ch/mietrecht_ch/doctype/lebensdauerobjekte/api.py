@@ -1,4 +1,3 @@
-from ast import List
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
@@ -33,14 +32,13 @@ def get_all_by_group(groupId):
     )
 
     groupEntries = []
-
-    parents = filter(lambda o : o['child_object'] == '', groupObjects)
-    children = filter(lambda o : o['child_object'] != '', groupObjects)
     
-    for obj in parents:
-            __insert_parent_object__(groupEntries, obj)
-    for obj in children:
-            __insert_child_object__(groupEntries, obj)
+    __set_parents__(groupObjects, groupEntries)
+    
+    __set_children__(groupObjects, groupEntries)
+
+    #We have to sort one more time, in case some fake parents have been added
+    groupEntries.sort(key= lambda e: e['label'])
 
     lebensdauerResult = LebensdauerResult(group.label, groupEntries)
 
@@ -49,30 +47,35 @@ def get_all_by_group(groupId):
         [CalculatorResult([lebensdauerResult], None)]
     )
 
+def __set_children__(groupObjects, groupEntries):
+    for child in sorted(filter(lambda o : o['child_object'] and o['child_object'] != '' , groupObjects), key = lambda x: x['child_object']):
+        __insert_child_object__(groupEntries, child)
 
 def __insert_child_object__(groupEntries, obj):
-    parent = next(x for x in groupEntries if x['label'] == obj['object'])
-
+    try:
+        parent = next(x for x in groupEntries if x['label'] == obj['object'])
+    except StopIteration:
+        # Parent was not found in database, we need to crerate a "fake" one
+        parent = LebensdauerEntry(obj['object'])
+        groupEntries.append(parent)
+    
     if not parent['children']:
         parent['children'] = []
 
-    parent['children'].append(__createEntry__(obj))
+    parent['children'].append(LebensdauerEntry(obj['child_object'], None, obj['lifetime'], __get_remedy__(obj), obj['comment']))
 
-
-def __createEntry__(obj):
-    return LebensdauerEntry(obj['object'], None, obj['lifetime'], __get_remedy__(obj), obj['comment'])
-
+def __set_parents__(groupObjects, groupEntries): 
+    for parent in  sorted(filter(lambda o : o['child_object'] == '' or not o['child_object'], groupObjects), key = lambda x: x['object']):
+        __insert_parent_object__(groupEntries, parent)
 
 def __insert_parent_object__(groupEntries, obj):
-    groupEntries.append(__createEntry__(obj))
-
+    groupEntries.append(LebensdauerEntry(obj['object'], None, obj['lifetime'], __get_remedy__(obj), obj['comment']))
 
 def __get_remedy__(obj):
     if (obj.remedy != None):
         return LebensdauerRemedy(obj['remedy'], obj['unit'], obj['price'])
 
     return None
-
 
 @frappe.whitelist(allow_guest=True)
 def get_all_by_keyword(keyword):
