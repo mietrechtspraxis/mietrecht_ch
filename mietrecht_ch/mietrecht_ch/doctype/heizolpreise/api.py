@@ -1,3 +1,4 @@
+import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
 from mietrecht_ch.models.resultTable import ResultTable
