@@ -1,6 +1,13 @@
 from numpy import number
 from typing import List
 
+FIELD_LABEL = 'label'
+FIELD_CHILD_OBJECT = 'child_object'
+FIELD_OBJECT = 'object'
+FIELD_LIFETIME = 'lifetime'
+FIELD_CHILDREN = 'children'
+FIELD_COMMENT = 'comment'
+
 class LebensdauerRemedy(dict):
     def __init__(self, label:str, unit: str, price:number):
         dict.__init__(self, label=label, unit=unit, price=price)
