@@ -1,35 +1,26 @@
 {
- "creation": "2022-02-23 23:15:45.713894",
+ "autoname": "format:{label}",
+ "creation": "2022-03-04 16:35:00.898867",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "value",
   "label"
  ],
  "fields": [
   {
-   "fieldname": "value",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Kennung",
-   "reqd": 1
-  },
-  {
    "fieldname": "label",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Etikett",
+   "label": "Stichwort",
    "reqd": 1,
    "unique": 1
   }
  ],
- "modified": "2022-03-02 09:10:37.956120",
+ "modified": "2022-03-09 18:22:08.141070",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
- "name": "Wetterstationen",
+ "name": "Stichworte",
  "owner": "Administrator",
  "permissions": [
   {
@@ -43,9 +34,18 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1
   }
  ],
- "sort_field": "name",
+ "sort_field": "label",
  "sort_order": "ASC",
  "track_changes": 1
 }

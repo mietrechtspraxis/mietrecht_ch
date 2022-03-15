@@ -1,0 +1,122 @@
+{
+ "autoname": "format:object-{naming}",
+ "creation": "2022-03-09 15:40:46.312387",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "group",
+  "bkp",
+  "object",
+  "child_object",
+  "comment",
+  "lifetime",
+  "remedy",
+  "unit",
+  "unit_comment",
+  "price",
+  "keywords",
+  "naming"
+ ],
+ "fields": [
+  {
+   "fieldname": "object",
+   "fieldtype": "Data",
+   "label": "Objekt",
+   "reqd": 1
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Data",
+   "label": "Kommentar"
+  },
+  {
+   "fieldname": "remedy",
+   "fieldtype": "Data",
+   "label": "Behebung"
+  },
+  {
+   "fieldname": "unit",
+   "fieldtype": "Data",
+   "label": "Einheit"
+  },
+  {
+   "default": "0",
+   "fieldname": "price",
+   "fieldtype": "Float",
+   "label": "Preis",
+   "reqd": 1
+  },
+  {
+   "fieldname": "group",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Gruppe",
+   "options": "LebensdauerGruppe",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "keywords",
+   "fieldtype": "Table MultiSelect",
+   "label": "Stichworte",
+   "options": "LebensdauerStichworte"
+  },
+  {
+   "fieldname": "bkp",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "BKP",
+   "reqd": 1
+  },
+  {
+   "fieldname": "child_object",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Unterobjekt"
+  },
+  {
+   "description": "Geben Sie entweder die Lebensdauer in Ziffern oder in Einheiten ein",
+   "fieldname": "lifetime",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Lebensdauer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "unit_comment",
+   "fieldtype": "Data",
+   "label": "Einheit Anmerkung"
+  },
+  {
+   "fieldname": "naming",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "naming"
+  }
+ ],
+ "modified": "2022-03-10 16:24:55.287741",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "LebensdauerObjekte",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "object",
+ "sort_order": "ASC",
+ "track_changes": 1
+}
