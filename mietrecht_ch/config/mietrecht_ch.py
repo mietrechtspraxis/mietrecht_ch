@@ -37,22 +37,35 @@ def get_data():
             ]
         },
         {
-            "label": _("Einstellungen"),
+            "label": _("Lebensdauer"),
             "icon": "fa fa-money",
             "items": [
                 {
                     "type": "doctype",
-                    "name": "Wetterstationen",
-                    "label": _("Wetterstationen Liste"),
-                    "description": _("Wetterstationen Liste")
+                    "name": "LebensdauerGruppe",
+                    "label": _("Gruppe Liste"),
+                    "description": _("Gruppe Liste")
                 },
                 {
                     "type": "doctype",
-                    "name": "Wetterstationen",
-                    "label": _("Neue Wetterstationen"),
-                    "description": _("Neue Wetterstationen"),
-                    "link": _("Form/Wetterstationen/New Wetterstationen 1")
-                }
+                    "name": "LebensdauerGruppe",
+                    "label": _("Neue Gruppe"),
+                    "description": _("Neue Gruppe"),
+                    "link": _("Form/LebensdauerGruppe/New LebensdauerGruppe 1")
+                },
+                {
+                    "type": "doctype",
+                    "name": "LebensdauerObjekte",
+                    "label": _("Objekte Liste"),
+                    "description": _("Objekte Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "LebensdauerObjekte",
+                    "label": _("Neue Objekte"),
+                    "description": _("Neue Objekte"),
+                    "link": _("Form/LebensdauerObjekte/New LebensdauerObjekte 1")
+                },
             ]
         },
         {
@@ -73,5 +86,43 @@ def get_data():
                     "link": _("Form/Aktualisierungsdaten/New Aktualisierungsdaten 1")
                 }
             ]
-        }
+        },
+        {
+            "label": _("Einstellungen"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "Wetterstationen",
+                    "label": _("Wetterstationen Liste"),
+                    "description": _("Wetterstationen Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Wetterstationen",
+                    "label": _("Neue Wetterstationen"),
+                    "description": _("Neue Wetterstationen"),
+                    "link": _("Form/Wetterstationen/New Wetterstationen 1")
+                }
+            ]
+        },
+        {
+            "label": _("Stichworte"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "Stichworte",
+                    "label": _("Stichworte Liste"),
+                    "description": _("Stichworte Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Stichworte",
+                    "label": _("Neue Stichworte"),
+                    "description": _("Neue Stichworte"),
+                    "link": _("Form/Stichworte/New Stichworte 1")
+                }
+            ]
+        },
     ]
