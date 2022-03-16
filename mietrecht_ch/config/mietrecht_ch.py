@@ -88,6 +88,25 @@ def get_data():
             ]
         },
         {
+            "label": _("Hypo-Referenzzins"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "HypoReferenzzins",
+                    "label": _("Hypo-Referenzzins Liste"),
+                    "description": _("Hypo-Referenzzins Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "HypoReferenzzins",
+                    "label": _("Neue Hypo-Referenzzins"),
+                    "description": _("Neue Hypo-Referenzzins"),
+                    "link": _("Form/HypoReferenzzins/New HypoReferenzzins 1")
+                }
+            ]
+        },
+        {
             "label": _("Einstellungen"),
             "icon": "fa fa-money",
             "items": [
