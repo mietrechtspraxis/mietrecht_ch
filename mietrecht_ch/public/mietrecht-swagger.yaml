@@ -1,0 +1,265 @@
+openapi: 3.0.0
+info:
+  title: Mietrecht - Open API
+  version: 1.0.0
+servers:
+  - url: http://mietrecht.localhost:8000/
+  - url: http://erpnext.staging.mietrecht.ch/
+components:
+  securitySchemes:
+    noauthAuth:
+      type: http
+      scheme: noauth
+tags:
+  - name: Healthcheck
+  - name: Heizölpreise
+  - name: Heizgradtagzahlen
+  - name: Ortschaft
+  - name: Lebensdauer Gruppen
+  - name: Lebensdauer
+  - name: Aktualisierungsdaten
+paths:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_single_oil_price:
+    get:
+      tags:
+        - Heizölpreise
+      summary: Get Sum For Month
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: month
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: year
+          in: query
+          schema:
+            type: integer
+          example: '1998'
+        - name: quantity
+          in: query
+          schema:
+            type: string
+          example: 800to1500
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_multiple_oil_price:
+    get:
+      tags:
+        - Heizölpreise
+      summary: Get Multpile Oil Price
+      parameters:
+        - name: quantity
+          in: query
+          schema:
+            type: string
+          example: 800to1500
+        - name: fromMonth
+          in: query
+          schema:
+            type: integer
+          example: '10'
+        - name: fromYear
+          in: query
+          schema:
+            type: integer
+          example: '1997'
+        - name: toMonth
+          in: query
+          schema:
+            type: integer
+          example: '12'
+        - name: toYear
+          in: query
+          schema:
+            type: integer
+          example: '1998'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.api.healthcheck:
+    get:
+      tags:
+        - Healthcheck
+      summary: Helthcheck
+      security:
+        - noauthAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_month:
+    get:
+      tags:
+        - Heizgradtagzahlen
+      summary: Get Sum For Month
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: month
+          in: query
+          schema:
+            type: integer
+          example: '4'
+        - name: year
+          in: query
+          schema:
+            type: integer
+          example: '2015'
+        - name: location
+          in: query
+          schema:
+            type: string
+          example: bern_zollikofen
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_period:
+    get:
+      tags:
+        - Heizgradtagzahlen
+      summary: Get Sum For Period
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: fromMonth
+          in: query
+          schema:
+            type: integer
+          example: '12'
+        - name: fromYear
+          in: query
+          schema:
+            type: integer
+          example: '2021'
+        - name: location
+          in: query
+          schema:
+            type: string
+          example: napf
+        - name: toMonth
+          in: query
+          schema:
+            type: integer
+          example: '3'
+        - name: toYear
+          in: query
+          schema:
+            type: integer
+          example: '2021'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_list_for_period:
+    get:
+      tags:
+        - Heizgradtagzahlen
+      summary: Get List For Period
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: fromMonth
+          in: query
+          schema:
+            type: integer
+          example: '3'
+        - name: fromYear
+          in: query
+          schema:
+            type: integer
+          example: '2017'
+        - name: location
+          in: query
+          schema:
+            type: string
+          example: zurich_fluntern
+        - name: toMonth
+          in: query
+          schema:
+            type: integer
+          example: '6'
+        - name: toYear
+          in: query
+          schema:
+            type: integer
+          example: '2017'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.wetterstationen.api.get_all:
+    get:
+      tags:
+        - Ortschaft
+      summary: Get All
+      security:
+        - noauthAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauergruppe.api.get_all:
+    get:
+      tags:
+        - Lebensdauer Gruppen
+      summary: Get All
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauerobjekte.api.get_all_by_group:
+    get:
+      tags:
+        - Lebensdauer
+      summary: Get All By Group
+      parameters:
+        - name: groupId
+          in: query
+          schema:
+            type: string
+          example: unknown
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauer.api.get_all_by_keyword:
+    get:
+      tags:
+        - Lebensdauer
+      summary: Get All By Keyword
+      parameters:
+        - name: keyword
+          in: query
+          schema:
+            type: string
+          example: unknown
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.gebaudeteilen.api.get_all:
+    get:
+      tags:
+        - Aktualisierungsdaten
+      summary: Get All
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
