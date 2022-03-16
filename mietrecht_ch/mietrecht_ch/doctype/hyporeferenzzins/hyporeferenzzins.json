@@ -1,0 +1,59 @@
+{
+ "autoname": "format:{canton}-{publish_date}",
+ "creation": "2022-03-16 19:06:47.303351",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "canton",
+  "publish_date",
+  "interest"
+ ],
+ "fields": [
+  {
+   "default": "CH",
+   "description": "W\u00e4hlen Sie CH, wenn es sich um ein nationales Land handelt.",
+   "fieldname": "canton",
+   "fieldtype": "Data",
+   "label": "Kanton",
+   "options": "CH\nAG\nAI\nAR\nBE\nBL\nBS\nFR\nGE\nGL\nGR\nJU\nLU\nNE\nNW\nOW\nSG\nSH\nSO\nSZ\nTG\nTI\nUR\nVD\nVS\nZD"
+  },
+  {
+   "fieldname": "publish_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Datum",
+   "reqd": 1
+  },
+  {
+   "fieldname": "interest",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Zins",
+   "reqd": 1
+  }
+ ],
+ "modified": "2022-03-16 19:06:47.303351",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "HypoReferenzzins",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "publish_date",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
