@@ -3,8 +3,8 @@ info:
   title: Mietrecht - Open API
   version: 1.0.0
 servers:
-  - url: http://mietrecht.localhost:8000/
   - url: https://erpnext.staging.mietrecht.ch/
+  - url: http://mietrecht.localhost:8000/
 components:
   securitySchemes:
     noauthAuth:
