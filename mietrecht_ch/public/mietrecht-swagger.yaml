@@ -10,6 +10,89 @@ components:
     noauthAuth:
       type: http
       scheme: noauth
+  schemas:
+    Canton:
+      type: string
+      enum:
+        - CH
+        - AG
+        - AI
+        - AR
+        - BE
+        - BL
+        - BS
+        - FR
+        - GE
+        - GL
+        - GR
+        - JU
+        - LU
+        - NE
+        - NW
+        - OW
+        - SG
+        - SH
+        - SO
+        - SZ
+        - TG
+        - TI
+        - UR
+        - VD
+        - VS
+        - ZU
+        - ZH
+    HypoReferenzzinsDetails:
+      type: object
+      properties:
+        since: 
+          type: string
+          description: The date when the intrest rate change really occured. Can be null if the change occured at the exact requested date
+        date:
+          type: string
+          description: The date requested for the interest rate
+        interest:
+          type: number
+          description: The interest, in percent
+        canton:
+          description: The canton the interest rate is requested for. CH stands for National Index
+          nullable: true
+          $ref: '#/components/schemas/Canton'
+    HypoReferenzzinsResult:
+      type: object
+      properties:
+        at:
+          nullable: true
+          description: The details at the first day of the requested month
+          $ref: '#components/schemas/HypoReferenzzinsDetails'
+        from:
+          nullable: true
+          description: The details at another date of the requested month
+          $ref: '#components/schemas/HypoReferenzzinsDetails'
+    CalculatorResult:
+      description: A standardized answer to be displayed in a calculator
+      properties:
+        result:
+          description: A single result
+          nullable: true
+          anyOf:
+            - $ref: '#components/schemas/HypoReferenzzinsResult'
+        resultTable:
+          description: A table of results
+          nullable: true
+    CalculatorResults:
+      description: An array that contains the result and some sub results
+      type: array
+      additionalProperties: 
+        $ref: '#components/schemas/CalculatorResult'
+    APICalculatorResponse:
+      description: the basic message returned by the API
+      properties:
+        message:
+          type: object
+          description: An object composed of all the parameters that have been used for the requested
+        CalculatorResults:
+          $ref: '#components/schemas/CalculatorResults'
+        
 tags:
   - name: Healthcheck
   - name: Heizölpreise
@@ -268,14 +351,16 @@ paths:
     get:
       tags:
         - HypoReferenzzins
-      summary: Get an index for a specific month
+      summary: Get an interest for a specific month
       parameters:
         - name: year
+          required: true
           in: query
           schema:
             type: number
           example: 2020
         - name: month
+          required: true
           in: query
           schema:
             type: number
@@ -288,6 +373,9 @@ paths:
           example: 'BS'
       responses:
         '200':
-          description: Successful response
+          description: In a standardized `APICalculatorReponse`, the `result` property will contain the result complient to the schema `HypoReferenzzinsResult`
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/schemas/HypoReferenzzinsResult'
