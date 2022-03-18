@@ -39,7 +39,7 @@ components:
         - UR
         - VD
         - VS
-        - ZU
+        - ZG
         - ZH
     HypoReferenzzinsDetails:
       type: object
@@ -369,7 +369,7 @@ paths:
           in: query
           schema:
             type: string
-            enum: ['CH', 'AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZU', 'ZH']
+            enum: ['CH', 'AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH']
           example: 'BS'
       responses:
         '200':
