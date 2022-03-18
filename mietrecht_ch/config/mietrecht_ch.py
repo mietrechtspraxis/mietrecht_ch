@@ -143,5 +143,5 @@ def get_data():
                     "link": _("Form/Stichworte/New Stichworte 1")
                 }
             ]
-        },
+        }
     ]
