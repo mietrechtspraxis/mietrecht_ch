@@ -273,7 +273,7 @@ paths:
         - name: year
           in: query
           schema:
-            type: number
+            type: string
           example: 2020
         - name: month
           in: query
