@@ -39,7 +39,7 @@ components:
         - UR
         - VD
         - VS
-        - ZU
+        - ZG
         - ZH
     HypoReferenzzinsDetails:
       type: object
