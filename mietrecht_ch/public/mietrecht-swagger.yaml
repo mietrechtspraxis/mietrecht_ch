@@ -18,6 +18,7 @@ tags:
   - name: Lebensdauer Gruppen
   - name: Lebensdauer
   - name: Aktualisierungsdaten
+  - name: HypoReferenzzins
 paths:
   /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_single_oil_price:
     get:
@@ -258,6 +259,33 @@ paths:
       tags:
         - Aktualisierungsdaten
       summary: Get All
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_index_by_month:
+    get:
+      tags:
+        - HypoReferenzzins
+      summary: Get an index for a specific month
+      parameters:
+        - name: year
+          in: query
+          schema:
+            type: number
+          example: 2020
+        - name: month
+          in: query
+          schema:
+            type: number
+          example: 3
+        - name: canton
+          in: query
+          schema:
+            type: string
+            enum: ['CH', 'AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZU', 'ZH']
+          example: 'BS'
       responses:
         '200':
           description: Successful response
