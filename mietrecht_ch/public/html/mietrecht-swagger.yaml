@@ -4,7 +4,7 @@ info:
   version: 1.0.0
 servers:
   - url: http://mietrecht.localhost:8000/
-  - url: http://erpnext.staging.mietrecht.ch/
+  - url: https://erpnext.staging.mietrecht.ch/
 components:
   securitySchemes:
     noauthAuth:
