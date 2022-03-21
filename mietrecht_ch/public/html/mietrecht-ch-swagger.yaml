@@ -102,6 +102,7 @@ tags:
   - name: Lebensdauer
   - name: Aktualisierungsdaten
   - name: HypoReferenzzins
+  - name: LandesIndex
 paths:
   /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_single_oil_price:
     get:
@@ -373,9 +374,23 @@ paths:
           example: 'BS'
       responses:
         '200':
-          description: In a standardized `APICalculatorReponse`, the `result` property will contain the result complient to the schema `HypoReferenzzinsResult`
+          description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `HypoReferenzzinsResult`
           content:
             application/json:
               schema:
                 type: object
                 $ref: '#components/schemas/HypoReferenzzinsResult'
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_last_five_indexes:
+    get:
+      tags:
+        - LandesIndex
+      summary: Get last 5 months of the consumer price index
+      parameters:
+      responses:
+        '200':
+          description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/schemas/APICalculatorResponse'
