@@ -40,9 +40,8 @@ def get_last_five_indexes():
 
     result_table_description_iterated = []
     for x in last_five_months:
-        resultTableDescriptions = [
-            result_table_description_iterated.append(ResultTableDescription([x], "number"))
-        ]
+        result_table_description_iterated.append(ResultTableDescription([x], "number"))
+       
 
     resultTable = ResultTable(result_table_description_iterated, result)
 
