@@ -74,24 +74,27 @@ components:
         result:
           description: A single result
           nullable: true
-          anyOf:
-            - $ref: '#components/schemas/HypoReferenzzinsResult'
         resultTable:
           description: A table of results
           nullable: true
-    CalculatorResults:
-      description: An array that contains the result and some sub results
-      type: array
-      additionalProperties: 
-        $ref: '#components/schemas/CalculatorResult'
+    CalculatorMasterResult:
+      description: The general result of a calculator
+      type: object
+      properties:
+        queryParams:
+          type: object
+          description: An dictionnary containing all the parameters passed as the query
+        calculatorResults:
+          type: array
+          description: An array that contains the result and some sub results
+          additionalProperties:
+            $ref: '#components/schemas/CalculatorResult'
     APICalculatorResponse:
       description: the basic message returned by the API
       properties:
         message:
-          type: object
           description: An object composed of all the parameters that have been used for the requested
-        CalculatorResults:
-          $ref: '#components/schemas/CalculatorResults'
+          $ref: '#components/schemas/CalculatorMasterResult'
         
 tags:
   - name: Healthcheck
@@ -385,7 +388,6 @@ paths:
       tags:
         - LandesIndex
       summary: Get last 5 months of the consumer price index
-      parameters:
       responses:
         '200':
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`

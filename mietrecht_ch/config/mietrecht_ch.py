@@ -84,6 +84,19 @@ def get_data():
                     "label": _("Neue Aktualisierungsdaten"),
                     "description": _("Neue Aktualisierungsdaten"),
                     "link": _("Form/Aktualisierungsdaten/New Aktualisierungsdaten 1")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Teuerung",
+                    "label": _("Teuerung Liste"),
+                    "description": _("Teuerung Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Teuerung",
+                    "label": _("Neue Teuerung"),
+                    "description": _("Neue Teuerung"),
+                    "link": _("Form/Teuerung/New Teuerung 1")
                 }
             ]
         },
