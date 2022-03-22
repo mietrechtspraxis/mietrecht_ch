@@ -385,7 +385,6 @@ paths:
       tags:
         - LandesIndex
       summary: Get last 5 months of the consumer price index
-      parameters:
       responses:
         '200':
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`
