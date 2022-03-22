@@ -38,9 +38,9 @@ def get_last_five_indexes():
         listTemp.extend([y['value'] for y in indexes if y['base_year'] == str(x)])
         result.append(listTemp)
 
-    result_table_description_iterated = []
+    result_table_description_iterated = [ResultTableDescription("auf der Basis", "number")]
     for x in last_five_months:
-        result_table_description_iterated.append(ResultTableDescription([x], "number"))
+        result_table_description_iterated.append(ResultTableDescription(x, "number"))
        
 
     resultTable = ResultTable(result_table_description_iterated, result)
@@ -48,7 +48,7 @@ def get_last_five_indexes():
     calculatorResult = CalculatorResult(None, resultTable)
 
     return CalculatorMasterResult(
-        {None},
+        None,
         [calculatorResult]
     )
 
@@ -64,4 +64,4 @@ def __get_last_five_months__():
     for _ in range(0, 4):
         now = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1)
         result.append(now)
-    return result
+    return sorted(set(result))
