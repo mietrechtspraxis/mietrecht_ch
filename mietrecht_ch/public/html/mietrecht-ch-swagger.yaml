@@ -151,8 +151,24 @@ components:
           $ref: '#components/schemas/LebensdauerRemedy'
         comment:
           type: string
-        
-        
+    HypothekarzinsDataset:
+      description: Returns all the Hypothekarzins data of the system, presented as dataset for graphs
+      properties:
+        labels:
+          type: array
+          description: All the labels of the graph
+          items:
+            type: string
+        rate:
+          type: array
+          description: The rate serie
+          items:
+            type: number
+        average:
+          type: array
+          description: THe rate average serie
+          items:
+            type: number
 tags:
   - name: Healthcheck
   - name: Heizölpreise
@@ -465,3 +481,41 @@ paths:
               schema:
                 type: object
                 $ref: '#components/schemas/APICalculatorResponse'
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.hypothekarzins.api.get_dataset:
+    get:
+      tags:
+        - HypoReferenzzins
+      summary: Get the datasets of Hypothekarzins
+      parameters:
+        - name: fromMonth
+          in: query
+          schema:
+            type: integer
+          example: 1
+          description: API Default value is 01
+        - name: fromYear
+          in: query
+          schema:
+            type: integer
+          example: 2009
+          description: API Default value is 1970
+        - name: toMonth
+          in: query
+          schema:
+            type: integer
+          example: 12
+          description: API Default value is 12
+        - name: toYear
+          in: query
+          schema:
+            type: integer
+          example: 2010
+          description: API Default value is the current year
+      responses:
+        '200':
+          description: In a standardized `APICalculatorResponse`, the `result` property will contain the dataset
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/schemas/HypothekarzinsDataset'
