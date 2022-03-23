@@ -39,7 +39,7 @@ def get_last_five_indexes():
         listTemp.extend([y['value'] for y in indexes if y['base_year'] == str(x)])
         result.append(ResultRow(listTemp))
 
-    result_table_description_iterated = [ResultTableDescription("auf der Basis", "number")]
+    result_table_description_iterated = [ResultTableDescription("auf der Basis", "year")]
     for x in last_five_months:
         result_table_description_iterated.append(ResultTableDescription(x, "number"))
        

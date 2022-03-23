@@ -48,7 +48,7 @@ def get_multiple_oil_price(quantity, fromYear, fromMonth, toYear, toMonth):
    
     resultTableDescriptions = [
         ResultTableDescription("Monat", "month"),
-        ResultTableDescription("Jahr", "number"),
+        ResultTableDescription("Jahr", "year"),
         ResultTableDescription("Preis in CHF", "number"),
     ]
     
