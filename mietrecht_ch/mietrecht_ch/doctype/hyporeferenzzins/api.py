@@ -2,6 +2,7 @@ from numbers import Number
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
+from mietrecht_ch.models.hypoReferenzzins import HypoReferenzzinsDetail
 from mietrecht_ch.utils.dateUtils import buildFullDate
 from mietrecht_ch.utils.queryExecutor import execute_query
 
@@ -15,62 +16,46 @@ KEY_INTEREST = 'interest'
 @frappe.whitelist(allow_guest=True)
 def get_index_by_month(year: Number, month: Number, canton:str = 'CH'):
     
-    print("Params : year:{} month:{} canton:{}".format(year, month, canton))
-    requestDate = buildFullDate(year, month)
-    closestIndex = execute_query("""SELECT publish_date, interest, canton 
+    request_date = buildFullDate(year, month)
+    closest_index = execute_query("""SELECT publish_date, interest, canton 
                               FROM tabHypoReferenzzins 
                               WHERE (canton = '{canton}' OR canton = 'CH')
                               AND publish_date < LAST_DAY('{date}')
                               ORDER BY publish_date DESC
                               LIMIT 2
                               """
-                              .format(canton=canton, date=requestDate))
+                              .format(canton=canton, date=request_date))
 
     result = None
 
-    if len(closestIndex) > 0:
-        publishDate = str(closestIndex[0].publish_date)
+    if len(closest_index) > 0:
+        publish_date = str(closest_index[0].publish_date)
 
-        if __published_at_beggining_of_the_month__(publishDate, requestDate) :
-            result = __get_single_result(closestIndex, requestDate, publishDate)
+        if __published_at_beggining_of_the_month__(publish_date, request_date) :
+            result = __get_single_result(closest_index, request_date, publish_date)
         else :
-            result = __get_double_result(closestIndex, requestDate)            
+            result = __get_double_result(closest_index, request_date)            
             
     
-    calculatorResult = CalculatorResult(result, None)
+    calculator_result = CalculatorResult(result, None)
 
     return CalculatorMasterResult(
         {'canton':canton, 'year':year, 'month':month},
-        [calculatorResult]
+        [calculator_result]
     )
 
-def __get_double_result(closestIndex, requestDate):
-    publishDate = str(closestIndex[1].publish_date)
+def __get_double_result(closest_index, request_date):
+    publish_date = str(closest_index[1].publish_date)
     return {
-        KEY_AT: {
-            KEY_SINCE: None if requestDate == publishDate else publishDate ,
-            KEY_DATE: requestDate, 
-            KEY_INTEREST: closestIndex[1].interest,
-            KEY_CANTON: closestIndex[1].canton
-        },
-        KEY_FROM: {
-            KEY_SINCE: None,
-            KEY_DATE: closestIndex[0].publish_date, 
-            KEY_INTEREST: closestIndex[0].interest,
-            KEY_CANTON: closestIndex[0].canton
-        }
+        KEY_AT: HypoReferenzzinsDetail(request_date, closest_index[1].publish_date, closest_index[1].canton, None if request_date == publish_date else publish_date),
+        KEY_FROM: HypoReferenzzinsDetail(closest_index[0].publish_date, closest_index[0].interest, closest_index[0].canton)
     }
 
-def __get_single_result(closestIndex, requestDate, publishDate):
-    key = KEY_FROM if requestDate == publishDate else KEY_AT
+def __get_single_result(closest_index, request_date, publish_date):
+    key = KEY_FROM if request_date == publish_date else KEY_AT
     return {
-        key : {
-            KEY_SINCE: None if requestDate == publishDate else publishDate ,
-            KEY_DATE: requestDate, 
-            KEY_INTEREST: closestIndex[0].interest,
-            KEY_CANTON: closestIndex[0].canton
-        }
+        key : HypoReferenzzinsDetail(request_date, closest_index[0].publish_date, closest_index[0].canton, None if request_date == publish_date else publish_date)
     }
 
-def __published_at_beggining_of_the_month__(publishDate, requestDate):
-    return publishDate < requestDate
+def __published_at_beggining_of_the_month__(publish_date, request_date):
+    return publish_date < request_date
