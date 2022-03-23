@@ -116,6 +116,19 @@ def get_data():
                     "label": _("Neue Hypo-Referenzzins"),
                     "description": _("Neue Hypo-Referenzzins"),
                     "link": _("Form/HypoReferenzzins/New HypoReferenzzins 1")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Hypothekarzins",
+                    "label": _("Hypothekarzins Liste"),
+                    "description": _("Hypothekarzins Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Hypothekarzins",
+                    "label": _("Neue Hypothekarzins"),
+                    "description": _("Neue Hypothekarzins"),
+                    "link": _("Form/Hypothekarzins/New Hypothekarzins 1")
                 }
             ]
         },
