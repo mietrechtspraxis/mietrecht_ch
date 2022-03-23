@@ -30,12 +30,14 @@ def get_index_by_month(year: Number, month: Number, canton:str = 'CH'):
 
     if len(closest_index) > 0:
         publish_date = str(closest_index[0].publish_date)
-
-        if __published_at_beggining_of_the_month__(publish_date, request_date) :
+        
+        if len(closest_index) == 1:
+            result = __get_single_result(closest_index, request_date, publish_date)
+        elif __published_at_beggining_of_the_month__(publish_date, request_date) :
             result = __get_single_result(closest_index, request_date, publish_date)
         else :
             result = __get_double_result(closest_index, request_date)            
-            
+
     
     calculator_result = CalculatorResult(result, None)
 
@@ -47,15 +49,15 @@ def get_index_by_month(year: Number, month: Number, canton:str = 'CH'):
 def __get_double_result(closest_index, request_date):
     publish_date = str(closest_index[1].publish_date)
     return {
-        KEY_AT: HypoReferenzzinsDetail(request_date, closest_index[1].publish_date, closest_index[1].canton, None if request_date == publish_date else publish_date),
+        KEY_AT: HypoReferenzzinsDetail(request_date, closest_index[1].interest, closest_index[1].canton, None if request_date == publish_date else publish_date),
         KEY_FROM: HypoReferenzzinsDetail(closest_index[0].publish_date, closest_index[0].interest, closest_index[0].canton)
     }
 
 def __get_single_result(closest_index, request_date, publish_date):
     key = KEY_FROM if request_date == publish_date else KEY_AT
     return {
-        key : HypoReferenzzinsDetail(request_date, closest_index[0].publish_date, closest_index[0].canton, None if request_date == publish_date else publish_date)
+        key : HypoReferenzzinsDetail(request_date, closest_index[0].interest, closest_index[0].canton, None if request_date == publish_date else publish_date)
     }
 
 def __published_at_beggining_of_the_month__(publish_date, request_date):
-    return publish_date < request_date
+    return publish_date <= request_date
