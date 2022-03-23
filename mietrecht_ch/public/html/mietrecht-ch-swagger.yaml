@@ -72,9 +72,11 @@ components:
       description: A standardized answer to be displayed in a calculator
       properties:
         result:
+          type: object
           description: A single result
           nullable: true
         resultTable:
+          type: object
           description: A table of results
           nullable: true
     CalculatorMasterResult:
@@ -87,7 +89,7 @@ components:
         calculatorResults:
           type: array
           description: An array that contains the result and some sub results
-          additionalProperties:
+          items:
             $ref: '#components/schemas/CalculatorResult'
     APICalculatorResponse:
       description: the basic message returned by the API
@@ -95,6 +97,61 @@ components:
         message:
           description: An object composed of all the parameters that have been used for the requested
           $ref: '#components/schemas/CalculatorMasterResult'
+    KeyValue:
+      description: An association between a key and a value
+      properties:
+        key:
+          description: The object Key
+        value:
+          description: The associated value
+    APIKeyValueResponse:
+      description: The message returned by some API points that provide data for populating DropDown boxes
+      properties:
+        message:
+          description: An object composed of all the parameters that have been used for the requested
+          type: array
+          items:
+            $ref: '#components/schemas/KeyValue'
+    LebensdauerGroup:
+      description: Describes a `Lebensdauer` group
+      properties:
+        groupName:
+          type: string
+          description: The name of the group
+        entries:
+          type: array
+          description: All the 'Lebensdauer` object belonging to the group'
+          items:
+            $ref: '#components/schemas/LebensdauerObject'
+    LebensdauerRemedy:
+      description: Describes the price that has to been covered
+      properties:
+        label:
+          type: string
+        unit:
+          type: string
+        price:
+          type: number
+    LebensdauerObject:
+      description: Describes a `Lebensdauer` object
+      properties:
+        label:
+          type: string
+          description: The name of the object
+        children:
+          type: array
+          description: All the 'Lebensdauer` object seen as children of the object
+          items:
+            type: object
+            $ref: '#components/schemas/LebensdauerObject'
+        lifetime:
+          type: string
+        remedy:
+          type: object
+          $ref: '#components/schemas/LebensdauerRemedy'
+        comment:
+          type: string
+        
         
 tags:
   - name: Healthcheck
@@ -303,44 +360,56 @@ paths:
     get:
       tags:
         - Lebensdauer Gruppen
-      summary: Get All
+      summary: Get All the Lebensdauer Groups to populate drop down boxes
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/schemas/APIKeyValueResponse'              
   /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauerobjekte.api.get_all_by_group:
     get:
       tags:
         - Lebensdauer
-      summary: Get All By Group
+      summary: Gets all the Lebensdauer Object belonging to the given group
       parameters:
         - name: groupId
           in: query
+          description: The key of the wanted group
           schema:
             type: string
-          example: unknown
+          example: bad_dusche_wc
       responses:
         '200':
-          description: Successful response
+          description: Wrapped in a normal `CalculatorResultResponse`, in the `result` property will be present a list of the object belonging to the given group.
           content:
-            application/json: {}
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauer.api.get_all_by_keyword:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/LebensdauerGroup'
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauerobjekte.api.get_all_by_keyword:
     get:
       tags:
         - Lebensdauer
-      summary: Get All By Keyword
+      summary: Gets all the Lebensdauer Object belonging to the given keyword.
       parameters:
         - name: keyword
           in: query
           schema:
             type: string
-          example: unknown
+          example: warme
       responses:
         '200':
-          description: Successful response
+          description: Wrapped in a normal `CalculatorResultResponse`, in the `result` property will be present a list of the object belonging to the given group.
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/LebensdauerGroup'
   /api/method/mietrecht_ch.mietrecht_ch.doctype.gebaudeteilen.api.get_all:
     get:
       tags:

@@ -1,5 +1,4 @@
 {
- "autoname": "format:object-{naming}",
  "creation": "2022-03-09 15:40:46.312387",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -15,8 +14,7 @@
   "unit",
   "unit_comment",
   "price",
-  "keywords",
-  "naming"
+  "keywords"
  ],
  "fields": [
   {
@@ -61,9 +59,8 @@
   },
   {
    "fieldname": "keywords",
-   "fieldtype": "Table MultiSelect",
-   "label": "Stichworte",
-   "options": "LebensdauerStichworte"
+   "fieldtype": "Data",
+   "label": "Stichworte"
   },
   {
    "fieldname": "bkp",
@@ -90,15 +87,9 @@
    "fieldname": "unit_comment",
    "fieldtype": "Data",
    "label": "Einheit Anmerkung"
-  },
-  {
-   "fieldname": "naming",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "naming"
   }
  ],
- "modified": "2022-03-15 21:28:02.139650",
+ "modified": "2022-03-23 10:13:11.295396",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "LebensdauerObjekte",

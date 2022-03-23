@@ -1,83 +1,42 @@
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
-from mietrecht_ch.models.lebensdauer import FIELD_CHILD_OBJECT, FIELD_CHILDREN, FIELD_COMMENT, FIELD_LABEL, FIELD_LIFETIME, FIELD_OBJECT, LebensdauerEntry, LebensdauerRemedy, LebensdauerResult
+from mietrecht_ch.models.lebensdauer import FIELD_CHILD_OBJECT, FIELD_CHILDREN, FIELD_COMMENT, FIELD_GROUP, FIELD_LABEL, FIELD_LIFETIME, FIELD_OBJECT, LebensdauerEntry, LebensdauerRemedy, LebensdauerResult
+from mietrecht_ch.utils.queryExecutor import execute_query
 
 
 @frappe.whitelist(allow_guest=True)
 def get_all_by_group(groupId):
 
-    groups: list = frappe.get_all(
-        'LebensdauerGruppe',
-        fields=[FIELD_LABEL, 'value'],
-        filters={
-            "value": ("like", groupId)
-        }
-    )
-
-    if len(groups) == 0:
-        return CalculatorMasterResult(
-            {'groupId': groupId},
-            [CalculatorResult(None, None)]
-        )
-
-    group = groups[0]
-
-    groupObjects = frappe.get_all(
-        'LebensdauerObjekte',
-        fields=['*'],
-        filters={
-            "group": ("like", group.label)
-        }
-    )
-
-    groupEntries = []
-
-    __set_parents__(groupObjects, groupEntries)
-
-    __set_children__(groupObjects, groupEntries)
-
-    # We have to sort one more time, in case some fake parents have been added
-    groupEntries.sort(key=lambda e: e[FIELD_LABEL])
-
-    lebensdauerResult = LebensdauerResult(group.label, groupEntries)
+    db_objects = execute_query("""SELECT `tabObjects`.* FROM tabLebensdauerObjekte as tabObjects
+                                    JOIN tabLebensdauerGruppe as tabGroup 
+                                    ON tabObjects.group = tabGroup.label
+                                    WHERE tabGroup.value = '{groupId}' 
+                                    ORDER BY `group`, object, child_object
+                                    """.format(groupId=groupId))
 
     return CalculatorMasterResult(
         {'groupId': groupId},
-        [CalculatorResult([lebensdauerResult], None)]
+        [CalculatorResult(__build_structured_objects__(db_objects), None)]
+    )
+
+@frappe.whitelist(allow_guest=True)
+def get_all_by_keyword(keyword):
+
+    db_objects = execute_query("""SELECT * FROM tabLebensdauerObjekte 
+                                    WHERE (keywords LIKE {search} OR object LIKE {search} OR child_object LIKE {search} OR comment LIKE {search}) 
+                                    ORDER BY `group`, object, child_object
+                                    """.format(search="'%{}%'".format(keyword)))
+
+    return CalculatorMasterResult(
+        {'keyword': keyword},
+        [CalculatorResult(__build_structured_objects__(db_objects), None)]
     )
 
 
-def __set_children__(groupObjects, groupEntries):
-    for child in sorted(filter(lambda o: o[FIELD_CHILD_OBJECT] and o[FIELD_CHILD_OBJECT] != '', groupObjects), key=lambda x: x[FIELD_CHILD_OBJECT]):
-        __insert_child_object__(groupEntries, child)
-
-
-def __insert_child_object__(groupEntries, obj):
-    try:
-        parent = next(
-            x for x in groupEntries if x[FIELD_LABEL] == obj[FIELD_OBJECT])
-    except StopIteration:
-        # Parent was not found in database, we need to crerate a "fake" one
-        parent = LebensdauerEntry(obj[FIELD_OBJECT])
-        groupEntries.append(parent)
-
-    if not parent[FIELD_CHILDREN]:
-        parent[FIELD_CHILDREN] = []
-
-    parent[FIELD_CHILDREN].append(LebensdauerEntry(
-        obj[FIELD_CHILD_OBJECT], None, obj[FIELD_LIFETIME], __get_remedy__(obj), obj[FIELD_COMMENT]))
-
-
-def __set_parents__(groupObjects, groupEntries):
-    for parent in sorted(filter(lambda o: o[FIELD_CHILD_OBJECT] == '' or not o[FIELD_CHILD_OBJECT], groupObjects), key=lambda x: x[FIELD_OBJECT]):
-        __insert_parent_object__(groupEntries, parent)
-
-
-def __insert_parent_object__(groupEntries, obj):
-    groupEntries.append(LebensdauerEntry(
-        obj[FIELD_OBJECT], None, obj[FIELD_LIFETIME], __get_remedy__(obj), obj[FIELD_COMMENT]))
-
+def __get_lebendsauder_entry__(dbObject, isChild = False):
+    return LebensdauerEntry(
+        dbObject[FIELD_CHILD_OBJECT] if isChild  else dbObject[FIELD_OBJECT] , None, dbObject[FIELD_LIFETIME], __get_remedy__(dbObject), dbObject[FIELD_COMMENT])
 
 def __get_remedy__(obj):
     if (obj.remedy != None):
@@ -85,48 +44,31 @@ def __get_remedy__(obj):
 
     return None
 
+def __build_structured_objects__(db_objects):
+    if not db_objects or len(db_objects) == 0:
+        structured_objects = None
+    
+    else:
+        structured_objects = []
+        last_group = LebensdauerResult('')
+        last_object = LebensdauerEntry('')
+        for object in db_objects:
+            if last_group['groupName'] != object[FIELD_GROUP]:
+                last_group = LebensdauerResult(object[FIELD_GROUP])
+                structured_objects.append(last_group)
 
-@frappe.whitelist(allow_guest=True)
-def get_all_by_keyword(keyword):
-    return CalculatorMasterResult(
-        {'keyword': keyword},
-        [CalculatorResult(get_fake_data(), None)]
-    )
+            if last_object[FIELD_LABEL] != object[FIELD_OBJECT]:
+                last_object = __get_lebendsauder_entry__(object)
+                if not last_group['entries']: 
+                    last_group['entries'] = [last_object]
+                else:
+                    last_group['entries'].append(last_object)
 
-
-def get_fake_data():
-    agregateChildren = [
-        LebensdauerEntry('für Warmluftcheminée', lifetime=20),
-        LebensdauerEntry('zur Wärmerückgewinnung', lifetime=20),
-    ]
-
-    chemineeChildren = [
-        LebensdauerEntry('Cheminée, Cheminéeofen, Schwedenofen', lifetime=25),
-        LebensdauerEntry('Schamottsteinauskleidung', lifetime=15,
-                         remedy=LebensdauerRemedy('Neuauskleidung', 'm²', 800))
-    ]
-
-    chemineeEntries = [
-        LebensdauerEntry('Aggregate', agregateChildren),
-        LebensdauerEntry('Cheminéeabschluss',
-                         comment="Metallgitter, Glas", lifetime=20),
-        LebensdauerEntry('Cheminées', chemineeChildren),
-        LebensdauerEntry('Ventilator', comment='Zu Rauchabzug', lifetime=20),
-    ]
-
-    otherChildren = [
-        LebensdauerEntry('Kunststoft', lifetime=15,
-                         remedy=LebensdauerRemedy('Ersatz', 'Stk.', 75)),
-        LebensdauerEntry('Metall', lifetime=20,
-                         remedy=LebensdauerRemedy('Ersatz', 'Stk.', 75)),
-    ]
-
-    otherEntries = [
-        LebensdauerEntry(
-            'Abdeckungen zu Lüftungsanlagen/-gittern', otherChildren),
-    ]
-
-    return [
-        LebensdauerResult('Cheminée', chemineeEntries),
-        LebensdauerResult('Heizung / Lüftung / Klima', otherEntries),
-    ]
+            if object[FIELD_CHILD_OBJECT] and object[FIELD_CHILD_OBJECT] != '':
+                child_entry = __get_lebendsauder_entry__(object, True)
+                if not last_object[FIELD_CHILDREN]:
+                    last_object[FIELD_CHILDREN] = [child_entry]
+                else:
+                    last_object[FIELD_CHILDREN].append(child_entry)
+    
+    return structured_objects
