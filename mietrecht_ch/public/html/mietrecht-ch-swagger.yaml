@@ -325,7 +325,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauer.api.get_all_by_keyword:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauerobjekte.api.get_all_by_keyword:
     get:
       tags:
         - Lebensdauer
