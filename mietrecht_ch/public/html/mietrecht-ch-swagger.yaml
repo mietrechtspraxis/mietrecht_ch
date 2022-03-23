@@ -486,6 +486,31 @@ paths:
       tags:
         - HypoReferenzzins
       summary: Get the datasets of Hypothekarzins
+      parameters:
+        - name: fromMonth
+          in: query
+          schema:
+            type: integer
+          example: 1
+          description: API Default value is 01
+        - name: fromYear
+          in: query
+          schema:
+            type: integer
+          example: 2009
+          description: API Default value is 1970
+        - name: toMonth
+          in: query
+          schema:
+            type: integer
+          example: 12
+          description: API Default value is 12
+        - name: toYear
+          in: query
+          schema:
+            type: integer
+          example: 2010
+          description: API Default value is the current year
       responses:
         '200':
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the dataset
