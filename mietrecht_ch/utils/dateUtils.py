@@ -1,13 +1,13 @@
-def buildFullDate(year, month):
-    return year + '-' + str.zfill(month, 2) + '-01'
+def buildFullDate(year, month, day="01"):
+    return year + '-' + str.zfill(month, 2) + '-' + day
 
 def swapDateIfNeeded(fromDate, toDate):
     if fromDate > toDate :
         return toDate, fromDate
     return fromDate, toDate
 
-def buildDatesInChronologicalOrder(fromYear, fromMonth, toYear, toMonth):
-    fromFull = buildFullDate(fromYear, fromMonth)
-    toFull = buildFullDate(toYear, toMonth)
+def buildDatesInChronologicalOrder(fromYear, fromMonth, toYear, toMonth, fromDay='01', toDay="01"):
+    fromFull = buildFullDate(fromYear, fromMonth, fromDay)
+    toFull = buildFullDate(toYear, toMonth, toDay)
 
     return swapDateIfNeeded(fromFull, toFull)

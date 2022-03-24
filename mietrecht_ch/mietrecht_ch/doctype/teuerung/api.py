@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
+from mietrecht_ch.models.resultRow import ResultRow
 from mietrecht_ch.models.resultTableDescription import ResultTableDescription
 from mietrecht_ch.models.resultTable import ResultTable
 from mietrecht_ch.models.teuerung import TeuerungInflationResult, TeuerungOldIndex, TeuerungNewIndex, FIELD_VALUE
@@ -34,7 +35,7 @@ def get_last_five_indexes():
         listTemp.append(x)
         listTemp.extend([y['value']
                         for y in indexes if y['base_year'] == str(x)])
-        result.append(listTemp)
+        result.append(ResultRow(listTemp))
 
     result_table_description_iterated = [
         ResultTableDescription("auf der Basis", "number")]

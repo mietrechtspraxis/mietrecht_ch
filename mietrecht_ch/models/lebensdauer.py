@@ -7,6 +7,7 @@ FIELD_OBJECT = 'object'
 FIELD_LIFETIME = 'lifetime'
 FIELD_CHILDREN = 'children'
 FIELD_COMMENT = 'comment'
+FIELD_GROUP = 'group'
 
 class LebensdauerRemedy(dict):
     def __init__(self, label:str, unit: str, price:number):
