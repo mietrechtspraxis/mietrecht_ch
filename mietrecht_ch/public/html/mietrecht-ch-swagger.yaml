@@ -166,9 +166,43 @@ components:
             type: number
         average:
           type: array
-          description: THe rate average serie
+          description: The rate average serie
           items:
             type: number
+    TeuerungNewIndex:
+      description: Describe the new index and the value associated to this index
+      properties:
+        newIndexDate:
+          type: float
+        value:
+          type: float
+    TeuerungOldIndex:
+      description: Describe the old index and the value associated to this index
+      properties:
+        oldIndexDate:
+          type: float
+        value:
+          type: float
+    TeuerungInflationResult:
+      description: Return all informations about the last five months
+      properties:
+        oldIndex:
+          type: object
+          $ref: '#components/schemas/TeuerungOldIndex'
+        newIndex:
+          type: object
+          $ref: '#components/schemas/TeuerungNewIndex'
+        inflation:
+          type: float
+    TeuerungLastRelevantIndexResult:
+      description: Return the last relevant index
+      properties:
+        basis:
+          type: float
+        fromMonth:
+          type: float
+        fromYear:
+          type: float
 tags:
   - name: Healthcheck
   - name: Heizölpreise
@@ -468,6 +502,7 @@ paths:
               schema:
                 type: object
                 $ref: '#components/schemas/HypoReferenzzinsResult'
+
   /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_last_five_indexes:
     get:
       tags:
@@ -524,6 +559,56 @@ paths:
           schema:
             type: number
           example: 2015   
+      responses:
+        '200':
+          description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/schemas/APICalculatorResponse'
+
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_basis_by_index:
+    get:
+      tags:
+        - LandesIndex
+      summary: Get all the basis from a specific index
+      parameters:
+        - name: index
+          in: query
+          schema:
+            type: float
+          example: 103
+      responses:
+        '200':
+          description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/schemas/APICalculatorResponse'
+
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_last_index_from_basis:
+    get:
+      tags:
+        - LandesIndex
+      summary: Get the last relevant index from basis
+      parameters:
+        - name: basis
+          in: query
+          schema:
+            type: number
+          example: 2000
+        - name: fromMonth
+          in: query
+          schema:
+            type: number
+          example: 06
+        - name: fromYear
+          in: query
+          schema:
+            type: number
+          example: 1993
       responses:
         '200':
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`

@@ -1,3 +1,5 @@
+from typing import List
+
 FIELD_VALUE = 'value'
 
 class TeuerungOldIndex(dict):
@@ -12,3 +14,7 @@ class TeuerungInflationResult(dict):
     def __init__(self, oldIndex: TeuerungOldIndex, newIndex: TeuerungNewIndex, inflation: float):
         dict.__init__(self, oldIndex=oldIndex,
                       newIndex=newIndex, inflation=inflation)
+
+class TeuerungLastRelevantIndexResult(dict):
+    def __init__(self, basis: float, fromMonth: float, fromYear: float):
+        dict.__init__(self, basis=basis, fromMonth=fromMonth, fromYear=fromYear)
