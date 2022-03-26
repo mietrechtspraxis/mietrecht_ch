@@ -23,10 +23,11 @@ def get_all_by_group(groupId):
 @frappe.whitelist(allow_guest=True)
 def get_all_by_keyword(keyword):
 
+    adapted_keyword = keyword.replace('*', '')
     db_objects = execute_query("""SELECT * FROM tabLebensdauerObjekte 
                                     WHERE (keywords LIKE {search} OR object LIKE {search} OR child_object LIKE {search} OR comment LIKE {search}) 
                                     ORDER BY `group`, object, child_object
-                                    """.format(search="'%{}%'".format(keyword)))
+                                    """.format(search="'%{}%'".format(adapted_keyword)))
 
     return CalculatorMasterResult(
         {'keyword': keyword},
