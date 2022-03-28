@@ -38,7 +38,7 @@ def get_last_five_indexes():
         result.append(ResultRow(listTemp))
 
     result_table_description_iterated = [
-        ResultTableDescription("auf der Basis", "number")]
+        ResultTableDescription("auf der Basis", "string")]
     for x in last_five_months:
         result_table_description_iterated.append(
             ResultTableDescription(x, "number"))
