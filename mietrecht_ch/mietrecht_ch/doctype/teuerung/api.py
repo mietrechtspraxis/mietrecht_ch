@@ -12,6 +12,22 @@ from mietrecht_ch.models.teuerung import TeuerungInflationResult, TeuerungOldInd
 from mietrecht_ch.utils.queryExecutor import execute_query
 from mietrecht_ch.utils.dateUtils import buildFullDate, buildDatesInChronologicalOrder, swapDateIfNeeded
 
+@frappe.whitelist(allow_guest=True)
+def get_all_basis():
+    all_basis = frappe.get_all(
+        'TeuerungBasis',
+        fields=['base_year'],
+        order_by='base_year asc'
+    )
+
+    return all_data_gathered(all_basis)
+
+def all_data_gathered(all_basis):
+    results = []
+    for x in all_basis:
+        date_formatted = int(datetime.strftime(x['base_year'], "%Y"))
+        results.append({'value': date_formatted, 'label': x['base_year']})
+    return results
 
 @frappe.whitelist(allow_guest=True)
 def get_last_five_indexes():
@@ -184,7 +200,7 @@ def __round_inflation_number__(old_index_value, new_index_value, inflation):
 
 def __create_unique_basis_from_indexes__(indexes, baseYearIntegers):
     for i in indexes:
-        baseYearIntegers.append(int(i.base_year))
+        baseYearIntegers.append(i.base_year)
     return sorted(set(baseYearIntegers), key=None, reverse=True)
 
 

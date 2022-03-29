@@ -618,6 +618,17 @@ paths:
                 type: object
                 $ref: '#components/schemas/APICalculatorResponse'
 
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_all_basis:
+    get:
+      tags:
+        - LandesIndex
+      summary: Get All
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+
   /api/method/mietrecht_ch.mietrecht_ch.doctype.hypothekarzins.api.get_dataset:
     get:
       tags:
