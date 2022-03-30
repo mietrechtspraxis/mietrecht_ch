@@ -1,7 +1,5 @@
 from calendar import month
 from datetime import datetime, timedelta
-from queue import Empty
-from unittest import result
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
