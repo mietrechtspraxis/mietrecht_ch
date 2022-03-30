@@ -70,10 +70,9 @@ def get_last_five_indexes():
 
 
 @frappe.whitelist(allow_guest=True)
-def get_inflation_for_period(basis: int, inflationRate: float, fromMonth: int, fromYear: int, toMonth: int, toYear: int):
+def get_inflation_for_period(basis: str, inflationRate: float, fromMonth: int, fromYear: int, toMonth: int, toYear: int):
 
-    old_date_formatted = buildFullDate(fromYear, fromMonth)
-    new_date_formatted = buildFullDate(toYear, toMonth)
+    old_date_formatted, new_date_formatted = buildDatesInChronologicalOrder(fromYear, fromMonth, toYear, toMonth)
 
     values_from_sql_query = __get_values_from_sql_query__(
         basis, old_date_formatted, new_date_formatted)
@@ -170,7 +169,6 @@ def __compute_result__(inflationRate, old_date_formatted, new_date_formatted, va
 
     return results
 
-
 def __get_values_from_sql_query__(basis, old_date_formatted, new_date_formatted):
     order = 'asc' if old_date_formatted < new_date_formatted else 'desc'
     sql = execute_query(
@@ -180,7 +178,6 @@ def __get_values_from_sql_query__(basis, old_date_formatted, new_date_formatted)
             order by publish_date {order}"""
         .format(basis=basis, old_date_formatted=old_date_formatted, new_date_formatted=new_date_formatted, order=order))
     return sql
-
 
 def __result_of_all_data__(old_date_formatted, old_index_value, new_date_formatted, new_index_value, rounded_inflation):
     result = []
