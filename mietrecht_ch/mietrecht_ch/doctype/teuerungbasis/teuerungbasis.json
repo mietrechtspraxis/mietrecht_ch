@@ -1,37 +1,23 @@
 {
- "creation": "2022-03-19 22:49:23.585621",
+ "autoname": "format:{base_year}",
+ "creation": "2022-03-29 08:05:56.096908",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "base_year",
-  "publish_date",
-  "value"
+  "base_year"
  ],
  "fields": [
   {
    "fieldname": "base_year",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Basis",
-   "options": "TeuerungBasis",
-   "search_index": 1
-  },
-  {
-   "fieldname": "publish_date",
    "fieldtype": "Date",
-   "label": "Datum"
-  },
-  {
-   "fieldname": "value",
-   "fieldtype": "Float",
-   "label": "Index"
+   "label": "Basis"
   }
  ],
- "modified": "2022-03-29 08:16:48.235733",
+ "modified": "2022-03-29 08:12:19.347504",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
- "name": "Teuerung",
+ "name": "TeuerungBasis",
  "owner": "Administrator",
  "permissions": [
   {
@@ -50,6 +36,5 @@
  "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "title_field": "publish_date",
  "track_changes": 1
 }
