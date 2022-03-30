@@ -527,8 +527,9 @@ paths:
           required: true
           in: query
           schema:
-            type: number
-          example: 2000      
+            type: string
+            format: date
+            example: "2000-05-01"
         - name: inflationRate
           required: true
           in: query
@@ -597,8 +598,9 @@ paths:
         - name: basis
           in: query
           schema:
-            type: number
-          example: 2000
+            type: string
+            format: date
+            example: "2000-05-01"
         - name: fromMonth
           in: query
           schema:
