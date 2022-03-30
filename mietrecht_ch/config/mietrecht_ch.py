@@ -97,7 +97,7 @@ def get_data():
                     "label": _("Neue Teuerung"),
                     "description": _("Neue Teuerung"),
                     "link": _("Form/Teuerung/New Teuerung 1")
-                }
+                },
                 {
                     "type": "doctype",
                     "name": "TeuerungBasis",
