@@ -1,4 +1,3 @@
-from calendar import month
 from datetime import datetime, timedelta
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
