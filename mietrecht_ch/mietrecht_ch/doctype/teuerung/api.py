@@ -179,10 +179,8 @@ def __get_values_from_sql_query__(basis, old_date_formatted, new_date_formatted)
     return sql
 
 def __result_of_all_data__(old_date_formatted, old_index_value, new_date_formatted, new_index_value, rounded_inflation):
-    result = []
-    result.append(TeuerungInflationResult(TeuerungIndex(old_date_formatted, old_index_value),
-                  TeuerungIndex(new_date_formatted, new_index_value), rounded_inflation))
-    return result
+    return TeuerungInflationResult(TeuerungIndex(old_date_formatted, old_index_value),
+                  TeuerungIndex(new_date_formatted, new_index_value), rounded_inflation)
 
 
 def __round_inflation_number__(old_index_value, new_index_value, inflation):
