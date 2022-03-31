@@ -169,18 +169,11 @@ components:
           description: The rate average serie
           items:
             type: number
-    TeuerungNewIndex:
-      description: Describe the new index and the value associated to this index
-      properties:
-        newIndexDate:
-          type: float
-        value:
-          type: float
-    TeuerungOldIndex:
+    TeuerungIndex:
       description: Describe the old index and the value associated to this index
       properties:
-        oldIndexDate:
-          type: float
+        date:
+          type: date
         value:
           type: float
     TeuerungInflationResult:
@@ -188,21 +181,21 @@ components:
       properties:
         oldIndex:
           type: object
-          $ref: '#components/schemas/TeuerungOldIndex'
+          $ref: '#components/schemas/TeuerungIndex'
         newIndex:
           type: object
-          $ref: '#components/schemas/TeuerungNewIndex'
+          $ref: '#components/schemas/TeuerungIndex'
         inflation:
           type: float
     TeuerungLastRelevantIndexResult:
       description: Return the last relevant index
       properties:
         basis:
-          type: float
+          type: string
         fromMonth:
-          type: float
+          type: number
         fromYear:
-          type: float
+          type: number
 tags:
   - name: Healthcheck
   - name: Heizölpreise
