@@ -1,20 +1,18 @@
 from typing import List
 
+from numpy import number
+
 FIELD_VALUE = 'value'
 
-class TeuerungOldIndex(dict):
-    def __init__(self, oldIndexDate: float, value: float):
-        dict.__init__(self, oldIndexDate=oldIndexDate, value=value)
-
-class TeuerungNewIndex(dict):
-    def __init__(self, newIndexDate: float, value: float):
-        dict.__init__(self, newIndexDate=newIndexDate, value=value)
+class TeuerungIndex(dict):
+    def __init__(self, date: str, value: float):
+        dict.__init__(self, date=date, value=value)
 
 class TeuerungInflationResult(dict):
-    def __init__(self, oldIndex: TeuerungOldIndex, newIndex: TeuerungNewIndex, inflation: float):
+    def __init__(self, oldIndex: TeuerungIndex, newIndex: TeuerungIndex, inflation: float):
         dict.__init__(self, oldIndex=oldIndex,
                       newIndex=newIndex, inflation=inflation)
 
 class TeuerungLastRelevantIndexResult(dict):
-    def __init__(self, basis: float, fromMonth: float, fromYear: float):
+    def __init__(self, basis: str, fromMonth: number, fromYear: number):
         dict.__init__(self, basis=basis, fromMonth=fromMonth, fromYear=fromYear)

@@ -1,3 +1,5 @@
+DATE_FORMAT = '%Y-%m-%d'
+
 def buildFullDate(year, month, day="01"):
     return year + '-' + str.zfill(month, 2) + '-' + day
 

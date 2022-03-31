@@ -6,9 +6,9 @@ from mietrecht_ch.models.calculatorResult import CalculatorResult
 from mietrecht_ch.models.resultRow import ResultRow
 from mietrecht_ch.models.resultTableDescription import ResultTableDescription
 from mietrecht_ch.models.resultTable import ResultTable
-from mietrecht_ch.models.teuerung import TeuerungInflationResult, TeuerungOldIndex, TeuerungNewIndex, TeuerungLastRelevantIndexResult, FIELD_VALUE
+from mietrecht_ch.models.teuerung import TeuerungInflationResult, TeuerungIndex, TeuerungLastRelevantIndexResult, FIELD_VALUE
 from mietrecht_ch.utils.queryExecutor import execute_query
-from mietrecht_ch.utils.dateUtils import buildFullDate, buildDatesInChronologicalOrder, swapDateIfNeeded
+from mietrecht_ch.utils.dateUtils import DATE_FORMAT, buildFullDate, buildDatesInChronologicalOrder
 
 @frappe.whitelist(allow_guest=True)
 def get_all_basis():
@@ -23,7 +23,7 @@ def get_all_basis():
 def all_data_gathered(all_basis):
     results = []
     for x in all_basis:
-        date_formatted = int(datetime.strftime(x['base_year'], "%Y"))
+        date_formatted = datetime.strftime(x['base_year'], DATE_FORMAT)
         results.append({'value': date_formatted, 'label': x['base_year']})
     return results
 
@@ -34,7 +34,7 @@ def get_last_five_indexes():
         """select distinct(publish_date) from tabTeuerung where DAY(publish_date) = 1 order by publish_date desc LIMIT 5;""")
 
     inClause = ','.join(map(lambda x: "'{}'".format(
-        x['publish_date'].strftime('%Y-%m-%d')), last_five_publish_dates))
+        x['publish_date'].strftime(DATE_FORMAT)), last_five_publish_dates))
 
     indexes = execute_query(
         """select base_year, publish_date, value from tabTeuerung where publish_date IN ({inClause}) order by base_year DESC, publish_date""".format(inClause=inClause))
@@ -181,8 +181,8 @@ def __get_values_from_sql_query__(basis, old_date_formatted, new_date_formatted)
 
 def __result_of_all_data__(old_date_formatted, old_index_value, new_date_formatted, new_index_value, rounded_inflation):
     result = []
-    result.append(TeuerungInflationResult(TeuerungOldIndex(old_date_formatted, old_index_value),
-                  TeuerungNewIndex(new_date_formatted, new_index_value), rounded_inflation))
+    result.append(TeuerungInflationResult(TeuerungIndex(old_date_formatted, old_index_value),
+                  TeuerungIndex(new_date_formatted, new_index_value), rounded_inflation))
     return result
 
 
