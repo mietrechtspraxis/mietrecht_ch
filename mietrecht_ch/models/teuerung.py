@@ -1,11 +1,14 @@
+from datetime import date
 from typing import List
 from numpy import number
 
 FIELD_VALUE = 'value'
+FIELD_PUBLISH_DATE = 'publish_date'
+FIELD_BASE_YEAR = 'base_year'
 
 class TeuerungIndex(dict):
-    def __init__(self, date: str, value: float):
-        dict.__init__(self, date=date, value=value)
+    def __init__(self, requestedDate: str, value: float, affectedDate = None):
+        dict.__init__(self, requestedDate=requestedDate, value=value, affectedDate=affectedDate)
 
 class TeuerungInflationResult(dict):
     def __init__(self, oldIndex: TeuerungIndex, newIndex: TeuerungIndex, inflation: float):
