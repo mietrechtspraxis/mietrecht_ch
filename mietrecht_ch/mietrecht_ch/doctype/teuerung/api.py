@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from optparse import Values
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
@@ -184,7 +183,7 @@ def __get_values_from_sql_query__(basis, old_date_formatted, new_date_formatted)
     last_relevant_date = execute_query("""select publish_date from tabTeuerung where publish_date <= '{new_date_formatted}' order by publish_date desc limit 1 """.format(
         new_date_formatted=new_date_formatted))
     value_last_relevant_date = last_relevant_date[0]['publish_date']
-    # return value_last_relevant_date
+
     sql = execute_query(
         """select base_year, publish_date, value
             from tabTeuerung 
