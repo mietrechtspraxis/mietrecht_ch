@@ -194,16 +194,8 @@ def __get_values_from_sql_query__(basis, old_date_formatted, new_date_formatted)
 
 
 def __result_of_all_data__(old_date_formatted, old_index_value, new_date_formatted, new_index_value, rounded_inflation, affected_date):
-
-    result = []
-    if str(new_date_formatted) == str(affected_date):
-        result.append(TeuerungInflationResult(TeuerungIndex(old_date_formatted, old_index_value),
-                                              TeuerungIndex(new_date_formatted, new_index_value, None), rounded_inflation))
-    else:
-        result.append(TeuerungInflationResult(TeuerungIndex(old_date_formatted, old_index_value,),
-                                              TeuerungIndex(new_date_formatted, new_index_value, affected_date), rounded_inflation))
-
-    return result
+    return TeuerungInflationResult(TeuerungIndex(old_date_formatted, old_index_value),
+                                              TeuerungIndex(new_date_formatted, new_index_value, None if str(new_date_formatted) == str(affected_date) else affected_date), rounded_inflation)
 
 
 def __round_inflation_number__(old_index_value, new_index_value, inflation):
