@@ -15,15 +15,20 @@ def get_dataset(fromMonth = '01', fromYear = '1970', toMonth = '12', toYear = st
                                 ORDER BY `date`
                                 """.format(from_date=from_date, to_date=to_date))
 
+    next_update = execute_query("""SELECT `value` FROM tabSingles
+                                WHERE `doctype` = 'Hypothekarzins Aktualisierungsdaten' and `field` = 'interest_rate_next_update'
+
+                                """)
+
     return CalculatorMasterResult(
         {},
-        [CalculatorResult(__build_dataset__(db_objects), None)]
+        [CalculatorResult(__build_dataset__(db_objects, next_update[0]['value']), None)]
     )
 
-def __build_dataset__(db_objects):
+def __build_dataset__(db_objects, next_update):
     result = {
         'actualRate': 0,
-        'nextUpdate': None,
+        'nextUpdate': next_update,
         'labels': [],
         'rate': [],
         'average': []

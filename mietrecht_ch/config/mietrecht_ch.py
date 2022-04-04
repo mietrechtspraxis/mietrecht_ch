@@ -142,6 +142,13 @@ def get_data():
                     "label": _("Neue Hypothekarzins"),
                     "description": _("Neue Hypothekarzins"),
                     "link": _("Form/Hypothekarzins/New Hypothekarzins 1")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Hypothekarzins Aktualisierungsdaten",
+                    "label": _("Nächste Hypothekarzins Aktualisierungsdaten"),
+                    "description": _("Nächste Hypothekarzins Aktualisierungsdaten"),
+                    "link": _("Form/Hypothekarzins Aktualisierungsdaten")
                 }
             ]
         },

@@ -1,0 +1,38 @@
+{
+ "creation": "2022-04-04 09:34:51.470447",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "interest_rate_next_update"
+ ],
+ "fields": [
+  {
+   "fieldname": "interest_rate_next_update",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "N\u00e4chste Hypothekarzins Aktualisierungsdaten",
+   "reqd": 1
+  }
+ ],
+ "issingle": 1,
+ "modified": "2022-04-04 09:35:02.610842",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "Hypothekarzins Aktualisierungsdaten",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
