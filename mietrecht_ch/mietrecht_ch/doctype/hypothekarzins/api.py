@@ -1,5 +1,4 @@
 from datetime import date
-from unittest import result
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
@@ -11,8 +10,6 @@ from mietrecht_ch.utils.queryExecutor import execute_query
 def get_dataset(fromMonth = '01', fromYear = '1970', toMonth = '12', toYear = str(date.today().year)):
 
     from_date, to_date = buildDatesInChronologicalOrder(fromYear, fromMonth, toYear, toMonth, toDay='31')
-    print(from_date)
-    print(to_date)
     db_objects = execute_query("""SELECT `date`, interest_rate, average FROM tabHypothekarzins
                                 WHERE `date` BETWEEN '{from_date}' AND '{to_date}'
                                 ORDER BY `date`
@@ -25,12 +22,17 @@ def get_dataset(fromMonth = '01', fromYear = '1970', toMonth = '12', toYear = st
 
 def __build_dataset__(db_objects):
     result = {
+        'actualRate': 0,
+        'nextUpdate': None,
         'labels': [],
         'rate': [],
         'average': []
     }
-    for object in db_objects:
+    result_length = len(db_objects)
+    for i, object in enumerate(db_objects):
         result['labels'].append(object['date'])
         result['rate'].append(object['interest_rate'])
         result['average'].append(object['average'])
+        if i == result_length - 1:
+            result['actualRate'] = object['interest_rate']
     return result
