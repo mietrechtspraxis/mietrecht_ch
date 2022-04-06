@@ -158,7 +158,7 @@ def __compute_all_basis_results__(all_basis, index):
     if index != '':
         results = []
         for b in all_basis:
-            results.append(ResultRow(b))
+            results.append(ResultRow([b[FIELD_BASE_YEAR], b[FIELD_PUBLISH_DATE]]))
     return results
 
 
