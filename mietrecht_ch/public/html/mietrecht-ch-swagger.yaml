@@ -453,7 +453,7 @@ paths:
                 type: array
                 items:
                   $ref: '#components/schemas/LebensdauerGroup'
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.gebaudeteilen.api.get_all:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.aktualisierungsdaten.api.get_all:
     get:
       tags:
         - Aktualisierungsdaten
