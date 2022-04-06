@@ -105,8 +105,8 @@ def get_basis_by_index(index: int):
     results = __compute_all_basis_results__(all_basis, index)
 
     result_table_description = [
-        ResultTableDescription('Basis', "number"),
-        ResultTableDescription('Monat/Jahr', "string")
+        ResultTableDescription('Basis', "year"),
+        ResultTableDescription('Monat/Jahr', "month-year")
     ]
 
     resultTable = ResultTable(result_table_description, results)
