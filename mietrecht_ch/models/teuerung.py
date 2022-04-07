@@ -1,4 +1,3 @@
-from datetime import date
 from typing import List
 from numpy import number
 
@@ -16,5 +15,5 @@ class TeuerungInflationResult(dict):
                       newIndex=newIndex, inflation=inflation)
 
 class TeuerungLastRelevantIndexResult(dict):
-    def __init__(self, basis: str, fromMonth: number, fromYear: number):
-        dict.__init__(self, basis=basis, fromMonth=fromMonth, fromYear=fromYear)
+    def __init__(self, basis: str, requestedDate: str, value: float, affectedDate: None):
+        dict.__init__(self, basis=basis, requestedDate=requestedDate, value=value, affectedDate=affectedDate)
