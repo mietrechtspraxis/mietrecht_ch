@@ -122,7 +122,8 @@ def get_basis_by_index(index: int):
 @frappe.whitelist(allow_guest=True)
 def get_last_index_from_basis(basis, fromMonth, fromYear):
 
-    results = __last_relevant_index_result__(basis, fromMonth, fromYear)
+    lastRelevant = __last_relevant_index_result__(basis, fromMonth, fromYear)
+    results = lastRelevant[0] if len(lastRelevant) > 0 else None 
 
     calculatorResult = CalculatorResult(results, None)
 
