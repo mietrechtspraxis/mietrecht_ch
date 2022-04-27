@@ -41,8 +41,6 @@ def get_last_five_indexes():
     indexes = execute_query(
         """select base_year, publish_date, value from tabTeuerung where publish_date IN ({inClause}) order by base_year DESC, publish_date""".format(inClause=inClause))
 
-    last_five_months = __get_last_five_months__()
-
     base_year_integer = []
     converted_base_year_integer = __create_unique_basis_from_indexes__(
         indexes, base_year_integer)
@@ -57,9 +55,9 @@ def get_last_five_indexes():
 
     result_table_description_iterated = [
         ResultTableDescription("auf der Basis", "string")]
-    for x in last_five_months:
+    for x in last_five_publish_dates:
         result_table_description_iterated.append(
-            ResultTableDescription(x, "number"))
+            ResultTableDescription(x['publish_date'], "number"))
 
     resultTable = ResultTable(result_table_description_iterated, result)
 
@@ -214,12 +212,3 @@ def __create_unique_basis_from_indexes__(indexes, baseYearIntegers):
         baseYearIntegers.append(i.base_year)
     return sorted(set(baseYearIntegers), key=None, reverse=True)
 
-
-def __get_last_five_months__():
-    now = datetime.now()
-    result = [now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)]
-    for _ in range(0, 4):
-        now = now.replace(day=1, hour=0, minute=0, second=0,
-                          microsecond=0) - timedelta(days=1)
-        result.append(now)
-    return sorted(set(result))
