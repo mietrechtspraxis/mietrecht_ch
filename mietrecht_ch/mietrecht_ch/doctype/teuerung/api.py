@@ -34,6 +34,7 @@ def get_last_five_indexes():
 
     last_five_publish_dates = execute_query(
         """select distinct(publish_date) from tabTeuerung where DAY(publish_date) = 1 order by publish_date desc LIMIT 5;""")
+    last_five_publish_dates_reversed = last_five_publish_dates[::-1]
 
     inClause = ','.join(map(lambda x: "'{}'".format(
         x['publish_date'].strftime(DATE_FORMAT)), last_five_publish_dates))
@@ -55,7 +56,7 @@ def get_last_five_indexes():
 
     result_table_description_iterated = [
         ResultTableDescription("auf der Basis", "string")]
-    for x in last_five_publish_dates:
+    for x in last_five_publish_dates_reversed:
         result_table_description_iterated.append(
             ResultTableDescription(x['publish_date'], "number"))
 
