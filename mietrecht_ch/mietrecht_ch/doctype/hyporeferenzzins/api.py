@@ -4,7 +4,7 @@ from socket import fromfd
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
-from mietrecht_ch.models.hypoReferenzzins import HypoReferenzzinsMortageInterest
+from mietrecht_ch.models.hypoReferenzzins import HypoReferenzzinsDetail, HypoReferenzzinsMortageInterest
 from mietrecht_ch.models.teuerung import TeuerungIndex
 from mietrecht_ch.utils.dateUtils import buildDatesInChronologicalOrder, buildFullDate
 from mietrecht_ch.utils.queryExecutor import execute_query
