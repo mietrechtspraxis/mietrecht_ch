@@ -18,6 +18,7 @@
    "search_index": 1
   },
   {
+   "description": "Bitte w\u00e4hlen Sie immer den ersten Tag des Monats.",
    "fieldname": "publish_date",
    "fieldtype": "Date",
    "label": "Datum"
@@ -28,7 +29,7 @@
    "label": "Index"
   }
  ],
- "modified": "2022-03-29 08:16:48.235733",
+ "modified": "2022-04-27 12:00:46.998555",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Teuerung",
