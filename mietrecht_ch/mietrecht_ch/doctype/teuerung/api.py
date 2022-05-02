@@ -8,7 +8,7 @@ from mietrecht_ch.models.resultTable import ResultTable
 from mietrecht_ch.models.teuerung import TeuerungInflationResult, TeuerungIndex, TeuerungLastRelevantIndexResult, FIELD_VALUE, FIELD_PUBLISH_DATE, FIELD_BASE_YEAR
 from mietrecht_ch.utils.queryExecutor import execute_query
 from mietrecht_ch.utils.dateUtils import DATE_FORMAT, buildFullDate, buildDatesInChronologicalOrder
-
+from mietrecht_ch.utils.inflation import __round_inflation_number__
 
 @frappe.whitelist(allow_guest=True)
 def get_all_basis():
@@ -199,13 +199,6 @@ def __last_relevant_date__(new_date_formatted):
 def __result_of_all_data__(old_date_formatted, old_index_value, new_date_formatted, new_index_value, rounded_inflation, affected_date):
     return TeuerungInflationResult(TeuerungIndex(old_date_formatted, old_index_value),
                                    TeuerungIndex(new_date_formatted, new_index_value, None if str(new_date_formatted) == str(affected_date) else affected_date), rounded_inflation)
-
-def __round_inflation_number__(old_index_value, new_index_value, inflation):
-    number_not_rounded = (new_index_value - old_index_value) / \
-        (old_index_value) * int(inflation)
-    number_rounded = round(number_not_rounded, 2)
-    return number_rounded
-
 
 def __create_unique_basis_from_indexes__(indexes, baseYearIntegers):
     for i in indexes:
