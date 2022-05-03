@@ -1,12 +1,11 @@
 from datetime import datetime
 from distutils.command.build import build
 from numbers import Number
-import re
-from socket import fromfd
-from typing import Iterator
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
+from mietrecht_ch.models.resultTable import ResultTable
+from mietrecht_ch.models.resultTableDescription import ResultTableDescription
 from mietrecht_ch.models.hypoReferenzzins import HypoReferenzzinsDetail, HypoReferenzzinsMortageInterest
 from mietrecht_ch.models.teuerung import TeuerungIndex
 from mietrecht_ch.utils.dateUtils import buildDatesInChronologicalOrder, buildFullDate
@@ -100,7 +99,15 @@ def get_mortgage_rate_table(canton: str):
             result.append([y for y in mortgage_rate_values if __get_year_from_date__(
                 y['publish_date']) == x])
 
-    calculator_result = CalculatorResult(result, None)
+    result_table_description = [
+        ResultTableDescription('Jahr', 'string'),
+        ResultTableDescription('Monat', 'string'),
+        ResultTableDescription('Zinssatz', 'string')
+    ]
+
+    result_table = ResultTable(result_table_description, result)
+
+    calculator_result = CalculatorResult(None, result_table)
 
     return CalculatorMasterResult(
         {'canton': canton}, calculator_result
