@@ -1,6 +1,9 @@
+from datetime import datetime
 from distutils.command.build import build
 from numbers import Number
+import re
 from socket import fromfd
+from typing import Iterator
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
@@ -79,6 +82,43 @@ def get_interest_value_from_date(fromMonth: Number, fromYear: Number, toMonth: N
                 'toMonth': toMonth, 'toYear': toYear, 'canton': canton},
             [Calculator_result]
         )
+
+
+@frappe.whitelist(allow_guest=True)
+def get_mortgage_rate_table(canton: str):
+    mortgage_rate_values = execute_query("""SELECT publish_date, interest FROM tabHypoReferenzzins
+                            WHERE canton = '{canton}'
+                            ORDER BY publish_date ASC
+                            """.format(canton=canton))
+
+    result = None
+
+    if len(mortgage_rate_values) > 0:
+        result = []
+        array_date = __sorted_date__(mortgage_rate_values)
+        for x in array_date:
+            result.append([y for y in mortgage_rate_values if __get_year_from_date__(
+                y['publish_date']) == x])
+
+    calculator_result = CalculatorResult(result, None)
+
+    return CalculatorMasterResult(
+        {'canton': canton}, calculator_result
+    )
+
+
+def __sorted_date__(mortgage_rate_values):
+    array_date = []
+    for x in mortgage_rate_values:
+        array_date.append(__get_year_from_date__(x['publish_date']))
+    return sorted(set(array_date))
+
+
+def __get_year_from_date__(date):
+    datem = datetime.strptime(str(date), "%Y-%m-%d")
+    year_of_date = datem.year
+    return year_of_date
+
 
 def __get_index_by_date__(canton, request_date, nbr_result):
     closest_index = execute_query("""SELECT publish_date, interest, canton 
