@@ -90,15 +90,10 @@ def get_mortgage_rate_table(canton: str):
                             ORDER BY publish_date ASC
                             """.format(canton=canton))
 
-    result = None
-
-    if len(mortgage_rate_values) > 0:
-        result = []
-        array_date = __sorted_date__(mortgage_rate_values)
-        for x in array_date:
-            result.append([y for y in mortgage_rate_values if __get_year_from_date__(
-                y['publish_date']) == x])
-
+    result = []
+    for x in mortgage_rate_values:
+        result.append(x)
+        
     result_table_description = [
         ResultTableDescription('Jahr', 'string'),
         ResultTableDescription('Monat', 'string'),
