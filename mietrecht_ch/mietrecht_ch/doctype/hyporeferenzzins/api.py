@@ -50,9 +50,9 @@ def get_index_by_month(year: Number, month: Number, canton: str = 'CH'):
 
 @frappe.whitelist(allow_guest=True)
 def get_interest_value_from_date(fromMonth: Number, fromYear: Number, toMonth: Number, toYear: Number, canton: str = 'CH'):
-
-    requested_from_date = buildFullDate(fromYear, fromMonth)
-    requested_to_date = buildFullDate(toYear, toMonth)
+    
+    requested_from_date, requested_to_date = buildDatesInChronologicalOrder(
+        fromYear, fromMonth, toYear, toMonth)
 
     get_index_from_date = __get_index_by_date__(canton, requested_from_date, 1)
     get_index_to_date = __get_index_by_date__(canton, requested_to_date, 1)
