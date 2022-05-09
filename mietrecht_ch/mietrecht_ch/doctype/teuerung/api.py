@@ -123,6 +123,7 @@ def get_basis_by_index(index: int):
 def get_last_index_from_basis(basis, fromMonth, fromYear):
 
     lastRelevant = __last_relevant_index_result__(basis, fromMonth, fromYear)
+    
     results = lastRelevant[0] if len(lastRelevant) > 0 else None
 
     calculatorResult = CalculatorResult(results, None)
@@ -197,7 +198,7 @@ def __get_values_from_sql_query__(basis, old_date_formatted, new_date_formatted)
 def __last_relevant_date__(new_date_formatted):
     last_relevant_date = execute_query("""select publish_date from tabTeuerung where publish_date <= '{new_date_formatted}' order by publish_date desc limit 1 """.format(
         new_date_formatted=new_date_formatted))
-    value_last_relevant_date = last_relevant_date[0]['publish_date']
+    value_last_relevant_date = last_relevant_date[0]['publish_date'] if last_relevant_date and len(last_relevant_date) > 0 else None
     return value_last_relevant_date
 
 
