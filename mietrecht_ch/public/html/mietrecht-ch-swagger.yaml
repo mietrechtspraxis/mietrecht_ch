@@ -509,13 +509,48 @@ paths:
           example: 'BS'
       responses:
         '200':
+          description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/schemas/APICalculatorResponse'
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_interest_value_from_date:
+    get:
+      tags:
+        - HypoReferenzzins
+      summary: Get an interest for a specific month
+      parameters:
+        - name: fromMonth
+          required: true
+          in: query
+          schema:
+            type: number
+          example: 2
+        - name: fromYear
+          required: true
+          in: query
+          schema:
+            type: number
+          example: 2005
+        - name: toMonth
+          required: true
+          in: query
+          schema:
+            type: number
+          example: 5
+        - name: toYear
+          required: true
+          in: query
+          schema:
+            type: number
+          example: 2015
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorMasterResult`
           content:
             application/json:
               schema:
                 type: object
-                $ref: '#components/schemas/CalculatorMasterResult'
-
+                $ref: '#components/schemas/APICalculatorResponse'
   /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_last_five_indexes:
     get:
       tags:
