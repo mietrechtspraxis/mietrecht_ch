@@ -1,9 +1,11 @@
+from datetime import datetime
 from distutils.command.build import build
 from numbers import Number
-from socket import fromfd
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
+from mietrecht_ch.models.resultTable import ResultTable
+from mietrecht_ch.models.resultTableDescription import ResultTableDescription
 from mietrecht_ch.models.hypoReferenzzins import HypoReferenzzinsDetail, HypoReferenzzinsMortageInterest
 from mietrecht_ch.models.teuerung import TeuerungIndex
 from mietrecht_ch.utils.dateUtils import buildDatesInChronologicalOrder, buildFullDate
@@ -79,6 +81,46 @@ def get_interest_value_from_date(fromMonth: Number, fromYear: Number, toMonth: N
                 'toMonth': toMonth, 'toYear': toYear, 'canton': canton},
             [Calculator_result]
         )
+
+
+@frappe.whitelist(allow_guest=True)
+def get_mortgage_rate_table(canton: str):
+    mortgage_rate_values = execute_query("""SELECT publish_date, interest FROM tabHypoReferenzzins
+                            WHERE canton = '{canton}'
+                            ORDER BY publish_date ASC
+                            """.format(canton=canton))
+
+    result = []
+    for x in mortgage_rate_values:
+        result.append(x)
+        
+    result_table_description = [
+        ResultTableDescription('Jahr', 'string'),
+        ResultTableDescription('Monat', 'string'),
+        ResultTableDescription('Zinssatz', 'string')
+    ]
+
+    result_table = ResultTable(result_table_description, result)
+
+    calculator_result = CalculatorResult(None, result_table)
+
+    return CalculatorMasterResult(
+        {'canton': canton}, calculator_result
+    )
+
+
+def __sorted_date__(mortgage_rate_values):
+    array_date = []
+    for x in mortgage_rate_values:
+        array_date.append(__get_year_from_date__(x['publish_date']))
+    return sorted(set(array_date))
+
+
+def __get_year_from_date__(date):
+    datem = datetime.strptime(str(date), "%Y-%m-%d")
+    year_of_date = datem.year
+    return year_of_date
+
 
 def __get_index_by_date__(canton, request_date, nbr_result):
     closest_index = execute_query("""SELECT publish_date, interest, canton 

@@ -495,6 +495,26 @@ paths:
               schema:
                 type: object
                 $ref: '#components/schemas/HypoReferenzzinsResult'
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_mortgage_rate_table:
+    get:
+      tags:
+        - HypoReferenzzins
+      summary: Get all interest for a specific canton
+      parameters:
+        - name: canton
+          in: query
+          schema:
+            type: string
+            enum: ['CH', 'AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH']
+          example: 'BS'
+      responses:
+        '200':
+          description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/schemas/APICalculatorResponse'
   /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_interest_value_from_date:
     get:
       tags:
@@ -525,21 +545,12 @@ paths:
           schema:
             type: number
           example: 2015
-        - name: canton
-          in: query
-          schema:
-            type: string
-            enum: ['CH', 'AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH']
-          example: 'BS'
-      responses:
-        '200':
-          description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`
+          description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorMasterResult`
           content:
             application/json:
               schema:
                 type: object
                 $ref: '#components/schemas/APICalculatorResponse'
-
   /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_last_five_indexes:
     get:
       tags:
