@@ -173,9 +173,10 @@ components:
       description: Describe the old index and the value associated to this index
       properties:
         date:
-          type: date
+          type: string
+          format: date
         value:
-          type: float
+          type: number
     TeuerungInflationResult:
       description: Return all informations about the last five months
       properties:
@@ -186,7 +187,7 @@ components:
           type: object
           $ref: '#components/schemas/TeuerungIndex'
         inflation:
-          type: float
+          type: number
     TeuerungLastRelevantIndexResult:
       description: Return the last relevant index
       properties:
@@ -545,6 +546,8 @@ paths:
           schema:
             type: number
           example: 2015
+      responses:
+        '200':
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorMasterResult`
           content:
             application/json:
@@ -626,7 +629,7 @@ paths:
         - name: index
           in: query
           schema:
-            type: float
+            type: number
           example: 103
       responses:
         '200':
