@@ -10,6 +10,7 @@ from mietrecht_ch.utils.queryExecutor import execute_query
 from mietrecht_ch.utils.dateUtils import DATE_FORMAT, buildFullDate, buildDatesInChronologicalOrder
 from mietrecht_ch.utils.inflation import __round_inflation_number__
 
+
 @frappe.whitelist(allow_guest=True)
 def get_all_basis():
     all_basis = frappe.get_all(
@@ -122,7 +123,8 @@ def get_basis_by_index(index: int):
 def get_last_index_from_basis(basis, fromMonth, fromYear):
 
     lastRelevant = __last_relevant_index_result__(basis, fromMonth, fromYear)
-    results = lastRelevant[0] if len(lastRelevant) > 0 else None 
+    
+    results = lastRelevant[0] if len(lastRelevant) > 0 else None
 
     calculatorResult = CalculatorResult(results, None)
 
@@ -145,14 +147,14 @@ def __last_relevant_index_result__(basis, fromMonth, fromYear):
             order by publish_date desc limit 1
             """
         .format(basis=basis, relevant_date=relevant_date))
-    
-    results = None
+
+    results = []
     if last_relevant_index and len(last_relevant_index) == 1:
-        results = []
         for i in last_relevant_index:
             results = [TeuerungLastRelevantIndexResult(
                 i[FIELD_BASE_YEAR], date_formatted, i[FIELD_VALUE], None if str(date_formatted) == str(relevant_date) else relevant_date)]
     return results
+
 
 def __compute_all_basis_results__(all_basis, index):
     results = None
@@ -179,30 +181,33 @@ def __compute_result__(inflationRate, old_date_formatted, new_date_formatted, va
 
     return results
 
+
 def __get_values_from_sql_query__(basis, old_date_formatted, new_date_formatted):
     order = 'asc' if old_date_formatted < new_date_formatted else 'desc'
     relevant_date = __last_relevant_date__(new_date_formatted)
-  
+
     sql = execute_query(
         """select base_year, publish_date, value
             from tabTeuerung 
             where base_year = '{basis}' and publish_date in ('{old_date_formatted}', '{relevant_date}')
             order by publish_date {order}"""
-        .format(basis=basis, old_date_formatted=old_date_formatted, relevant_date=relevant_date , new_date_formatted=new_date_formatted, order=order))
+        .format(basis=basis, old_date_formatted=old_date_formatted, relevant_date=relevant_date, new_date_formatted=new_date_formatted, order=order))
     return sql
+
 
 def __last_relevant_date__(new_date_formatted):
     last_relevant_date = execute_query("""select publish_date from tabTeuerung where publish_date <= '{new_date_formatted}' order by publish_date desc limit 1 """.format(
         new_date_formatted=new_date_formatted))
-    value_last_relevant_date = last_relevant_date[0]['publish_date']
+    value_last_relevant_date = last_relevant_date[0]['publish_date'] if last_relevant_date and len(last_relevant_date) > 0 else None
     return value_last_relevant_date
+
 
 def __result_of_all_data__(old_date_formatted, old_index_value, new_date_formatted, new_index_value, rounded_inflation, affected_date):
     return TeuerungInflationResult(TeuerungIndex(old_date_formatted, old_index_value),
                                    TeuerungIndex(new_date_formatted, new_index_value, None if str(new_date_formatted) == str(affected_date) else affected_date), rounded_inflation)
 
+
 def __create_unique_basis_from_indexes__(indexes, baseYearIntegers):
     for i in indexes:
         baseYearIntegers.append(i.base_year)
     return sorted(set(baseYearIntegers), key=None, reverse=True)
-
