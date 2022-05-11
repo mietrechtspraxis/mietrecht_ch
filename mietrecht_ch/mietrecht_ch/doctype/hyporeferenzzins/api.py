@@ -93,16 +93,8 @@ def get_mortgage_rate_table(canton: str):
     result = []
     for x in mortgage_rate_values:
         result.append(x)
-        
-    result_table_description = [
-        ResultTableDescription('Jahr', 'string'),
-        ResultTableDescription('Monat', 'string'),
-        ResultTableDescription('Zinssatz', 'string')
-    ]
 
-    result_table = ResultTable(result_table_description, result)
-
-    calculator_result = CalculatorResult(None, result_table)
+    calculator_result = CalculatorResult(result, None)
 
     return CalculatorMasterResult(
         {'canton': canton}, calculator_result
