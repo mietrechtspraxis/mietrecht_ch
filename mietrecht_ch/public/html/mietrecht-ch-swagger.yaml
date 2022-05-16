@@ -272,6 +272,24 @@ paths:
           description: Successful response
           content:
             application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_last_data_date:
+    get:
+      tags:
+        - Heizölpreise
+      summary: Get date of the last data we have in Database
+      security:
+        - noauthAuth: []
+      responses:
+        '200':
+          description: In standard API response, the message contains the date of the last data available 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    format: date
   /api/method/mietrecht_ch.api.healthcheck:
     get:
       tags:
@@ -388,6 +406,24 @@ paths:
           description: Successful response
           content:
             application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_last_data_date:
+    get:
+      tags:
+        - Heizgradtagzahlen
+      summary: Get date of the last data we have in Database
+      security:
+        - noauthAuth: []
+      responses:
+        '200':
+          description: In standard API response, the message contains the date of the last data available 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    format: date
   /api/method/mietrecht_ch.mietrecht_ch.doctype.wetterstationen.api.get_all:
     get:
       tags:

@@ -69,3 +69,11 @@ def get_list_for_period(location, fromYear, fromMonth, toYear, toMonth):
         {'location':location, 'fromYear':fromYear, 'fromMonth':fromMonth, 'toYear':toYear, 'toMonth':toMonth},
         [calculatorResult]
     )
+
+@frappe.whitelist(allow_guest=True)
+def get_last_data_date():
+    last_data_date = execute_query("""SELECT `monat` FROM tabHeizgradtagzahlen
+                                    ORDER BY `monat` DESC 
+                                    LIMIT 1
+                                    """)
+    return last_data_date[0]['monat'] if last_data_date else None

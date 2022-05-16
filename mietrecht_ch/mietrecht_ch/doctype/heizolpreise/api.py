@@ -65,3 +65,11 @@ def get_multiple_oil_price(quantity, fromYear, fromMonth, toYear, toMonth):
         {'quantity':quantity, 'fromYear':fromYear, 'fromMonth':fromMonth, 'toYear':toYear, 'toMonth':toMonth},
         [calculatorResult]
     )
+
+@frappe.whitelist(allow_guest=True)
+def get_last_data_date():
+    last_data_date = execute_query("""SELECT `monat` FROM tabHeizolpreise
+                                    ORDER BY `monat` DESC 
+                                    LIMIT 1
+                                    """)
+    return last_data_date[0]['monat'] if last_data_date else None
