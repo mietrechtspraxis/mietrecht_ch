@@ -4,8 +4,6 @@ from numbers import Number
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
-from mietrecht_ch.models.resultTable import ResultTable
-from mietrecht_ch.models.resultTableDescription import ResultTableDescription
 from mietrecht_ch.models.hypoReferenzzins import HypoReferenzzinsDetail, HypoReferenzzinsMortageInterest
 from mietrecht_ch.models.teuerung import TeuerungIndex
 from mietrecht_ch.utils.dateUtils import buildDatesInChronologicalOrder, buildFullDate
@@ -52,7 +50,7 @@ def get_index_by_month(year: Number, month: Number, canton: str = 'CH'):
 
 @frappe.whitelist(allow_guest=True)
 def get_interest_value_from_date(fromMonth: Number, fromYear: Number, toMonth: Number, toYear: Number, canton: str = 'CH'):
-    
+
     requested_from_date, requested_to_date = buildDatesInChronologicalOrder(
         fromYear, fromMonth, toYear, toMonth)
 
@@ -97,7 +95,7 @@ def get_mortgage_rate_table(canton: str):
     calculator_result = CalculatorResult(result, None)
 
     return CalculatorMasterResult(
-        {'canton': canton}, calculator_result
+        {'canton': canton}, [calculator_result]
     )
 
 
