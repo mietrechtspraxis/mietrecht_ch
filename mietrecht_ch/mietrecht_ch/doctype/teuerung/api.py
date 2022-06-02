@@ -1,14 +1,15 @@
 from datetime import datetime, timedelta
+from queue import Empty
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
 from mietrecht_ch.models.resultRow import ResultRow
 from mietrecht_ch.models.resultTableDescription import ResultTableDescription
 from mietrecht_ch.models.resultTable import ResultTable
-from mietrecht_ch.models.teuerung import TeuerungInflationResult, TeuerungIndex, TeuerungLastRelevantIndexResult, FIELD_VALUE, FIELD_PUBLISH_DATE, FIELD_BASE_YEAR
+from mietrecht_ch.models.teuerung import MietzinsanpassungInflationResult, TeuerungInflationResult, TeuerungIndex, TeuerungLastRelevantIndexResult, FIELD_VALUE, FIELD_PUBLISH_DATE, FIELD_BASE_YEAR
 from mietrecht_ch.utils.queryExecutor import execute_query
 from mietrecht_ch.utils.dateUtils import DATE_FORMAT, buildFullDate, buildDatesInChronologicalOrder
-from mietrecht_ch.utils.inflation import __round_inflation_number__
+from mietrecht_ch.utils.inflation import __round_inflation_number__, __rounding_value__
 
 
 @frappe.whitelist(allow_guest=True)
@@ -123,13 +124,34 @@ def get_basis_by_index(index: int):
 def get_last_index_from_basis(basis, fromMonth, fromYear):
 
     lastRelevant = __last_relevant_index_result__(basis, fromMonth, fromYear)
-    
+
     results = lastRelevant[0] if len(lastRelevant) > 0 else None
 
     calculatorResult = CalculatorResult(results, None)
 
     return CalculatorMasterResult(
         {'basis': basis, 'fromMonth': fromMonth, 'fromYear': fromYear},
+        [calculatorResult]
+    )
+
+
+@frappe.whitelist(allow_guest=True)
+def get_rent_adjustment_data(rent, basis, inflationRate, fromMonth, fromYear, toMonth, toYear):
+
+    old_date_formatted, new_date_formatted = buildDatesInChronologicalOrder(
+        fromYear, fromMonth, toYear, toMonth)
+
+    values_from_sql_query = __get_values_from_sql_query__(
+        basis, old_date_formatted, new_date_formatted)
+
+    results = __compute_result__(
+        inflationRate, old_date_formatted, new_date_formatted, values_from_sql_query, rent)
+
+    calculatorResult = CalculatorResult(results, None)
+
+    return CalculatorMasterResult(
+        {'rent': rent, 'basis': basis, 'inflationRate': inflationRate, 'fromMonth': fromMonth,
+         'fromYear': fromYear, 'toMonth': toMonth, 'toYear': toYear},
         [calculatorResult]
     )
 
@@ -166,19 +188,22 @@ def __compute_all_basis_results__(all_basis, index):
     return results
 
 
-def __compute_result__(inflationRate, old_date_formatted, new_date_formatted, values_from_sql_query):
+def __compute_result__(inflationRate, old_date_formatted, new_date_formatted, values_from_sql_query, rent=None):
     results = None
     if values_from_sql_query and len(values_from_sql_query) == 2:
         old_index_value = values_from_sql_query[0][FIELD_VALUE]
         new_index_value = values_from_sql_query[1][FIELD_VALUE]
         affected_date = values_from_sql_query[1][FIELD_PUBLISH_DATE]
 
-        rounded_inflation = __round_inflation_number__(
+        calculation_inflation = __round_inflation_number__(
             old_index_value, new_index_value, inflationRate)
 
-        results = __result_of_all_data__(
-            old_date_formatted, old_index_value, new_date_formatted, new_index_value, rounded_inflation, affected_date)
-
+        if (rent != None):
+            results = __result_of_all_data_with_rent__(old_date_formatted, new_date_formatted,
+                                                       rent, old_index_value, new_index_value, affected_date, calculation_inflation)
+        else:
+            results = __result_of_all_data_without_rent__(
+                old_date_formatted, old_index_value, new_date_formatted, new_index_value, calculation_inflation, affected_date)
     return results
 
 
@@ -198,11 +223,35 @@ def __get_values_from_sql_query__(basis, old_date_formatted, new_date_formatted)
 def __last_relevant_date__(new_date_formatted):
     last_relevant_date = execute_query("""select publish_date from tabTeuerung where publish_date <= '{new_date_formatted}' order by publish_date desc limit 1 """.format(
         new_date_formatted=new_date_formatted))
-    value_last_relevant_date = last_relevant_date[0]['publish_date'] if last_relevant_date and len(last_relevant_date) > 0 else None
+    value_last_relevant_date = last_relevant_date[0]['publish_date'] if last_relevant_date and len(
+        last_relevant_date) > 0 else None
     return value_last_relevant_date
 
 
-def __result_of_all_data__(old_date_formatted, old_index_value, new_date_formatted, new_index_value, rounded_inflation, affected_date):
+def __result_of_all_data_with_rent__(old_date_formatted, new_date_formatted, rent, old_index_value, new_index_value, affected_date, inflation):
+    calculation_variation = __calculation_variation__(rent, inflation)
+    rounded_calclulation_new_rent = __calculation_new_rent__(
+        rent, calculation_variation)
+    rounded_inflation = __rounding_value__(inflation)
+
+    return MietzinsanpassungInflationResult(TeuerungIndex(old_date_formatted, old_index_value),
+                                            TeuerungIndex(new_date_formatted, new_index_value, None if str(new_date_formatted) == str(affected_date) else affected_date), rounded_inflation, calculation_variation, rounded_calclulation_new_rent)
+
+
+def __calculation_variation__(rent, rounded_inflation):
+    calculation_variation = (int(rent) * rounded_inflation) / 100
+    rounded_calculation_variation = __rounding_value__(calculation_variation)
+    return rounded_calculation_variation
+
+
+def __calculation_new_rent__(rent, calculation_variation):
+    calculation_new_rent = int(rent) + calculation_variation
+    rounded_calclulation_new_rent = __rounding_value__(calculation_new_rent)
+    return rounded_calclulation_new_rent
+
+
+def __result_of_all_data_without_rent__(old_date_formatted, old_index_value, new_date_formatted, new_index_value, inflation, affected_date):
+    rounded_inflation = __rounding_value__(inflation)
     return TeuerungInflationResult(TeuerungIndex(old_date_formatted, old_index_value),
                                    TeuerungIndex(new_date_formatted, new_index_value, None if str(new_date_formatted) == str(affected_date) else affected_date), rounded_inflation)
 
