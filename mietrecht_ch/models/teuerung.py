@@ -19,9 +19,9 @@ class TeuerungInflationResult(dict):
 
 
 class MietzinsanpassungInflationResult(dict):
-    def __init__(self, oldIndex: TeuerungIndex, newIndex: TeuerungIndex, inflation: float, calculation_variation: str, calculationRent: str):
+    def __init__(self, oldIndex: TeuerungIndex, newIndex: TeuerungIndex, inflation: float, calculationVariation: str, calculationRent: str):
         dict.__init__(self, oldIndex=oldIndex,
-                      newIndex=newIndex, inflation=inflation, calculationRent=calculationRent, calculation_variation=calculation_variation)
+                      newIndex=newIndex, inflation=inflation, calculationRent=calculationRent, calculationVariation=calculationVariation)
 
 
 class TeuerungLastRelevantIndexResult(dict):
