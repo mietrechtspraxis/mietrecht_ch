@@ -7,9 +7,10 @@ from mietrecht_ch.utils.queryExecutor import execute_query
 
 
 @frappe.whitelist(allow_guest=True)
-def get_dataset(fromMonth = '01', fromYear = '1970', toMonth = '12', toYear = str(date.today().year)):
+def get_dataset(fromMonth='01', fromYear='1970', toMonth='12', toYear=str(date.today().year)):
 
-    from_date, to_date = buildDatesInChronologicalOrder(fromYear, fromMonth, toYear, toMonth, toDay='31')
+    from_date, to_date = buildDatesInChronologicalOrder(
+        fromYear, fromMonth, toYear, toMonth, toDay='31')
     db_objects = execute_query("""SELECT `date`, interest_rate, average FROM tabHypothekarzins
                                 WHERE `date` BETWEEN '{from_date}' AND '{to_date}'
                                 ORDER BY `date`
@@ -22,8 +23,10 @@ def get_dataset(fromMonth = '01', fromYear = '1970', toMonth = '12', toYear = st
 
     return CalculatorMasterResult(
         {},
-        [CalculatorResult(__build_dataset__(db_objects, next_update[0]['value']), None)]
+        [CalculatorResult(__build_dataset__(
+            db_objects, next_update[0]['value']), None)]
     )
+
 
 def __build_dataset__(db_objects, next_update):
     result = {
