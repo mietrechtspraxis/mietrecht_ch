@@ -12,7 +12,7 @@ def compute_rent():
     data = {
         "rent": {
             "since": "01-01-2022",
-            "from": "01-06-2022",
+            "from": "06-01-2022",
             "rent": {
                 "original": 1450.00,
                 "updated": 1420.91
@@ -22,7 +22,7 @@ def compute_rent():
                 "updated": 0.91
             },
             "total": {
-                "oringinal": 1450.00,
+                "original": 1455.00,
                 "updated": 1420.91
             }
         },
