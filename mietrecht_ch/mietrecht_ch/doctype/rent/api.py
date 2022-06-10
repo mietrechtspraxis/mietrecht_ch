@@ -51,7 +51,7 @@ def compute_rent():
                 "percent": 0,
                 "amount": 0
             },
-            "reserve": {
+            "total": {
                 "percent": -2.01,
                 "amount": -29.09
             }
