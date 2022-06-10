@@ -7,7 +7,7 @@ from mietrecht_ch.models.calculatorResult import CalculatorResult
 @frappe.whitelist(allow_guest=True)
 def compute_rent():
 
-    # payload = json.loads(frappe.request.data)
+    payload = json.loads(frappe.request.data)
 
     data = {
         "rent": {
@@ -78,7 +78,7 @@ def compute_rent():
     calculatorResult = CalculatorResult(data, None)
 
     return CalculatorMasterResult(
-        None,
+        payload,
         [calculatorResult]
     )
 
