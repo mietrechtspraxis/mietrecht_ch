@@ -44,8 +44,12 @@ def compute_rent():
                 "amount": 2.00
             },
             "valueAdded": {
-                "percent": 3.27,
-                "amount": 1.75
+                "percent": 0,
+                "amount": 0
+            },
+            "reserve": {
+                "percent": 0,
+                "amount": 0
             },
             "reserve": {
                 "percent": -2.01,
@@ -55,7 +59,7 @@ def compute_rent():
         "costLevel": {
             "mortgageInterestRate": {
                 "requestedDate": "01-04-2022",
-                "canton": 4051,
+                "canton": "BS",
                 "value": 1.25
             },
             "inflation": {
