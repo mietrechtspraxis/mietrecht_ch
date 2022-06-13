@@ -87,7 +87,6 @@ def compute_rent():
             },
             "inflation": {
                 "indexBasis": "01-05-2015",
-                "percent": 100,
                 "value": 103.8,
                 "affectedDate": "01-03-2022"
             },
