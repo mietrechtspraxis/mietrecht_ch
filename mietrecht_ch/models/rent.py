@@ -11,10 +11,11 @@ class Rent(dict):
                       rent=rent, extraRooms=extraRooms, total=total)
 
 
-class InflationCalculationValue(dict):
-    def __init__(self, fromDate: int, at: int, percent: int, amount: int):
-        dict.__init__(self, fromDate=fromDate, at=at,
+class CalculationValue(dict):
+    def __init__(self, _from: int, at: int, percent: int, amount: int):
+        dict.__init__(self, at=at,
                       percent=percent, amount=amount)
+        self['from'] = _from
 
 
 class CalculatedPercentage(dict):
@@ -23,7 +24,7 @@ class CalculatedPercentage(dict):
 
 
 class Justification(dict):
-    def __init__(self, mortgageInterest: InflationCalculationValue, inflation: InflationCalculationValue, constIncrease: InflationCalculationValue, valueAdded: CalculatedPercentage, reserve: CalculatedPercentage, total: CalculatedPercentage):
+    def __init__(self, mortgageInterest: CalculationValue, inflation: CalculationValue, constIncrease: CalculationValue, valueAdded: CalculatedPercentage, reserve: CalculatedPercentage, total: CalculatedPercentage):
         dict.__init__(mortgageInterest=mortgageInterest, inflation=inflation,
                       constIncrease=constIncrease, valueAdded=valueAdded, reserve=reserve, total=total)
 
