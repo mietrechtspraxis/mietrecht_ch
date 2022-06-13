@@ -2,12 +2,33 @@ import json
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
+from mietrecht_ch.utils.dateUtils import DATE_FORMAT, buildDatesInChronologicalOrder
+from mietrecht_ch.mietrecht_ch.doctype.teuerung.api import __get_values_from_sql_query__, __compute_result__
 
 
 @frappe.whitelist(allow_guest=True)
 def compute_rent():
 
     payload = json.loads(frappe.request.data)
+
+    # Teuerung
+    fromYear = payload['inflation']['previous']['year']
+    fromMonth = payload['inflation']['previous']['month']
+    toYear = payload['inflation']['next']['year']
+    toMonth = payload['inflation']['next']['month']
+    basis = payload['inflation']['basis']
+    inflationRate: int = 100
+
+    old_date_formatted, new_date_formatted = buildDatesInChronologicalOrder(
+        fromYear, fromMonth, toYear, toMonth)
+
+    values_from_sql_query = __get_values_from_sql_query__(
+        basis, old_date_formatted, new_date_formatted)
+
+    teuerung_result = __compute_result__(
+        inflationRate, old_date_formatted, new_date_formatted, values_from_sql_query)
+
+    return teuerung_result
 
     data = {
         "rent": {
