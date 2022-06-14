@@ -71,7 +71,7 @@ def compute_rent():
             },
             "costIncrease": {
                 "flatRate": 0.63,
-                "countedUpTo": "31-03-2022"
+                "countedUpTo": "03-31-2022"
             }
         }
     }
