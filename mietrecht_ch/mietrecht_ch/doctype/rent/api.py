@@ -1,12 +1,8 @@
-from calendar import calendar
-from datetime import datetime
-from hashlib import new
 import json
-from xml.dom import ValidationErr
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
-from mietrecht_ch.utils.dateUtils import DATE_FORMAT, buildDatesInChronologicalOrder, date_with_month_ahead
+from mietrecht_ch.utils.dateUtils import DATE_FORMAT, buildDatesInChronologicalOrder, date_with_different_day, date_with_month_ahead
 from mietrecht_ch.mietrecht_ch.doctype.teuerung.api import __get_values_from_sql_query__, __compute_result__
 from mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api import __get_index_by_date__
 from mietrecht_ch.models.rent import CalculationValue, Rent, UpdatedValue
@@ -20,12 +16,6 @@ def compute_rent():
     payload = json.loads(frappe.request.data)
     rent = payload['rent']['rent']
 
-    test = bool(False)
-
-    if test == bool(False):
-        return {'Error': 'Not Good'}
-    else:
-        pass
     # hypoReference
     old_date_formatted_hypo, new_date_formatted_hypo, from_date_interest, to_date_interest, rent_pourcentage_change, rounded_calculation_rent_hypo = hypotekarzins_data(
         payload, rent)
@@ -43,10 +33,13 @@ def compute_rent():
     # Total
     # total in percent from all calculation
     total_in_percent = teuerung_inflation + rent_pourcentage_change
+    rounded_total_in_percent = __rounding_value__(total_in_percent)
     # total in sfr from all calculation
     total_in_sfr = rounded_calculation_rent_hypo + rounded_calculation_rent_teuerung
+    rounded_total_in_sfr = __rounding_value__(total_in_sfr)
 
-    result_total = CalculationValue('', '', total_in_percent, total_in_sfr)
+    result_total = CalculationValue(
+        '', '', rounded_total_in_percent, rounded_total_in_sfr)
 
     # Rent
     since_date, from_date, original_rent, rounded_updated_value, original_extra_room, rounded_updated_extra_room, total_original, round_total_updated = mietzins_data(
@@ -54,6 +47,22 @@ def compute_rent():
 
     result_mietzins = Rent(since_date, from_date, UpdatedValue(
         original_rent, rounded_updated_value), UpdatedValue(original_extra_room, rounded_updated_extra_room), UpdatedValue(total_original, round_total_updated))
+
+    # Kostensteigerungen
+    fromYear = payload['generalCostsIncrease']['previous']['year']
+    fromMonth = payload['generalCostsIncrease']['previous']['month']
+    toYear = payload['generalCostsIncrease']['next']['year']
+    toMonth = payload['generalCostsIncrease']['next']['month']
+
+    old_date_formatted, new_date_formatted = buildDatesInChronologicalOrder(
+        fromYear, fromMonth, toYear, toMonth)
+    # Create function to get the last day
+    start_day_date = date_with_different_day(old_date_formatted, 0)
+    end_day_date = date_with_different_day(new_date_formatted, 28)
+
+    return end_day_date
+
+    # Big Result
     return result_mietzins, result_hypothekarzinsen, results_teuerung, result_total
     data = {
         "rent": {
@@ -61,7 +70,7 @@ def compute_rent():
             "from": "06-01-2022",
             "rent": {
                 "original": 1450.00,
-                "updated": 1420.91
+                    "updated": 1420.91
             },
             "extraRooms": {
                 "original": 5.00,
@@ -164,16 +173,17 @@ def teuerung_data(payload, rent):
 
     values_from_sql_query = __get_values_from_sql_query__(
         basis, old_date_formatted_teuerung, new_date_formatted_teuerung)
+    if values_from_sql_query and len(values_from_sql_query) == 2:
+        teuerung_result = __compute_result__(
+            inflationRate, old_date_formatted_teuerung, new_date_formatted_teuerung, values_from_sql_query, rent=None)
+        teuerung_inflation = teuerung_result['inflation']
+        calculation_rent_teuerung = __rent_calculation__(
+            rent, teuerung_result['inflation'])
+        rounded_calculation_rent_teuerung = __rounding_value__(
+            calculation_rent_teuerung)
 
-    teuerung_result = __compute_result__(
-        inflationRate, old_date_formatted_teuerung, new_date_formatted_teuerung, values_from_sql_query, rent=None)
-    teuerung_inflation = teuerung_result['inflation']
-    calculation_rent_teuerung = __rent_calculation__(
-        rent, teuerung_result['inflation'])
-    rounded_calculation_rent_teuerung = __rounding_value__(
-        calculation_rent_teuerung)
-
-    return teuerung_result, teuerung_inflation, rounded_calculation_rent_teuerung
+        return teuerung_result, teuerung_inflation, rounded_calculation_rent_teuerung
+    return frappe.throw('No data found for Inflation')
 
 
 def hypotekarzins_data(payload, rent):
@@ -195,18 +205,26 @@ def hypotekarzins_data(payload, rent):
     get_index_to_date = __get_index_by_date__(
         canton, new_date_formatted_hypo, 1)
 
-    from_date_interest = get_index_from_date[0].interest
-    to_date_interest = get_index_to_date[0].interest
+    if len(get_index_from_date and get_index_to_date) == 1:
 
-    rent_pourcentage_change = __rent_pourcentage_calculation__(
-        from_date_interest, to_date_interest)
+        from_date_interest = get_index_from_date[0].interest
+        to_date_interest = get_index_to_date[0].interest
 
-    calculation_rent_hypo = __rent_calculation__(rent, rent_pourcentage_change)
-    rounded_calculation_rent_hypo = __rounding_value__(calculation_rent_hypo)
-    return old_date_formatted_hypo, new_date_formatted_hypo, from_date_interest, to_date_interest, rent_pourcentage_change, rounded_calculation_rent_hypo
+        rent_pourcentage_change = __rent_pourcentage_calculation__(
+            from_date_interest, to_date_interest)
+
+        calculation_rent_hypo = __rent_calculation__(
+            rent, rent_pourcentage_change)
+        rounded_calculation_rent_hypo = __rounding_value__(
+            calculation_rent_hypo)
+        return old_date_formatted_hypo, new_date_formatted_hypo, from_date_interest, to_date_interest, rent_pourcentage_change, rounded_calculation_rent_hypo
+
+    return frappe.throw('No Data for HypoReference')
 
 
 def __rent_calculation__(rent, rent_pourcentage_change):
     return rent * rent_pourcentage_change / 100
 
-# Get the Hypothekarzinsen result here
+
+class CustomException(Exception):
+    """ my custom exception class """
