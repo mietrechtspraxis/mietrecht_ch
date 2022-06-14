@@ -1,8 +1,12 @@
+from calendar import calendar
+from datetime import datetime
+from hashlib import new
 import json
+from xml.dom import ValidationErr
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
-from mietrecht_ch.utils.dateUtils import DATE_FORMAT, buildDatesInChronologicalOrder
+from mietrecht_ch.utils.dateUtils import DATE_FORMAT, buildDatesInChronologicalOrder, date_with_month_ahead
 from mietrecht_ch.mietrecht_ch.doctype.teuerung.api import __get_values_from_sql_query__, __compute_result__
 from mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api import __get_index_by_date__
 from mietrecht_ch.models.rent import CalculationValue, Rent, UpdatedValue
@@ -14,58 +18,24 @@ from mietrecht_ch.utils.hyporeferenzzinsUtils import __rent_pourcentage_calculat
 def compute_rent():
 
     payload = json.loads(frappe.request.data)
-    result = []
     rent = payload['rent']['rent']
 
-    # Hypothekarzinsen
-    fromYear = payload['hypoReference']['previous']['year']
-    fromMonth = payload['hypoReference']['previous']['month']
-    toYear = payload['hypoReference']['next']['year']
-    toMonth = payload['hypoReference']['next']['month']
-    canton: str = 'CH'
+    test = bool(False)
 
-    old_date_formatted_hypo, new_date_formatted_hypo = buildDatesInChronologicalOrder(
-        fromYear, fromMonth, toYear, toMonth)
-
-    # get data based on the old date
-    get_index_from_date = __get_index_by_date__(
-        canton, old_date_formatted_hypo, 1)
-    # get data based on the new date
-    get_index_to_date = __get_index_by_date__(
-        canton, new_date_formatted_hypo, 1)
-
-    from_date_interest = get_index_from_date[0].interest
-    to_date_interest = get_index_to_date[0].interest
-
-    rent_pourcentage_change = __rent_pourcentage_calculation__(
-        from_date_interest, to_date_interest)
-
-    calculation_rent_hypo = __rent_calculation__(rent, rent_pourcentage_change)
+    if test == bool(False):
+        return {'Error': 'Not Good'}
+    else:
+        pass
+    # hypoReference
+    old_date_formatted_hypo, new_date_formatted_hypo, from_date_interest, to_date_interest, rent_pourcentage_change, rounded_calculation_rent_hypo = hypotekarzins_data(
+        payload, rent)
 
     result_hypothekarzinsen = CalculationValue(
-        from_date_interest, to_date_interest, rent_pourcentage_change, calculation_rent_hypo)
+        from_date_interest, to_date_interest, rent_pourcentage_change, rounded_calculation_rent_hypo)
 
-    # Teuerung
-    fromYear = payload['inflation']['previous']['year']
-    fromMonth = payload['inflation']['previous']['month']
-    toYear = payload['inflation']['next']['year']
-    toMonth = payload['inflation']['next']['month']
-    basis = payload['inflation']['basis']
-    inflationRate: int = 100
-
-    old_date_formatted_teuerung, new_date_formatted_teuerung = buildDatesInChronologicalOrder(
-        fromYear, fromMonth, toYear, toMonth)
-
-    values_from_sql_query = __get_values_from_sql_query__(
-        basis, old_date_formatted_teuerung, new_date_formatted_teuerung)
-
-    teuerung_result = __compute_result__(
-        inflationRate, old_date_formatted_teuerung, new_date_formatted_teuerung, values_from_sql_query, rent=None)
-    teuerung_inflation = teuerung_result['inflation']
-    calculation_rent_teuerung = __rent_calculation__(
-        rent, teuerung_result['inflation'])
-    rounded_calculation_rent_teuerung = __rounding_value__(
-        calculation_rent_teuerung)
+    # Inflation
+    teuerung_result, teuerung_inflation, rounded_calculation_rent_teuerung = teuerung_data(
+        payload, rent)
 
     results_teuerung = CalculationValue(
         teuerung_result['oldIndex']['value'], teuerung_result['newIndex']['value'], teuerung_inflation, rounded_calculation_rent_teuerung)
@@ -74,22 +44,17 @@ def compute_rent():
     # total in percent from all calculation
     total_in_percent = teuerung_inflation + rent_pourcentage_change
     # total in sfr from all calculation
-    total_in_sfr = calculation_rent_hypo + rounded_calculation_rent_teuerung
+    total_in_sfr = rounded_calculation_rent_hypo + rounded_calculation_rent_teuerung
 
-    # Mietzins
-    original_rent = rent
-    rent_updated_value = rent + total_in_sfr
+    result_total = CalculationValue('', '', total_in_percent, total_in_sfr)
 
-    original_extra_room = payload['rent']['extraRoom']
-    updated_extra_room = original_extra_room + total_in_sfr
+    # Rent
+    since_date, from_date, original_rent, rounded_updated_value, original_extra_room, rounded_updated_extra_room, total_original, round_total_updated = mietzins_data(
+        payload, rent, old_date_formatted_hypo, new_date_formatted_hypo, total_in_sfr)
 
-    total_original = rent + original_extra_room
-    total_updated = rent_updated_value + updated_extra_room
-    round_total_updated = __rounding_value__(total_updated)
-
-    result_mietzins = Rent(old_date_formatted_hypo, new_date_formatted_hypo, UpdatedValue(
-        original_rent, rent_updated_value), UpdatedValue(original_extra_room, updated_extra_room), UpdatedValue(total_original, round_total_updated))
-    return result_hypothekarzinsen, results_teuerung, result_mietzins,
+    result_mietzins = Rent(since_date, from_date, UpdatedValue(
+        original_rent, rounded_updated_value), UpdatedValue(original_extra_room, rounded_updated_extra_room), UpdatedValue(total_original, round_total_updated))
+    return result_mietzins, result_hypothekarzinsen, results_teuerung, result_total
     data = {
         "rent": {
             "since": "01-01-2022",
@@ -164,6 +129,81 @@ def compute_rent():
         payload,
         [calculatorResult]
     )
+
+
+def mietzins_data(payload, rent, old_date_formatted_hypo, new_date_formatted_hypo, total_in_sfr):
+    # Mietzins
+    since_date = old_date_formatted_hypo
+    from_date = date_with_month_ahead(new_date_formatted_hypo, 1)
+
+    original_rent = rent
+    rent_updated_value = rent + total_in_sfr
+    rounded_updated_value = __rounding_value__(rent_updated_value)
+
+    original_extra_room = payload['rent']['extraRoom']
+    updated_extra_room = original_extra_room + total_in_sfr
+    rounded_updated_extra_room = __rounding_value__(updated_extra_room)
+
+    total_original = rent + original_extra_room
+    total_updated = rent_updated_value + updated_extra_room
+    round_total_updated = __rounding_value__(total_updated)
+    return since_date, from_date, original_rent, rounded_updated_value, original_extra_room, rounded_updated_extra_room, total_original, round_total_updated
+
+
+def teuerung_data(payload, rent):
+    # Teuerung
+    fromYear = payload['inflation']['previous']['year']
+    fromMonth = payload['inflation']['previous']['month']
+    toYear = payload['inflation']['next']['year']
+    toMonth = payload['inflation']['next']['month']
+    basis = payload['inflation']['basis']
+    inflationRate: int = 100
+
+    old_date_formatted_teuerung, new_date_formatted_teuerung = buildDatesInChronologicalOrder(
+        fromYear, fromMonth, toYear, toMonth)
+
+    values_from_sql_query = __get_values_from_sql_query__(
+        basis, old_date_formatted_teuerung, new_date_formatted_teuerung)
+
+    teuerung_result = __compute_result__(
+        inflationRate, old_date_formatted_teuerung, new_date_formatted_teuerung, values_from_sql_query, rent=None)
+    teuerung_inflation = teuerung_result['inflation']
+    calculation_rent_teuerung = __rent_calculation__(
+        rent, teuerung_result['inflation'])
+    rounded_calculation_rent_teuerung = __rounding_value__(
+        calculation_rent_teuerung)
+
+    return teuerung_result, teuerung_inflation, rounded_calculation_rent_teuerung
+
+
+def hypotekarzins_data(payload, rent):
+    # Hypothekarzinsen
+
+    fromYear = payload['hypoReference']['previous']['year']
+    fromMonth = payload['hypoReference']['previous']['month']
+    toYear = payload['hypoReference']['next']['year']
+    toMonth = payload['hypoReference']['next']['month']
+    canton: str = 'CH'
+
+    old_date_formatted_hypo, new_date_formatted_hypo = buildDatesInChronologicalOrder(
+        fromYear, fromMonth, toYear, toMonth)
+
+    # get data based on the old date
+    get_index_from_date = __get_index_by_date__(
+        canton, old_date_formatted_hypo, 1)
+    # get data based on the new date
+    get_index_to_date = __get_index_by_date__(
+        canton, new_date_formatted_hypo, 1)
+
+    from_date_interest = get_index_from_date[0].interest
+    to_date_interest = get_index_to_date[0].interest
+
+    rent_pourcentage_change = __rent_pourcentage_calculation__(
+        from_date_interest, to_date_interest)
+
+    calculation_rent_hypo = __rent_calculation__(rent, rent_pourcentage_change)
+    rounded_calculation_rent_hypo = __rounding_value__(calculation_rent_hypo)
+    return old_date_formatted_hypo, new_date_formatted_hypo, from_date_interest, to_date_interest, rent_pourcentage_change, rounded_calculation_rent_hypo
 
 
 def __rent_calculation__(rent, rent_pourcentage_change):
