@@ -25,13 +25,11 @@ def date_with_month_ahead(date, number_of_months):
     date_format = '%Y-%m-%d'
     date_object = datetime.strptime(date, date_format)
     new_date = date_object + relativedelta(months=number_of_months)
-    new_date_formatted = new_date.strftime(date_format)
-    return new_date_formatted
+    return new_date.strftime(date_format)
 
 
 def date_with_different_day(date, number_of_day):
     date_format = '%Y-%m-%d'
     date_object = datetime.strptime(date, date_format)
-    new_date = date_object + relativedelta(days=number_of_day)
-    new_date_formatted = new_date.strftime(date_format)
-    return new_date_formatted
+    new_date = date_object + relativedelta(day=number_of_day)
+    return new_date.strftime(date_format)
