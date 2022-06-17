@@ -22,6 +22,7 @@ def __rent_pourcentage_calculation__(first_hypo_value, second_hypo_value):
 
     for i in __custom_range__(min_value, max_value, step):
         rent_mortage_value += __round_hypo_retourned_value__(i)
+        print(rent_mortage_value)
 
     if (first_hypo_value == max_value):
         rent_mortage_value = -rent_mortage_value/(1 + rent_mortage_value)
