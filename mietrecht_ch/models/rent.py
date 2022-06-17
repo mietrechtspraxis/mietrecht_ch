@@ -22,7 +22,7 @@ class CalculationValue(dict):
 
 class CalculatedPercentage(dict):
     def __init__(self, percent: int, amount: int):
-        dict.__init__(percent=percent, amount=amount)
+        dict.__init__(self, percent=percent, amount=amount)
 
 
 class Justification(dict):
