@@ -4,9 +4,16 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "title_de",
+  "title_fr",
   "published",
-  "title",
-  "description"
+  "description_de",
+  "description_fr",
+  "article_old",
+  "article",
+  "pdf",
+  "antique_collection",
+  "should_become_antique_collection"
  ],
  "fields": [
   {
@@ -16,19 +23,57 @@
    "label": "Ver\u00f6ffentlicht"
   },
   {
-   "fieldname": "title",
+   "fieldname": "title_de",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Titel",
+   "label": "Titel (DE)",
    "reqd": 1
   },
   {
-   "fieldname": "description",
+   "fieldname": "title_fr",
+   "fieldtype": "Data",
+   "label": "Title (FR)"
+  },
+  {
+   "fieldname": "description_de",
    "fieldtype": "Text Editor",
-   "label": "Beschreibung"
+   "label": "Beschreibung (DE)",
+   "reqd": 1,
+   "translatable": 1
+  },
+  {
+   "fieldname": "description_fr",
+   "fieldtype": "Text Editor",
+   "label": "Bechreibung (FR)"
+  },
+  {
+   "fieldname": "article_old",
+   "fieldtype": "Data",
+   "label": "Artikel (old)"
+  },
+  {
+   "fieldname": "article",
+   "fieldtype": "Data",
+   "label": "Artikel"
+  },
+  {
+   "fieldname": "pdf",
+   "fieldtype": "Attach",
+   "label": "PDF"
+  },
+  {
+   "fieldname": "antique_collection",
+   "fieldtype": "Data",
+   "label": "Antlichesammlung"
+  },
+  {
+   "default": "0",
+   "fieldname": "should_become_antique_collection",
+   "fieldtype": "Check",
+   "label": "Soll in die Antlichesammlung gehen"
   }
  ],
- "modified": "2022-06-17 16:00:22.785143",
+ "modified": "2022-06-17 16:17:53.007951",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Entscheid",
