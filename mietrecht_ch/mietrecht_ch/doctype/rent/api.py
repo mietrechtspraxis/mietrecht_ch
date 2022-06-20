@@ -29,7 +29,6 @@ def compute_rent():
         from_interest, to_interest, rent_pourcentage_change, final_rent_hypo)
 
     # Inflation
-    # return teuerung_data(payload)
     from_index, at_index, teuerung_inflation, final_rent_calculation, index_basis, affected_date = teuerung_data(
         payload)
     results_teuerung = CalculationValue(
@@ -38,8 +37,7 @@ def compute_rent():
     # Kostensteigerungen
     start_day_date, end_day_date, cost_inflation, cost_value, flat_rate = general_costs_increase_data(
         payload, rent)
-    # return general_costs_increase_data(
-    #     payload, rent)
+
     result_general_cost = CalculationValue(
         start_day_date, end_day_date, cost_inflation, cost_value)
 
@@ -162,9 +160,6 @@ def teuerung_data(payload):
 
     inflationRate: int = 40
 
-    # old_date_formatted_teuerung, new_date_formatted_teuerung = buildDatesInChronologicalOrder(
-    #     fromYear, fromMonth, toYear, toMonth)
-
     old_date_formatted_teuerung = buildFullDate(fromYear, fromMonth)
     new_date_formatted_teuerung = buildFullDate(toYear, toMonth)
 
@@ -222,9 +217,6 @@ def hypotekarzins_data(payload, rent):
     total_original = payload['rent']['rent'] + payload['rent']['extraRoom']
     input_type = payload['hypoReference']['inputType']
     canton: str = 'CH'
-
-    # old_date_formatted_hypo, new_date_formatted_hypo = buildDatesInChronologicalOrder(
-    #     fromYear, fromMonth, toYear, toMonth)
 
     old_date_formatted_hypo = buildFullDate(fromYear, fromMonth)
     new_date_formatted_hypo = buildFullDate(toYear, toMonth)
