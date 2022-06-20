@@ -213,9 +213,9 @@ def __get_values_from_sql_query__(basis, old_date_formatted, new_date_formatted)
 
     sql = execute_query(
         """select base_year, publish_date, value
-            from tabTeuerung 
-            where base_year = '{basis}' and publish_date in ('{old_date_formatted}', '{relevant_date}')
-            order by publish_date {order}"""
+                from tabTeuerung 
+                where base_year = '{basis}' and publish_date in ('{old_date_formatted}', '{relevant_date}')
+                order by publish_date {order}"""
         .format(basis=basis, old_date_formatted=old_date_formatted, relevant_date=relevant_date, new_date_formatted=new_date_formatted, order=order))
     return sql
 
