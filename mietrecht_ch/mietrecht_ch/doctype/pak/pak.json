@@ -1,0 +1,58 @@
+{
+ "autoname": "format:{label}",
+ "creation": "2022-06-23 17:12:27.586007",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "label",
+  "associated_voucher"
+ ],
+ "fields": [
+  {
+   "fieldname": "associated_voucher",
+   "fieldtype": "Data",
+   "label": "zugeh\u00f6riger_gutschein"
+  },
+  {
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "label": "Pak"
+  }
+ ],
+ "modified": "2022-06-24 14:25:08.524309",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "Pak",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Guest",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
