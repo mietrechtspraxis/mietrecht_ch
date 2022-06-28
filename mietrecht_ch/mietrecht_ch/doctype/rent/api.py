@@ -1,5 +1,6 @@
 from datetime import datetime
 import json
+import re
 import frappe
 from mietrecht_ch.models.calculatorMasterResult import CalculatorMasterResult
 from mietrecht_ch.models.calculatorResult import CalculatorResult
@@ -12,6 +13,7 @@ from mietrecht_ch.utils.hyporeferenzzinsUtils import __rent_pourcentage_calculat
 from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
 from mietrecht_ch.utils.inflation import __round_inflation_number__
 from mietrecht_ch.utils.validationUtils import data_validation
+from mietrecht_ch.utils.validationTypeUtils import data_type_validation_int, data_type_validation_str, data_type_validation_float, data_type_validation_float_and_int
 
 
 @frappe.whitelist(allow_guest=True)
@@ -272,6 +274,7 @@ def __rent_calculation__(rent_pourcentage_change, total_original):
 
 
 def __data_validation__(payload):
+
     __canton_validation__(payload)
 
     __rent_validation__(payload)
@@ -296,12 +299,17 @@ def __general_cost_increase_validation__(payload):
 
     data_validation(general_cost_increase, 'generalCostsIncrease')
     data_validation(flat_rate, 'flat_rate')
+    data_type_validation_float(flat_rate, 'flat_rate')
     data_validation(previous, 'previous')
     data_validation(previous_month, 'previous_month')
+    data_type_validation_str(previous_month, 'previous_mont')
     data_validation(previous_year, 'previous_year')
+    data_type_validation_str(previous_year, 'previous_year')
     data_validation(next, 'next')
     data_validation(next_month, 'next_month')
+    data_type_validation_str(next_month, 'next_month')
     data_validation(next_year, 'next_year')
+    data_type_validation_str(next_year, 'next_year')
 
 
 def __inflation_validation__(payload):
@@ -320,15 +328,23 @@ def __inflation_validation__(payload):
 
     data_validation(inflation, 'inflation')
     data_validation(basis, 'basis')
+    data_type_validation_str(basis, 'basis')
     data_validation(input_type, 'inputType')
+    data_type_validation_str(input_type, 'input_type')
     data_validation(previous, 'previous')
     data_validation(previous_month, 'previous_month')
+    data_type_validation_str(previous_month, 'previous_month')
     data_validation(previous_year, 'previous_year')
+    data_type_validation_str(previous_year, 'previous_year')
     data_validation(previous_index, 'previous_index')
+    data_type_validation_float_and_int(previous_index, 'previous_index')
     data_validation(next, 'next')
     data_validation(next_month, 'next_month')
+    data_type_validation_str(next_month, 'next_month')
     data_validation(next_year, 'next_year')
+    data_type_validation_str(next_year, 'next_year')
     data_validation(next_index, 'next_index')
+    data_type_validation_float_and_int(next_index, 'next_index')
 
 
 def __mortgage_validation__(payload):
@@ -347,22 +363,36 @@ def __mortgage_validation__(payload):
     data_validation(mortgage, 'mortgage')
     data_validation(previous_mortgage, 'previous')
     data_validation(previous_month, 'previous_month')
+    data_type_validation_str(previous_month, 'previous_month')
     data_validation(previous_year, 'previous_year')
+    data_type_validation_str(previous_year, 'previous_year')
     data_validation(previous_rate, 'previous_rate')
+    data_type_validation_float(previous_rate, 'previous_rate')
     data_validation(next_mortage, 'next')
     data_validation(next_month, 'next_month')
+    data_type_validation_str(next_month, 'next_mont')
     data_validation(next_year, 'next_year')
+    data_type_validation_str(next_year, 'next_year')
     data_validation(next_rate, 'next_rate')
+    data_type_validation_float(next_rate, 'next_rate')
     data_validation(input_type, 'inputType')
+    data_type_validation_str(input_type, 'input_type')
 
 
 def __rent_validation__(payload):
     # Rent validation
+    rent = payload['rent']
+    rent_rent = rent['rent']
     extra_room = payload['rent']['extraRoom']
-    data_validation(extra_room, 'extraRoom')
+    data_validation(rent, 'rent')
+    data_validation(rent_rent, 'rent_rent')
+    data_type_validation_int(rent_rent, 'rent_rent')
+    data_validation(extra_room, 'extra_room')
+    data_type_validation_int(extra_room, 'extra_room')
 
 
 def __canton_validation__(payload):
     # Canton validation
     canton = payload['canton']
     data_validation(canton, 'canton')
+    data_type_validation_str(canton, 'canton')
