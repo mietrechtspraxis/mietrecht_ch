@@ -299,7 +299,7 @@ def __general_cost_increase_validation__(payload):
 
     data_validation(general_cost_increase, 'generalCostsIncrease')
     data_validation(flat_rate, 'flat_rate')
-    data_type_validation_float(flat_rate, 'flat_rate')
+    data_type_validation_float_and_int(flat_rate, 'flat_rate')
     data_validation(previous, 'previous')
     data_validation(previous_month, 'previous_month')
     data_type_validation_str(previous_month, 'previous_mont')
@@ -336,15 +336,17 @@ def __inflation_validation__(payload):
     data_type_validation_str(previous_month, 'previous_month')
     data_validation(previous_year, 'previous_year')
     data_type_validation_str(previous_year, 'previous_year')
-    data_validation(previous_index, 'previous_index')
-    data_type_validation_float_and_int(previous_index, 'previous_index')
+    if input_type == "manual":
+        data_validation(previous_index, 'previous_index')
+        data_type_validation_float_and_int(previous_index, 'previous_index')
     data_validation(next, 'next')
     data_validation(next_month, 'next_month')
     data_type_validation_str(next_month, 'next_month')
     data_validation(next_year, 'next_year')
     data_type_validation_str(next_year, 'next_year')
-    data_validation(next_index, 'next_index')
-    data_type_validation_float_and_int(next_index, 'next_index')
+    if input_type == "manual":
+        data_validation(next_index, 'next_index')
+        data_type_validation_float_and_int(next_index, 'next_index')
 
 
 def __mortgage_validation__(payload):
@@ -366,15 +368,17 @@ def __mortgage_validation__(payload):
     data_type_validation_str(previous_month, 'previous_month')
     data_validation(previous_year, 'previous_year')
     data_type_validation_str(previous_year, 'previous_year')
-    data_validation(previous_rate, 'previous_rate')
-    data_type_validation_float(previous_rate, 'previous_rate')
+    if input_type == "manual":
+        data_validation(previous_rate, 'previous_rate')
+        data_type_validation_float(previous_rate, 'previous_rate')
     data_validation(next_mortage, 'next')
     data_validation(next_month, 'next_month')
     data_type_validation_str(next_month, 'next_mont')
     data_validation(next_year, 'next_year')
     data_type_validation_str(next_year, 'next_year')
-    data_validation(next_rate, 'next_rate')
-    data_type_validation_float(next_rate, 'next_rate')
+    if input_type == "manual":
+        data_validation(next_rate, 'next_rate')
+        data_type_validation_float(next_rate, 'next_rate')
     data_validation(input_type, 'inputType')
     data_type_validation_str(input_type, 'input_type')
 
