@@ -11,6 +11,7 @@ from mietrecht_ch.utils.inflation import __rounding_value__
 from mietrecht_ch.utils.hyporeferenzzinsUtils import __rent_pourcentage_calculation__
 from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
 from mietrecht_ch.utils.inflation import __round_inflation_number__
+from mietrecht_ch.utils.validationUtils import data_validation
 
 
 @frappe.whitelist(allow_guest=True)
@@ -18,25 +19,28 @@ def compute_rent():
 
     payload = json.loads(frappe.request.data)
     rent = payload['rent']['rent']
+    extra_room = payload['rent']['extraRoom']
     inflation_rate = 100
     canton = 'CH'
 
+    __data_validation__(payload)
+
     # hypoReference
     from_interest, to_interest, rent_pourcentage_change, final_rent_hypo, old_date_formatted_hypo, new_date_formatted_hypo = hypotekarzins_data(
-        payload, rent)
+        payload, extra_room)
 
     result_hypothekarzinsen = CalculationValue(
         from_interest, to_interest, rent_pourcentage_change, final_rent_hypo)
 
     # Inflation
     from_index, at_index, teuerung_inflation, final_rent_calculation, index_basis, affected_date = teuerung_data(
-        payload)
+        payload, extra_room)
     results_teuerung = CalculationValue(
         from_index, at_index, teuerung_inflation, final_rent_calculation)
 
     # Kostensteigerungen
     start_day_date, end_day_date, cost_inflation, cost_value, flat_rate = general_costs_increase_data(
-        payload, rent)
+        payload, extra_room)
 
     result_general_cost = CalculationValue(
         start_day_date, end_day_date, cost_inflation, cost_value)
@@ -51,7 +55,7 @@ def compute_rent():
 
     # Rent
     since_date, from_date, original_rent, rounded_updated_value, original_extra_room, rounded_updated_extra_room, total_original, round_total_updated = mietzins_data(
-        payload, rent, old_date_formatted_hypo, new_date_formatted_hypo, rounded_total_in_percent, rounded_total_in_sfr)
+        payload, rent, old_date_formatted_hypo, new_date_formatted_hypo, rounded_total_in_percent, rounded_total_in_sfr, extra_room)
 
     # return rounded_updated_value
 
@@ -86,13 +90,13 @@ def total_data(rent_pourcentage_change, final_rent_hypo, teuerung_inflation, ren
     return rounded_total_in_percent, rounded_total_in_sfr
 
 
-def general_costs_increase_data(payload, rent):
+def general_costs_increase_data(payload, extra_room):
     fromYear = str(payload['generalCostsIncrease']['previous']['year'])
     fromMonth = str(payload['generalCostsIncrease']['previous']['month'])
     toYear = payload['generalCostsIncrease']['next']['year']
     toMonth = payload['generalCostsIncrease']['next']['month']
     flat_rate = payload['generalCostsIncrease']['flatRate']
-    total_original = payload['rent']['rent'] + payload['rent']['extraRoom']
+    total_original = payload['rent']['rent'] + extra_room
 
     old_date_formatted = buildFullDate(fromYear, fromMonth)
     new_date_formatted = buildFullDate(toYear, toMonth)
@@ -127,12 +131,12 @@ def get_seconds_from_date(date):
     return seconds
 
 
-def mietzins_data(payload, rent, old_date_formatted_hypo, new_date_formatted_hypo, rounded_total_in_percent, rounded_total_in_sfr):
+def mietzins_data(payload, rent, old_date_formatted_hypo, new_date_formatted_hypo, rounded_total_in_percent, rounded_total_in_sfr, extra_room):
     # Mietzins
     since_date = old_date_formatted_hypo
     from_date = date_with_month_ahead(new_date_formatted_hypo, 1)
 
-    original_extra_room = payload['rent']['extraRoom']
+    original_extra_room = extra_room
     updated_extra_room = original_extra_room * rounded_total_in_percent * 0.01
     final_extra_room = updated_extra_room + original_extra_room
     rounded_updated_extra_room = __rounding_value__(final_extra_room)
@@ -148,16 +152,16 @@ def mietzins_data(payload, rent, old_date_formatted_hypo, new_date_formatted_hyp
     return since_date, from_date, original_rent, rounded_updated_value, original_extra_room, rounded_updated_extra_room, total_original, round_total_updated,
 
 
-def teuerung_data(payload):
+def teuerung_data(payload, extra_room):
     # Teuerung
     fromYear = payload['inflation']['previous']['year']
     fromMonth = payload['inflation']['previous']['month']
     toYear = payload['inflation']['next']['year']
     toMonth = payload['inflation']['next']['month']
     basis = payload['inflation']['basis']
-    total_original = payload['rent']['rent'] + payload['rent']['extraRoom']
+    total_original = payload['rent']['rent'] + extra_room
     input_type = payload['inflation']['inputType']
-
+    inflation = payload['inflation']
     inflationRate: int = 40
 
     old_date_formatted_teuerung = buildFullDate(fromYear, fromMonth)
@@ -207,15 +211,16 @@ def __get_data_from_manual_input__(payload, total_original, index_basis, affecte
     return from_index, at_index, teuerung_inflation, final_rent_calculation, index_basis, affected_date
 
 
-def hypotekarzins_data(payload, rent):
+def hypotekarzins_data(payload, extra_room):
     # Hypothekarzinsen
 
     fromYear = payload['hypoReference']['previous']['year']
     fromMonth = payload['hypoReference']['previous']['month']
     toYear = payload['hypoReference']['next']['year']
     toMonth = payload['hypoReference']['next']['month']
-    total_original = payload['rent']['rent'] + payload['rent']['extraRoom']
+    total_original = payload['rent']['rent'] + extra_room
     input_type = payload['hypoReference']['inputType']
+    hypo_reference = payload['hypoReference']
     canton: str = 'CH'
 
     old_date_formatted_hypo = buildFullDate(fromYear, fromMonth)
@@ -264,3 +269,100 @@ def __get_data_hypo_from_search_input__(total_original, canton, old_date_formatt
 
 def __rent_calculation__(rent_pourcentage_change, total_original):
     return total_original * rent_pourcentage_change * 0.01
+
+
+def __data_validation__(payload):
+    __canton_validation__(payload)
+
+    __rent_validation__(payload)
+
+    __mortgage_validation__(payload)
+
+    __inflation_validation__(payload)
+
+    __general_cost_increase_validation__(payload)
+
+
+def __general_cost_increase_validation__(payload):
+    # general cost increase validation
+    general_cost_increase = payload['generalCostsIncrease']
+    flat_rate = general_cost_increase['flatRate']
+    previous = general_cost_increase['previous']
+    previous_month = previous['month']
+    previous_year = previous['year']
+    next = general_cost_increase['next']
+    next_month = next['month']
+    next_year = next['year']
+
+    data_validation(general_cost_increase, 'generalCostsIncrease')
+    data_validation(flat_rate, 'flat_rate')
+    data_validation(previous, 'previous')
+    data_validation(previous_month, 'previous_month')
+    data_validation(previous_year, 'previous_year')
+    data_validation(next, 'next')
+    data_validation(next_month, 'next_month')
+    data_validation(next_year, 'next_year')
+
+
+def __inflation_validation__(payload):
+    # Inflation validation
+    inflation = payload['inflation']
+    basis = inflation['basis']
+    input_type = inflation['inputType']
+    previous = inflation['previous']
+    previous_month = previous['month']
+    previous_year = previous['year']
+    previous_index = previous['index']
+    next = inflation['next']
+    next_month = next['month']
+    next_year = next['year']
+    next_index = next['index']
+
+    data_validation(inflation, 'inflation')
+    data_validation(basis, 'basis')
+    data_validation(input_type, 'inputType')
+    data_validation(previous, 'previous')
+    data_validation(previous_month, 'previous_month')
+    data_validation(previous_year, 'previous_year')
+    data_validation(previous_index, 'previous_index')
+    data_validation(next, 'next')
+    data_validation(next_month, 'next_month')
+    data_validation(next_year, 'next_year')
+    data_validation(next_index, 'next_index')
+
+
+def __mortgage_validation__(payload):
+    # Mortgage validation
+    mortgage = payload['hypoReference']
+    previous_mortgage = mortgage['previous']
+    previous_month = previous_mortgage['month']
+    previous_year = previous_mortgage['year']
+    previous_rate = previous_mortgage['rate']
+    next_mortage = mortgage['next']
+    next_month = next_mortage['month']
+    next_year = next_mortage['year']
+    next_rate = next_mortage['rate']
+    input_type = mortgage['inputType']
+
+    data_validation(mortgage, 'mortgage')
+    data_validation(previous_mortgage, 'previous')
+    data_validation(previous_month, 'previous_month')
+    data_validation(previous_year, 'previous_year')
+    data_validation(previous_rate, 'previous_rate')
+    data_validation(next_mortage, 'next')
+    data_validation(next_month, 'next_month')
+    data_validation(next_year, 'next_year')
+    data_validation(next_rate, 'next_rate')
+    data_validation(input_type, 'inputType')
+
+
+def __rent_validation__(payload):
+    # Rent validation
+    extra_room = payload['rent']['extraRoom']
+    data_validation(extra_room, 'extraRoom')
+
+
+def __canton_validation__(payload):
+    # Canton validation
+    canton = payload['canton']
+    data_validation(canton, 'canton')
