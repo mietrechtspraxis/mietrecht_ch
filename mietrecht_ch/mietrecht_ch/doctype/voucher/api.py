@@ -20,22 +20,19 @@ def get_voucher_informations(**kwargs):
     if voucher_doctype:
         voucher_name = voucher_doctype.name
         associated_pak = voucher_doctype.associated_pak
-        if associated_pak:
-            if email:
-                __save_email_doctype__(email, voucher_doctype)
-            results = {"voucher": voucher_name, "pak": associated_pak}
-            return __calculator_master_result__(params, results)
-        # return non_assigned_pak
-        non_assigned_pak_value = __non_assigned_pak__()
         if email:
             __save_email_doctype__(email, voucher_doctype)
+        if associated_pak:
+            results = {"voucher": voucher_name, "pak": associated_pak}
+            return __calculator_master_result__(params, results)
+        # non assigned pak found
+        non_assigned_pak_value = __non_assigned_pak__()
         __save_associated_pak_to_voucher__(
             voucher_doctype, non_assigned_pak_value)
         # update the relation in the pak table adding the value of the voucher
         __save_data_pak__(voucher_name, non_assigned_pak_value)
         results = {"voucher": voucher_name, "pak": non_assigned_pak_value}
-
-    return __calculator_master_result__(params, results)
+        return __calculator_master_result__(params, results)
 
 
 def __calculator_master_result__(params, results):
