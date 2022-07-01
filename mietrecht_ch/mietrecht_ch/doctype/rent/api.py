@@ -21,7 +21,7 @@ def compute_rent():
 
     payload = json.loads(frappe.request.data)
     rent = payload['rent']['rent']
-    extra_room = payload['rent']['extraRoom']
+    extra_room = __extra_room_validation__(payload)
     inflation_rate = 100
     canton = 'CH'
 
@@ -80,6 +80,14 @@ def compute_rent():
     calculatorResult = CalculatorResult(results, None)
 
     return CalculatorMasterResult(payload, [calculatorResult])
+
+
+def __extra_room_validation__(payload):
+    extra_room = payload['rent']['extraRoom']
+    if extra_room is None:
+        extra_room = 0
+        return extra_room
+    return extra_room
 
 
 def total_data(rent_pourcentage_change, final_rent_hypo, teuerung_inflation, rent_teuerung, cost_inflation, cost_value):
@@ -387,12 +395,9 @@ def __rent_validation__(payload):
     # Rent validation
     rent = payload['rent']
     rent_rent = rent['rent']
-    extra_room = payload['rent']['extraRoom']
     data_validation(rent, 'rent')
     data_validation(rent_rent, 'rent_rent')
     data_type_validation_int(rent_rent, 'rent_rent')
-    data_validation(extra_room, 'extra_room')
-    data_type_validation_int(extra_room, 'extra_room')
 
 
 def __canton_validation__(payload):
