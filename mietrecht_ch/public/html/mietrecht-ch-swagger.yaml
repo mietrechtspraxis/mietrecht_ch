@@ -321,6 +321,7 @@ tags:
   - name: HypoReferenzzins
   - name: LandesIndex
   - name: Wertvermehrende Investitionen
+  - name: Voucher
 paths:
   ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_single_oil_price
   : get:
@@ -973,6 +974,31 @@ paths:
             type: integer
           example: 2010
           description: API Default value is the current year
+      responses:
+        "200":
+          description: In a standardized `APICalculatorResponse`, the `result` property will contain the dataset
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#components/schemas/HypothekarzinsDataset"
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.voucher.api.get_voucher_informations
+  : post:
+      tags:
+        - Voucher
+      summary: Get the data about voucher
+      parameters:
+        - name: voucher
+          required: true
+          in: query
+          schema:
+            type: string
+          example: "RRHF-Q68H-TXYY-F29B-3XKP"
+        - name: email
+          in: query
+          schema:
+            type: string
+          example: example@yourmail.com
       responses:
         "200":
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the dataset
