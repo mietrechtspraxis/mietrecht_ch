@@ -44,7 +44,7 @@ components:
     HypoReferenzzinsDetails:
       type: object
       properties:
-        since: 
+        since:
           type: string
           description: The date when the intrest rate change really occured. Can be null if the change occured at the exact requested date
         date:
@@ -56,18 +56,18 @@ components:
         canton:
           description: The canton the interest rate is requested for. CH stands for National Index
           nullable: true
-          $ref: '#/components/schemas/Canton'
+          $ref: "#/components/schemas/Canton"
     HypoReferenzzinsResult:
       type: object
       properties:
         at:
           nullable: true
           description: The details at the first day of the requested month
-          $ref: '#components/schemas/HypoReferenzzinsDetails'
+          $ref: "#components/schemas/HypoReferenzzinsDetails"
         from:
           nullable: true
           description: The details at another date of the requested month
-          $ref: '#components/schemas/HypoReferenzzinsDetails'
+          $ref: "#components/schemas/HypoReferenzzinsDetails"
     CalculatorResult:
       description: A standardized answer to be displayed in a calculator
       properties:
@@ -90,13 +90,13 @@ components:
           type: array
           description: An array that contains the result and some sub results
           items:
-            $ref: '#components/schemas/CalculatorResult'
+            $ref: "#components/schemas/CalculatorResult"
     APICalculatorResponse:
       description: the basic message returned by the API
       properties:
         message:
           description: An object composed of all the parameters that have been used for the requested
-          $ref: '#components/schemas/CalculatorMasterResult'
+          $ref: "#components/schemas/CalculatorMasterResult"
     KeyValue:
       description: An association between a key and a value
       properties:
@@ -111,7 +111,7 @@ components:
           description: An object composed of all the parameters that have been used for the requested
           type: array
           items:
-            $ref: '#components/schemas/KeyValue'
+            $ref: "#components/schemas/KeyValue"
     LebensdauerGroup:
       description: Describes a `Lebensdauer` group
       properties:
@@ -122,7 +122,7 @@ components:
           type: array
           description: All the 'Lebensdauer` object belonging to the group'
           items:
-            $ref: '#components/schemas/LebensdauerObject'
+            $ref: "#components/schemas/LebensdauerObject"
     LebensdauerRemedy:
       description: Describes the price that has to been covered
       properties:
@@ -143,12 +143,12 @@ components:
           description: All the 'Lebensdauer` object seen as children of the object
           items:
             type: object
-            $ref: '#components/schemas/LebensdauerObject'
+            $ref: "#components/schemas/LebensdauerObject"
         lifetime:
           type: string
         remedy:
           type: object
-          $ref: '#components/schemas/LebensdauerRemedy'
+          $ref: "#components/schemas/LebensdauerRemedy"
         comment:
           type: string
     HypothekarzinsDataset:
@@ -182,10 +182,10 @@ components:
       properties:
         oldIndex:
           type: object
-          $ref: '#components/schemas/TeuerungIndex'
+          $ref: "#components/schemas/TeuerungIndex"
         newIndex:
           type: object
-          $ref: '#components/schemas/TeuerungIndex'
+          $ref: "#components/schemas/TeuerungIndex"
         inflation:
           type: number
     TeuerungLastRelevantIndexResult:
@@ -197,6 +197,119 @@ components:
           type: number
         fromYear:
           type: number
+    UpdatedValue:
+      description: Return UpdatedValue structure
+      properties:
+        original:
+          type: number
+        updated:
+          type: number
+    Rent:
+      description: Return Rent structure
+      properties:
+        _since:
+          type: string
+        _from:
+          type: string
+        rent:
+          type: object
+          $ref: "#components/schemas/UpdatedValue"
+        extraRoom:
+          type: object
+          $ref: "#components/schemas/UpdatedValue"
+        total:
+          type: object
+          $ref: "#components/schemas/UpdatedValue"
+    CalculationValue:
+      description: Return CalculationValue structure
+      properties:
+        _from:
+          type: number
+        at:
+          type: number
+        percent:
+          type: number
+        amount:
+          type: number
+    CalculatedPercentage:
+      description: Return CalculatedPercentage structure
+      properties:
+        percent:
+          type: number
+        amount:
+          type: number
+    Justification:
+      description: Return Justification structure
+      properties:
+        mortgageInterest:
+          type: object
+          $ref: "#components/schemas/CalculationValue"
+        inflation:
+          type: object
+          $ref: "#components/schemas/CalculationValue"
+        constIncrease:
+          type: object
+          $ref: "#components/schemas/CalculationValue"
+        valueAdded:
+          type: object
+          $ref: "#components/schemas/CalculatedPercentage"
+        reserve:
+          type: object
+          $ref: "#components/schemas/CalculatedPercentage"
+        total:
+          type: object
+          $ref: "#components/schemas/CalculatedPercentage"
+    MortgageInterestRate:
+      description: Return MortgageInterestRate structure
+      properties:
+        requestDate:
+          type: string
+        canton:
+          type: string
+        value:
+          type: int
+    Inflation:
+      description: Return inflation structure
+      properties:
+        requestDate:
+          type: string
+        percent:
+          type: number
+        value:
+          type: number
+        affectedDate:
+          type: string
+    CostIncrease:
+      description: Return CostIncrease structure
+      properties:
+        flatRate:
+          type: number
+        countedUpTo:
+          type: string
+    CostLevel:
+      description: Return CostLevel structure
+      properties:
+        mortgageInterestRate:
+          type: object
+          $ref: "#components/schemas/MortgageInterestRate"
+        inflation:
+          type: object
+          $ref: "#components/schemas/Inflation"
+        costIncrease:
+          type: object
+          $ref: "#components/schemas/CostIncrease"
+    RentCalculatorResult:
+      description: Return RentCalculatorResult structure
+      properties:
+        rent:
+          type: object
+          $ref: "#components/schemas/Rent"
+        inflation:
+          type: object
+          $ref: "#components/schemas/Inflation"
+        costLevel:
+          type: object
+          $ref: "#components/schemas/CostLevel"
 tags:
   - name: Healthcheck
   - name: Heizölpreise
@@ -207,9 +320,10 @@ tags:
   - name: Aktualisierungsdaten
   - name: HypoReferenzzins
   - name: LandesIndex
+  - name: Wertvermehrende Investitionen
 paths:
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_single_oil_price:
-    get:
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_single_oil_price
+  : get:
       tags:
         - Heizölpreise
       summary: Get Sum For Month
@@ -220,24 +334,24 @@ paths:
           in: query
           schema:
             type: integer
-          example: '1'
+          example: "1"
         - name: year
           in: query
           schema:
             type: integer
-          example: '1998'
+          example: "1998"
         - name: quantity
           in: query
           schema:
             type: string
           example: 800to1500
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json: {}
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_multiple_oil_price:
-    get:
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_multiple_oil_price
+  : get:
       tags:
         - Heizölpreise
       summary: Get Multpile Oil Price
@@ -251,37 +365,37 @@ paths:
           in: query
           schema:
             type: integer
-          example: '10'
+          example: "10"
         - name: fromYear
           in: query
           schema:
             type: integer
-          example: '1997'
+          example: "1997"
         - name: toMonth
           in: query
           schema:
             type: integer
-          example: '12'
+          example: "12"
         - name: toYear
           in: query
           schema:
             type: integer
-          example: '1998'
+          example: "1998"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json: {}
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_last_data_date:
-    get:
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_last_data_date
+  : get:
       tags:
         - Heizölpreise
       summary: Get date of the last data we have in Database
       security:
         - noauthAuth: []
       responses:
-        '200':
-          description: In standard API response, the message contains the date of the last data available 
+        "200":
+          description: In standard API response, the message contains the date of the last data available
           content:
             application/json:
               schema:
@@ -298,12 +412,12 @@ paths:
       security:
         - noauthAuth: []
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json: {}
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_month:
-    get:
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_month
+  : get:
       tags:
         - Heizgradtagzahlen
       summary: Get Sum For Month
@@ -314,24 +428,24 @@ paths:
           in: query
           schema:
             type: integer
-          example: '4'
+          example: "4"
         - name: year
           in: query
           schema:
             type: integer
-          example: '2015'
+          example: "2015"
         - name: location
           in: query
           schema:
             type: string
           example: bern_zollikofen
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json: {}
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_period:
-    get:
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_period
+  : get:
       tags:
         - Heizgradtagzahlen
       summary: Get Sum For Period
@@ -342,12 +456,12 @@ paths:
           in: query
           schema:
             type: integer
-          example: '12'
+          example: "12"
         - name: fromYear
           in: query
           schema:
             type: integer
-          example: '2021'
+          example: "2021"
         - name: location
           in: query
           schema:
@@ -357,19 +471,19 @@ paths:
           in: query
           schema:
             type: integer
-          example: '3'
+          example: "3"
         - name: toYear
           in: query
           schema:
             type: integer
-          example: '2021'
+          example: "2021"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json: {}
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_list_for_period:
-    get:
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_list_for_period
+  : get:
       tags:
         - Heizgradtagzahlen
       summary: Get List For Period
@@ -380,12 +494,12 @@ paths:
           in: query
           schema:
             type: integer
-          example: '3'
+          example: "3"
         - name: fromYear
           in: query
           schema:
             type: integer
-          example: '2017'
+          example: "2017"
         - name: location
           in: query
           schema:
@@ -395,27 +509,27 @@ paths:
           in: query
           schema:
             type: integer
-          example: '6'
+          example: "6"
         - name: toYear
           in: query
           schema:
             type: integer
-          example: '2017'
+          example: "2017"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json: {}
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_last_data_date:
-    get:
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_last_data_date
+  : get:
       tags:
         - Heizgradtagzahlen
       summary: Get date of the last data we have in Database
       security:
         - noauthAuth: []
       responses:
-        '200':
-          description: In standard API response, the message contains the date of the last data available 
+        "200":
+          description: In standard API response, the message contains the date of the last data available
           content:
             application/json:
               schema:
@@ -432,7 +546,7 @@ paths:
       security:
         - noauthAuth: []
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json: {}
@@ -442,15 +556,15 @@ paths:
         - Lebensdauer Gruppen
       summary: Get All the Lebensdauer Groups to populate drop down boxes
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
                 type: object
-                $ref: '#components/schemas/APIKeyValueResponse'              
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauerobjekte.api.get_all_by_group:
-    get:
+                $ref: "#components/schemas/APIKeyValueResponse"
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauerobjekte.api.get_all_by_group
+  : get:
       tags:
         - Lebensdauer
       summary: Gets all the Lebensdauer Object belonging to the given group
@@ -462,16 +576,16 @@ paths:
             type: string
           example: bad_dusche_wc
       responses:
-        '200':
+        "200":
           description: Wrapped in a normal `CalculatorResultResponse`, in the `result` property will be present a list of the object belonging to the given group.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#components/schemas/LebensdauerGroup'
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauerobjekte.api.get_all_by_keyword:
-    get:
+                  $ref: "#components/schemas/LebensdauerGroup"
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauerobjekte.api.get_all_by_keyword
+  : get:
       tags:
         - Lebensdauer
       summary: Gets all the Lebensdauer Object belonging to the given keyword.
@@ -482,26 +596,26 @@ paths:
             type: string
           example: warme
       responses:
-        '200':
+        "200":
           description: Wrapped in a normal `CalculatorResultResponse`, in the `result` property will be present a list of the object belonging to the given group.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#components/schemas/LebensdauerGroup'
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.aktualisierungsdaten.api.get_all:
-    get:
+                  $ref: "#components/schemas/LebensdauerGroup"
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.aktualisierungsdaten.api.get_all
+  : get:
       tags:
         - Aktualisierungsdaten
       summary: Get All
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json: {}
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_index_by_month:
-    get:
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_index_by_month
+  : get:
       tags:
         - HypoReferenzzins
       summary: Get an interest for a specific month
@@ -522,18 +636,47 @@ paths:
           in: query
           schema:
             type: string
-            enum: ['CH', 'AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH']
-          example: 'BS'
+            enum:
+              [
+                "CH",
+                "AG",
+                "AI",
+                "AR",
+                "BE",
+                "BL",
+                "BS",
+                "FR",
+                "GE",
+                "GL",
+                "GR",
+                "JU",
+                "LU",
+                "NE",
+                "NW",
+                "OW",
+                "SG",
+                "SH",
+                "SO",
+                "SZ",
+                "TG",
+                "TI",
+                "UR",
+                "VD",
+                "VS",
+                "ZG",
+                "ZH",
+              ]
+          example: "BS"
       responses:
-        '200':
+        "200":
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `HypoReferenzzinsResult`
           content:
             application/json:
               schema:
                 type: object
-                $ref: '#components/schemas/HypoReferenzzinsResult'
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_mortgage_rate_table:
-    get:
+                $ref: "#components/schemas/HypoReferenzzinsResult"
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_mortgage_rate_table
+  : get:
       tags:
         - HypoReferenzzins
       summary: Get all interest for a specific canton
@@ -542,18 +685,47 @@ paths:
           in: query
           schema:
             type: string
-            enum: ['CH', 'AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH']
-          example: 'BS'
+            enum:
+              [
+                "CH",
+                "AG",
+                "AI",
+                "AR",
+                "BE",
+                "BL",
+                "BS",
+                "FR",
+                "GE",
+                "GL",
+                "GR",
+                "JU",
+                "LU",
+                "NE",
+                "NW",
+                "OW",
+                "SG",
+                "SH",
+                "SO",
+                "SZ",
+                "TG",
+                "TI",
+                "UR",
+                "VD",
+                "VS",
+                "ZG",
+                "ZH",
+              ]
+          example: "BS"
       responses:
-        '200':
+        "200":
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`
           content:
             application/json:
               schema:
                 type: object
-                $ref: '#components/schemas/APICalculatorResponse'
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_interest_value_from_date:
-    get:
+                $ref: "#components/schemas/APICalculatorResponse"
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_interest_value_from_date
+  : get:
       tags:
         - HypoReferenzzins
       summary: Get an interest for a specific month
@@ -583,29 +755,29 @@ paths:
             type: number
           example: 2015
       responses:
-        '200':
+        "200":
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorMasterResult`
           content:
             application/json:
               schema:
                 type: object
-                $ref: '#components/schemas/APICalculatorResponse'
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_last_five_indexes:
-    get:
+                $ref: "#components/schemas/APICalculatorResponse"
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_last_five_indexes
+  : get:
       tags:
         - LandesIndex
       summary: Get last 5 months of the consumer price index
       responses:
-        '200':
+        "200":
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`
           content:
             application/json:
               schema:
                 type: object
-                $ref: '#components/schemas/APICalculatorResponse'
+                $ref: "#components/schemas/APICalculatorResponse"
 
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_inflation_for_period:
-    get:
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_inflation_for_period
+  : get:
       tags:
         - LandesIndex
       summary: Get inflation for specific period
@@ -622,39 +794,39 @@ paths:
           in: query
           schema:
             type: number
-          example: 85      
+          example: 85
         - name: fromMonth
           required: true
           in: query
           schema:
             type: number
-          example: 5     
+          example: 5
         - name: fromYear
           required: true
           in: query
           schema:
             type: number
-          example: 1993    
+          example: 1993
         - name: toMonth
           required: true
           in: query
           schema:
             type: number
-          example: 6    
+          example: 6
         - name: toYear
           required: true
           in: query
           schema:
             type: number
-          example: 2015   
+          example: 2015
       responses:
-        '200':
+        "200":
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`
           content:
             application/json:
               schema:
                 type: object
-                $ref: '#components/schemas/APICalculatorResponse'
+                $ref: "#components/schemas/APICalculatorResponse"
 
   /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_basis_by_index:
     get:
@@ -668,16 +840,16 @@ paths:
             type: number
           example: 103
       responses:
-        '200':
+        "200":
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`
           content:
             application/json:
               schema:
                 type: object
-                $ref: '#components/schemas/APICalculatorResponse'
+                $ref: "#components/schemas/APICalculatorResponse"
 
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_last_index_from_basis:
-    get:
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_last_index_from_basis
+  : get:
       tags:
         - LandesIndex
       summary: Get the last relevant index from basis
@@ -699,13 +871,13 @@ paths:
             type: number
           example: 1993
       responses:
-        '200':
+        "200":
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the result complient to the schema `CalculatorResults`
           content:
             application/json:
               schema:
                 type: object
-                $ref: '#components/schemas/APICalculatorResponse'
+                $ref: "#components/schemas/APICalculatorResponse"
 
   /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_all_basis:
     get:
@@ -713,13 +885,63 @@ paths:
         - LandesIndex
       summary: Get All
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
                 type: object
-                $ref: '#components/schemas/APIKeyValueResponse'   
+                $ref: "#components/schemas/APIKeyValueResponse"
+  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_rent_adjustment_data
+  : get:
+      tags:
+        - LandesIndex
+      summary: Get rent adjustment data
+      parameters:
+        - name: rent
+          in: query
+          schema:
+            type: number
+            example: 2500
+        - name: basis
+          in: query
+          schema:
+            type: string
+            format: date
+            example: "1993-05-01"
+        - name: inflationRate
+          in: query
+          schema:
+            type: number
+            example: 100
+        - name: fromMonth
+          in: query
+          schema:
+            type: number
+            example: 2
+        - name: fromYear
+          in: query
+          schema:
+            type: number
+            example: 2011
+        - name: toMonth
+          in: query
+          schema:
+            type: number
+            example: 6
+        - name: toYear
+          in: query
+          schema:
+            type: number
+            example: 2009
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#components/schemas/CalculatorMasterResult"
 
   /api/method/mietrecht_ch.mietrecht_ch.doctype.hypothekarzins.api.get_dataset:
     get:
@@ -752,10 +974,196 @@ paths:
           example: 2010
           description: API Default value is the current year
       responses:
-        '200':
+        "200":
           description: In a standardized `APICalculatorResponse`, the `result` property will contain the dataset
           content:
             application/json:
               schema:
                 type: object
-                $ref: '#components/schemas/HypothekarzinsDataset'
+                $ref: "#components/schemas/HypothekarzinsDataset"
+
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.rent.api.compute_rent:
+    post:
+      tags:
+        - Wertvermehrende Investitionen
+      summary: Compute all the data for the Wertvermehrende Investitionen calculator
+      parameters:
+        - name: canton
+          in: query
+          schema:
+            type: string
+            enum:
+              [
+                "CH",
+                "AG",
+                "AI",
+                "AR",
+                "BE",
+                "BL",
+                "BS",
+                "FR",
+                "GE",
+                "GL",
+                "GR",
+                "JU",
+                "LU",
+                "NE",
+                "NW",
+                "OW",
+                "SG",
+                "SH",
+                "SO",
+                "SZ",
+                "TG",
+                "TI",
+                "UR",
+                "VD",
+                "VS",
+                "ZG",
+                "ZH",
+              ]
+            example: "BS"
+            description: Canton desired
+          example: "BS"
+        - name: rent
+          in: query
+          schema:
+            type: number
+          example: 2500
+          description: Amount of the rent
+        - name: extraRoom
+          in: query
+          schema:
+            type: number
+          example: 250
+          default: 0
+          description: Amount of the any extra room
+        - name: month
+          in: query
+          schema:
+            type: number
+          example: 3
+          description: month number which mean march for the starting date
+        - name: year
+          in: query
+          schema:
+            type: number
+          example: 2022
+          description: Year desired for the starting date
+        - name: previousRate
+          in: query
+          schema:
+            type: float
+          example: 1.75
+          description: Only used if manual search
+        - name: month
+          in: query
+          schema:
+            type: number
+          example: 6
+          description: month number which mean june for the ending date
+        - name: year
+          in: query
+          schema:
+            type: number
+          example: 2021
+          description: Year desired for the ending date
+        - name: nextRate
+          in: query
+          schema:
+            type: float
+          example: 1.25
+          description: Only used if manual search
+        - name: inputTypeMortgage
+          in: query
+          schema:
+            type: string
+          default: "search"
+          description: The method choosen from the user
+        - name: basis
+          in: query
+          schema:
+            type: string($date)
+          example: "2000-05-01"
+          description: The basis date used for the calculation
+        - name: inputTypeInflation
+          in: query
+          schema:
+            type: string
+          example: "search"
+          default: "search"
+          description: The method choosen from the user
+        - name: previousInflationMonth
+          in: query
+          schema:
+            type: number
+          example: 4
+          description: month number which mean april for the starting date
+        - name: previousInflationYear
+          in: query
+          schema:
+            type: number
+          example: 2021
+          description: Year desired for the starting date
+        - name: previousInflationIndex
+          in: query
+          schema:
+            type: float | int
+          example: 109
+          description: index used if already known by the user
+        - name: nextInflationMonth
+          in: query
+          schema:
+            type: number
+          example: 7
+          description: month number which mean april for the ending date
+        - name: nextInflationYear
+          in: query
+          schema:
+            type: number
+          example: 2020
+          description: Year desired for the ending date
+        - name: nextInflationIndex
+          in: query
+          schema:
+            type: float | int
+          example: 108.1
+          description: index used if already known by the user
+        - name: flatRate
+          in: query
+          schema:
+            type: float
+          example: 0.50
+          description: flat rate of the general cost
+        - name: generalCostPreviousMonth
+          in: query
+          schema:
+            type: number
+          example: 3
+          description: month number which mean march for the starting date
+        - name: generalCostPreviousYear
+          in: query
+          schema:
+            type: number
+          example: 2021
+          description: Year desired for the starting date
+        - name: generalCostNextMonth
+          in: query
+          schema:
+            type: number
+          example: 6
+          description: month number which mean june for the ending date
+        - name: generalCostNextYear
+          in: query
+          schema:
+            type: number
+          example: 2019
+          description: Year desired for the ending date
+      responses:
+        "200":
+          description: In a standardized `RentCalculatorResult`, the `result` property will contain the result complient to the schema `CalculatorMasterResult`
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#components/schemas/CalculatorMasterResult"

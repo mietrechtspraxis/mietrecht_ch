@@ -32,7 +32,7 @@ class Justification(dict):
 
 
 class MortgageInterestRate(dict):
-    def __init__(self, requestedDate: str, canton: int, value: int):
+    def __init__(self, requestedDate: str, canton: str, value: int):
         dict.__init__(self, requestedDate=requestedDate,
                       canton=canton, value=value)
 
