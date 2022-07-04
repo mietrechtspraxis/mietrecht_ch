@@ -1,7 +1,10 @@
 from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
 
-
-def data_validation(value, input: str):
+def data_empty_value(value, input: str):
     if value is None or value is "":
         raise BadRequestException(
-            'No value provided for {input}'.format(input=input))
+            __empty_value_message__(input))
+
+
+def __empty_value_message__(input):
+    return 'No value provided for {input}.'.format(input=input)
