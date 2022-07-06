@@ -61,7 +61,3 @@ def __non_assigned_pak__():
         """select * from tabPak where associated_voucher = '' or associated_voucher is null ORDER BY label DESC LIMIT 1""")
     non_assigned_pak_value = non_assigned_pak[0]['label']
     return non_assigned_pak_value
-
-
-def update_doctype(doctype: str, doctype_name: str, options: dict):
-    return frappe.db.set_value(doctype, doctype_name, options)

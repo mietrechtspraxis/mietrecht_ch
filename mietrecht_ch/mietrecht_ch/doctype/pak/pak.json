@@ -12,7 +12,9 @@
   {
    "fieldname": "associated_voucher",
    "fieldtype": "Data",
-   "label": "zugeh\u00f6riger_gutschein"
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Zugeh\u00f6riger Gutschein"
   },
   {
    "fieldname": "label",
@@ -20,7 +22,7 @@
    "label": "Pak"
   }
  ],
- "modified": "2022-06-24 14:25:08.524309",
+ "modified": "2022-07-06 09:06:36.050093",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Pak",
