@@ -12,7 +12,7 @@ def healthcheck():
         "code": 200,
         "message": "Alive",
         "timeStamp": dt_string,
-        "version": "0.0.3"
+        "version": "0.0.3-ebook"
         }
     return answer
 
