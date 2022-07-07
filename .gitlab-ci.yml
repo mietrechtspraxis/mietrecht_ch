@@ -14,5 +14,5 @@ deploy-job:
     - "curl -X POST \
      -F token=$ERPNEXT_DOCKER_PUBLISH_TRIGGER_TOKEN \
      -F 'variables[backend_version]='$APP_VERSION.$CI_COMMIT_SHORT_SHA \
-     -F 'variables[backend_branch]='$CI_COMMIT_BRANCH' \
+     -F 'variables[backend_branch]='$CI_COMMIT_BRANCH \
      -F ref=develop https://gitlab.liip.ch/api/v4/projects/2781/trigger/pipeline"
