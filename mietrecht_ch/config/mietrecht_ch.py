@@ -189,5 +189,23 @@ def get_data():
                     "link": _("Form/Stichworte/New Stichworte 1")
                 }
             ]
+        },
+        {
+            "label": _("PAK"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "Voucher",
+                    "label": _("Voucher Liste"),
+                    "description": _("Voucher Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Pak",
+                    "label": _("Pak Liste"),
+                    "description": _("Pak Liste")
+                }
+            ]
         }
     ]
