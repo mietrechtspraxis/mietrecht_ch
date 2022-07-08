@@ -12,8 +12,8 @@ def healthcheck():
         "code": 200,
         "message": "Alive",
         "timeStamp": dt_string,
-        "version": "0.0.3",
-        "branch": "develop"
+        "version": "0.0.5",
+        "branch": "ebook"
         }
     return answer
 
