@@ -1,0 +1,54 @@
+{
+ "autoname": "title",
+ "creation": "2022-07-13 10:56:29.678988",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "file",
+  "mp_book",
+  "mp_book_pages"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Titel",
+   "reqd": 1
+  },
+  {
+   "fieldname": "file",
+   "fieldtype": "Attach",
+   "in_list_view": 1,
+   "label": "PDF",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mp_book",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "MP Book Edition",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mp_book_pages",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "MP Book Pages",
+   "reqd": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2022-07-13 10:56:29.678988",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "Entscheide PDF",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
