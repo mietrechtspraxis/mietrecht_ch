@@ -36,8 +36,8 @@ app_license = "AGPL"
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 doctype_js = {
-	"Heizgradtagzahlen" : "common/javascript/doctype_utils.js",
-	"Heizolpreise" : "common/javascript/doctype_utils.js",
+    "Heizgradtagzahlen": "common/javascript/doctype_utils.js",
+    "Heizolpreise": "common/javascript/doctype_utils.js",
 }
 
 
@@ -105,23 +105,28 @@ doctype_js = {
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"mietrecht_ch.tasks.all"
-# 	],
-# 	"daily": [
-# 		"mietrecht_ch.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"mietrecht_ch.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"mietrecht_ch.tasks.weekly"
-# 	]
-# 	"monthly": [
-# 		"mietrecht_ch.tasks.monthly"
-# 	]
-# }
+scheduler_events = {
+    "cron": {
+        "59 23 * * *": [
+            "mietrecht_ch.tasks.cron"
+        ]
+    },
+    "all": [
+        "mietrecht_ch.tasks.all"
+    ],
+    "daily": [
+        "mietrecht_ch.tasks.daily"
+    ],
+    "hourly": [
+        "mietrecht_ch.tasks.hourly"
+    ],
+    "weekly": [
+        "mietrecht_ch.tasks.weekly"
+    ],
+    "monthly": [
+        "mietrecht_ch.tasks.monthly"
+    ]
+}
 
 # Testing
 # -------
@@ -151,30 +156,29 @@ doctype_js = {
 # --------------------
 
 user_data_fields = [
-	{
-		"doctype": "{doctype_1}",
-		"filter_by": "{filter_by}",
-		"redact_fields": ["{field_1}", "{field_2}"],
-		"partial": 1,
-	},
-	{
-		"doctype": "{doctype_2}",
-		"filter_by": "{filter_by}",
-		"partial": 1,
-	},
-	{
-		"doctype": "{doctype_3}",
-		"strict": False,
-	},
-	{
-		"doctype": "{doctype_4}"
-	}
+    {
+        "doctype": "{doctype_1}",
+        "filter_by": "{filter_by}",
+        "redact_fields": ["{field_1}", "{field_2}"],
+        "partial": 1,
+    },
+    {
+        "doctype": "{doctype_2}",
+        "filter_by": "{filter_by}",
+        "partial": 1,
+    },
+    {
+        "doctype": "{doctype_3}",
+        "strict": False,
+    },
+    {
+        "doctype": "{doctype_4}"
+    }
 ]
 
 # Authentication and authorization
 # --------------------------------
 
 # auth_hooks = [
-# 	"mietrecht_ch.auth.validate"
+#     "mietrecht_ch.auth.validate"
 # ]
-
