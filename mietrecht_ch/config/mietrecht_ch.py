@@ -207,5 +207,24 @@ def get_data():
                     "description": _("Pak Liste")
                 }
             ]
+        },
+        {
+            "label": _("Entscheid"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "Entscheid",
+                    "label": _("Entscheid Liste"),
+                    "description": _("Entscheid Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Entscheid",
+                    "label": _("Neue Entscheid"),
+                    "description": _("Neue Entscheid"),
+                    "link": _("Form/Entscheid/New Entscheid 1")
+                }
+            ]
         }
     ]
