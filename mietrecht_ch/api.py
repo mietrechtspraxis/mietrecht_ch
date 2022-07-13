@@ -13,7 +13,7 @@ def healthcheck():
         "message": "Alive",
         "timeStamp": dt_string,
         "version": "0.0.5",
-        "branch": "develop"
+        "branch": "ebook"
         }
     return answer
 
