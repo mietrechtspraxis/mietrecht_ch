@@ -1,0 +1,37 @@
+{
+ "creation": "2022-07-12 14:54:09.042309",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "config"
+ ],
+ "fields": [
+  {
+   "fieldname": "config",
+   "fieldtype": "Long Text",
+   "label": "konfig"
+  }
+ ],
+ "issingle": 1,
+ "modified": "2022-07-12 14:56:10.561902",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "Mietrecht Config",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
