@@ -1,23 +1,51 @@
 {
+ "autoname": "format:{decision_date}-{title_de}",
  "creation": "2022-06-17 16:00:22.785143",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "title_de",
-  "title_fr",
+  "grundlegende_informationen_section",
+  "type",
+  "decision_date",
   "published",
+  "column_break_2",
+  "court",
+  "decision_number",
+  "section_break_7",
+  "source",
+  "canton",
+  "column_break_9",
+  "summary",
+  "titel_und_beschreibung_section",
+  "title_de",
   "description_de",
+  "column_break_3",
+  "title_fr",
   "description_fr",
-  "article_old",
+  "section_break_6",
   "article",
-  "pdf",
-  "antique_collection",
-  "should_become_antique_collection"
+  "article_old",
+  "mp_file",
+  "should_be_in_offcial_collection",
+  "official_collection",
+  "keywords",
+  "mp_flash_section",
+  "mp_flash",
+  "mp_flash_summary",
+  "section_break_16",
+  "other_magazine",
+  "aufsatz_section",
+  "author_de",
+  "author_info_de",
+  "column_break_34",
+  "author_fr",
+  "author_info_fr"
  ],
  "fields": [
   {
    "default": "0",
+   "description": "\u00c4quivalent zu alt \"mp_Entsch_Nr\"",
    "fieldname": "published",
    "fieldtype": "Check",
    "label": "Ver\u00f6ffentlicht"
@@ -35,6 +63,7 @@
    "label": "Title (FR)"
   },
   {
+   "description": "Could also be called Regeste",
    "fieldname": "description_de",
    "fieldtype": "Text Editor",
    "label": "Beschreibung (DE)",
@@ -42,11 +71,13 @@
    "translatable": 1
   },
   {
+   "description": "Could also be called Regeste",
    "fieldname": "description_fr",
    "fieldtype": "Text Editor",
    "label": "Bechreibung (FR)"
   },
   {
+   "description": "We could get rid of it",
    "fieldname": "article_old",
    "fieldtype": "Data",
    "label": "Artikel (old)"
@@ -57,23 +88,165 @@
    "label": "Artikel"
   },
   {
-   "fieldname": "pdf",
-   "fieldtype": "Attach",
-   "label": "PDF"
+   "fieldname": "court",
+   "fieldtype": "Select",
+   "label": "Gericht",
+   "options": "AG\nAI\nAR\nAufsatz\nBE\nBGE\nBL\nBS\nFR\nGE\nGL\nGR\nJU\nKasuistik\nLU\nLU/VD\nNE\nNW\nSG\nSH\nSO\nSZ\nTG"
   },
   {
-   "fieldname": "antique_collection",
+   "fieldname": "mp_file",
+   "fieldtype": "Table",
+   "ignore_user_permissions": 1,
+   "label": "PDF",
+   "options": "Entscheide PDF"
+  },
+  {
+   "fieldname": "official_collection",
    "fieldtype": "Data",
-   "label": "Antlichesammlung"
+   "label": "Amtliche Sammlung"
   },
   {
    "default": "0",
-   "fieldname": "should_become_antique_collection",
+   "fieldname": "should_be_in_offcial_collection",
    "fieldtype": "Check",
-   "label": "Soll in die Antlichesammlung gehen"
+   "label": "zur Ver\u00f6ffentlichung vorgesehen"
+  },
+  {
+   "fieldname": "decision_number",
+   "fieldtype": "Data",
+   "label": "Entscheide Number"
+  },
+  {
+   "fieldname": "other_magazine",
+   "fieldtype": "Table",
+   "label": "Andere Zeitschriften",
+   "options": "Entscheide Zeitschrift"
+  },
+  {
+   "default": "CH",
+   "fieldname": "canton",
+   "fieldtype": "Select",
+   "label": "Kanton",
+   "options": "CH\nAG\nAI\nAR\nBE\nBL\nBS\nFR\nGE\nGL\nGR\nJU\nLU\nNE\nNW\nOW\nSG\nSH\nSO\nSZ\nTG\nTI\nUR\nVD\nVS\nZG\nZH"
+  },
+  {
+   "description": "wo Entscheid zu finden ist",
+   "fieldname": "source",
+   "fieldtype": "Data",
+   "label": "Quelle"
+  },
+  {
+   "fieldname": "mp_flash",
+   "fieldtype": "Data",
+   "label": "MP Flash"
+  },
+  {
+   "fieldname": "mp_flash_summary",
+   "fieldtype": "Text Editor",
+   "label": "MP Flash Summary"
+  },
+  {
+   "fieldname": "summary",
+   "fieldtype": "Text Editor",
+   "label": "Entscheide Summary"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "decision_date",
+   "fieldtype": "Date",
+   "label": "Datum",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "titel_und_beschreibung_section",
+   "fieldtype": "Section Break",
+   "label": "Titel und Beschreibung"
+  },
+  {
+   "fieldname": "grundlegende_informationen_section",
+   "fieldtype": "Section Break",
+   "label": "Entscheide"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_16",
+   "fieldtype": "Section Break",
+   "label": "Andere Zeitschriften"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "mp_flash_section",
+   "fieldtype": "Section Break",
+   "label": "MP Flash"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break",
+   "label": "Weitere Informationen"
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "keyword",
+   "fieldname": "keywords",
+   "fieldtype": "Table MultiSelect",
+   "label": "Stichworte",
+   "options": "Stichworte"
+  },
+  {
+   "default": "Entscheide",
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type",
+   "options": "Entscheide\nFlash\nAufsatz"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "aufsatz_section",
+   "fieldtype": "Section Break",
+   "label": "Aufsatz"
+  },
+  {
+   "fieldname": "author_de",
+   "fieldtype": "Data",
+   "label": "Autor (DE)"
+  },
+  {
+   "fieldname": "author_info_de",
+   "fieldtype": "Data",
+   "label": "Autor-Infos (DE)"
+  },
+  {
+   "fieldname": "column_break_34",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "author_fr",
+   "fieldtype": "Data",
+   "label": "Autor (FR)"
+  },
+  {
+   "fieldname": "author_info_fr",
+   "fieldtype": "Data",
+   "label": "Author-Infos (FR)"
   }
  ],
- "modified": "2022-06-17 16:17:53.007951",
+ "modified": "2022-07-13 16:37:45.349314",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Entscheid",
@@ -92,7 +265,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

@@ -322,8 +322,8 @@ tags:
   - name: LandesIndex
   - name: Wertvermehrende Investitionen
 paths:
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_single_oil_price
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_single_oil_price:
+    get:
       tags:
         - Heizölpreise
       summary: Get Sum For Month
@@ -350,8 +350,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_multiple_oil_price
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_multiple_oil_price:
+    get:
       tags:
         - Heizölpreise
       summary: Get Multpile Oil Price
@@ -386,8 +386,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_last_data_date
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_last_data_date:
+    get:
       tags:
         - Heizölpreise
       summary: Get date of the last data we have in Database
@@ -416,8 +416,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_month
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_month:
+    get:
       tags:
         - Heizgradtagzahlen
       summary: Get Sum For Month
@@ -444,8 +444,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_period
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_sum_for_period:
+    get:
       tags:
         - Heizgradtagzahlen
       summary: Get Sum For Period
@@ -482,8 +482,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_list_for_period
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_list_for_period:
+    get:
       tags:
         - Heizgradtagzahlen
       summary: Get List For Period
@@ -520,8 +520,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_last_data_date
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.heizgradtagzahlen.api.get_last_data_date:
+    get:
       tags:
         - Heizgradtagzahlen
       summary: Get date of the last data we have in Database
@@ -563,8 +563,8 @@ paths:
               schema:
                 type: object
                 $ref: "#components/schemas/APIKeyValueResponse"
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauerobjekte.api.get_all_by_group
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauerobjekte.api.get_all_by_group:
+    get:
       tags:
         - Lebensdauer
       summary: Gets all the Lebensdauer Object belonging to the given group
@@ -584,8 +584,8 @@ paths:
                 type: array
                 items:
                   $ref: "#components/schemas/LebensdauerGroup"
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauerobjekte.api.get_all_by_keyword
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.lebensdauerobjekte.api.get_all_by_keyword:
+    get:
       tags:
         - Lebensdauer
       summary: Gets all the Lebensdauer Object belonging to the given keyword.
@@ -604,8 +604,8 @@ paths:
                 type: array
                 items:
                   $ref: "#components/schemas/LebensdauerGroup"
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.aktualisierungsdaten.api.get_all
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.aktualisierungsdaten.api.get_all:
+    get:
       tags:
         - Aktualisierungsdaten
       summary: Get All
@@ -614,8 +614,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_index_by_month
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_index_by_month:
+    get:
       tags:
         - HypoReferenzzins
       summary: Get an interest for a specific month
@@ -675,8 +675,8 @@ paths:
               schema:
                 type: object
                 $ref: "#components/schemas/HypoReferenzzinsResult"
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_mortgage_rate_table
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_mortgage_rate_table:
+    get:
       tags:
         - HypoReferenzzins
       summary: Get all interest for a specific canton
@@ -724,8 +724,8 @@ paths:
               schema:
                 type: object
                 $ref: "#components/schemas/APICalculatorResponse"
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_interest_value_from_date
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.hyporeferenzzins.api.get_interest_value_from_date:
+    get:
       tags:
         - HypoReferenzzins
       summary: Get an interest for a specific month
@@ -762,8 +762,8 @@ paths:
               schema:
                 type: object
                 $ref: "#components/schemas/APICalculatorResponse"
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_last_five_indexes
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_last_five_indexes:
+    get:
       tags:
         - LandesIndex
       summary: Get last 5 months of the consumer price index
@@ -776,8 +776,8 @@ paths:
                 type: object
                 $ref: "#components/schemas/APICalculatorResponse"
 
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_inflation_for_period
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_inflation_for_period:
+    get:
       tags:
         - LandesIndex
       summary: Get inflation for specific period
@@ -848,8 +848,8 @@ paths:
                 type: object
                 $ref: "#components/schemas/APICalculatorResponse"
 
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_last_index_from_basis
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_last_index_from_basis:
+    get:
       tags:
         - LandesIndex
       summary: Get the last relevant index from basis
@@ -892,8 +892,8 @@ paths:
               schema:
                 type: object
                 $ref: "#components/schemas/APIKeyValueResponse"
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_rent_adjustment_data
-  : get:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.teuerung.api.get_rent_adjustment_data: 
+    get:
       tags:
         - LandesIndex
       summary: Get rent adjustment data

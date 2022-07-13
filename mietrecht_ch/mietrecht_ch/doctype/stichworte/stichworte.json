@@ -1,26 +1,74 @@
 {
- "autoname": "format:{label}",
+ "autoname": ".#####",
  "creation": "2022-03-04 16:35:00.898867",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "label"
+  "item_name",
+  "lft",
+  "rgt",
+  "is_group",
+  "old_parent",
+  "parent_stichworte",
+  "breadcrum"
  ],
  "fields": [
   {
-   "fieldname": "label",
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Left",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Right",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Old Parent",
+   "options": "Stichworte"
+  },
+  {
+   "fetch_from": "keyword",
+   "fieldname": "parent_stichworte",
+   "fieldtype": "Link",
+   "label": "Parent Stichworte",
+   "options": "Stichworte"
+  },
+  {
+   "fieldname": "item_name",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Stichwort",
-   "reqd": 1,
-   "unique": 1
+   "reqd": 1
+  },
+  {
+   "fieldname": "breadcrum",
+   "fieldtype": "Read Only",
+   "label": "Breadcrum"
   }
  ],
- "modified": "2022-03-09 18:22:08.141070",
+ "is_tree": 1,
+ "modified": "2022-07-13 15:52:04.346917",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Stichworte",
+ "nsm_parent_field": "parent_stichworte",
  "owner": "Administrator",
  "permissions": [
   {
@@ -45,7 +93,7 @@
    "share": 1
   }
  ],
- "sort_field": "label",
  "sort_order": "ASC",
+ "title_field": "breadcrum",
  "track_changes": 1
 }
