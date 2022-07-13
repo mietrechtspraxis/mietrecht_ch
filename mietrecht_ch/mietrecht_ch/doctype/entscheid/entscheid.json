@@ -27,6 +27,7 @@
   "mp_file",
   "should_be_in_offcial_collection",
   "official_collection",
+  "keywords",
   "mp_flash_section",
   "mp_flash",
   "mp_flash_summary",
@@ -36,7 +37,7 @@
  "fields": [
   {
    "default": "0",
-   "description": "Equivalent to mp_Entsch_Nr. ",
+   "description": "\u00c4quivalent zu alt \"mp_Entsch_Nr\"",
    "fieldname": "published",
    "fieldtype": "Check",
    "label": "Ver\u00f6ffentlicht"
@@ -100,7 +101,7 @@
    "default": "0",
    "fieldname": "should_be_in_offcial_collection",
    "fieldtype": "Check",
-   "label": "Sollte in der Amtliche Sammlung sein"
+   "label": "zur Ver\u00f6ffentlichung vorgesehen"
   },
   {
    "fieldname": "decision_number",
@@ -189,9 +190,16 @@
   {
    "fieldname": "column_break_9",
    "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "keyword",
+   "fieldname": "keywords",
+   "fieldtype": "Table MultiSelect",
+   "label": "Stichworte",
+   "options": "Stichworte"
   }
  ],
- "modified": "2022-07-13 12:18:09.727987",
+ "modified": "2022-07-13 15:57:12.794957",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Entscheid",
@@ -210,7 +218,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
