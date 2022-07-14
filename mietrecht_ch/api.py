@@ -10,7 +10,7 @@ def healthcheck():
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     answer = {
         "code": 200,
-        "message": "Alive",
+        "message": "Bor to be Alive",
         "timeStamp": dt_string,
         "version": "0.0.5",
         "branch": "develop"
