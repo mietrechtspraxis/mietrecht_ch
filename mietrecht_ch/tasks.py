@@ -1,6 +1,6 @@
 import frappe
 
-LIMIT_STOCK = 3
+LIMIT_STOCK = 199
 
 
 def ebook_cron():
