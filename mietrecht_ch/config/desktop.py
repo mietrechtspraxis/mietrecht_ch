@@ -4,7 +4,7 @@ def get_data():
 	return [
 		{
 			"module_name": "mietrecht-ch",
-			"color": "grey",
+			"color": "green",
 			"icon": "octicon octicon-file-directory",
 			"type": "module",
 			"label": _("mietrecht-ch")
