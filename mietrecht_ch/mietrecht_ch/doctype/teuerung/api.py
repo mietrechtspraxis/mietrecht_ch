@@ -10,6 +10,8 @@ from mietrecht_ch.models.teuerung import MietzinsanpassungInflationResult, Teuer
 from mietrecht_ch.utils.queryExecutor import execute_query
 from mietrecht_ch.utils.dateUtils import DATE_FORMAT, buildFullDate, buildDatesInChronologicalOrder
 from mietrecht_ch.utils.inflation import __round_inflation_number__, __rounding_value__
+from mietrecht_ch.utils.validationUtils import data_empty_value
+from mietrecht_ch.utils.validationTypeUtils import data_type_validation_str
 
 
 @frappe.whitelist(allow_guest=True)
@@ -74,7 +76,8 @@ def get_last_five_indexes():
 
 @frappe.whitelist(allow_guest=True)
 def get_inflation_for_period(basis: str, inflationRate: float, fromMonth: int, fromYear: int, toMonth: int, toYear: int):
-
+    __data_validation__(basis, inflationRate, fromMonth,
+                        fromYear, toMonth, toYear)
     old_date_formatted, new_date_formatted = buildDatesInChronologicalOrder(
         fromYear, fromMonth, toYear, toMonth)
 
@@ -91,6 +94,21 @@ def get_inflation_for_period(basis: str, inflationRate: float, fromMonth: int, f
             'fromYear': fromYear, 'toMonth': toMonth, 'toYear': toYear},
         [calculatorResult]
     )
+
+
+def __data_validation__(basis, inflationRate, fromMonth, fromYear, toMonth, toYear):
+    data_empty_value(basis, 'basis')
+    data_type_validation_str(basis, 'basis')
+    data_empty_value(inflationRate, 'inflationRate')
+    data_type_validation_str(inflationRate, 'inflationRate')
+    data_empty_value(fromMonth, 'fromMonth')
+    data_type_validation_str(fromMonth, 'fromMonth')
+    data_empty_value(fromYear, 'fromYear')
+    data_type_validation_str(fromYear, 'fromYear')
+    data_empty_value(toMonth, 'toMonth')
+    data_type_validation_str(toMonth, 'toMonth')
+    data_empty_value(toYear, 'toYear')
+    data_type_validation_str(toYear, 'toYear')
 
 
 @frappe.whitelist(allow_guest=True)
