@@ -226,5 +226,24 @@ def get_data():
                     "link": _("Form/Entscheid/New Entscheid 1")
                 }
             ]
+        },
+        {
+            "label": _("Gesetze"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "Gesetze",
+                    "label": _("Gesetze Liste"),
+                    "description": _("Gesetze Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Gesetze",
+                    "label": _("Neue Gesetze"),
+                    "description": _("Neue Gesetze"),
+                    "link": _("Form/Gesetze/New Gesetze 1")
+                }
+            ]
         }
     ]

@@ -29,7 +29,6 @@
   "mp_file",
   "should_be_in_offcial_collection",
   "official_collection",
-  "keywords",
   "mp_flash_section",
   "mp_flash",
   "mp_flash_summary",
@@ -40,7 +39,10 @@
   "author_info_de",
   "column_break_34",
   "author_fr",
-  "author_info_fr"
+  "author_info_fr",
+  "gesetze_section",
+  "laws",
+  "keywords"
  ],
  "fields": [
   {
@@ -201,11 +203,10 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "keyword",
    "fieldname": "keywords",
    "fieldtype": "Table MultiSelect",
-   "label": "Stichworte",
-   "options": "Stichworte"
+   "label": "Stichtworte",
+   "options": "Entscheide Stichworte"
   },
   {
    "default": "Entscheide",
@@ -244,9 +245,20 @@
    "fieldname": "author_info_fr",
    "fieldtype": "Data",
    "label": "Author-Infos (FR)"
+  },
+  {
+   "fieldname": "gesetze_section",
+   "fieldtype": "Section Break",
+   "label": "Gesetze"
+  },
+  {
+   "fieldname": "laws",
+   "fieldtype": "Table MultiSelect",
+   "label": "Gesetze",
+   "options": "Entscheide Gesetze"
   }
  ],
- "modified": "2022-07-13 16:37:45.349314",
+ "modified": "2022-07-20 11:41:51.178751",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Entscheid",
