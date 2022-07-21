@@ -6,13 +6,17 @@ from __future__ import unicode_literals
 # import frappe
 from frappe.model.document import Document
 
-# OR <article-number> 	<abs-number> <lit-nr>
-# OR 253a 
-# OR 253a 				2
-# OR 256							 a.
-
 class Gesetze(Document):
 	def autoname(self):
-		self.name = """{} {}""".format(self.law_type, self.article_number.strip())
+		self.name = self.__set_name__()
+		# if name == self.name: return 
+		
+		
+	def __get_name__(self):
+		name = """Art. {}""".format(self.article_number.strip())
 		if self.section_number != None:
-			self.name = """{} {}""".format(self.name, self.section_number)
+			name += """ Abs. {} """.format(self.section_number.strip())
+		if self.lit_number != None:
+			name += """ lit. {} """.format(self.lit_number.strip())
+		name += """ {}""".format(self.law_type)
+		return name

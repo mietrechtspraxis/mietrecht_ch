@@ -1,0 +1,152 @@
+{
+ "allow_rename": 1,
+ "creation": "2022-07-20 08:44:34.264084",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "law_type",
+  "column_break_2",
+  "section",
+  "article_section",
+  "article_number",
+  "margin",
+  "article_text",
+  "section_number",
+  "section_text",
+  "lit_number",
+  "lit_text",
+  "footnote",
+  "extra_data_section",
+  "references",
+  "fedlex_link",
+  "begriffe_section",
+  "term_1",
+  "term_2",
+  "term_3"
+ ],
+ "fields": [
+  {
+   "fieldname": "law_type",
+   "fieldtype": "Select",
+   "label": "Gesetz",
+   "options": "OR\nVMWG\nBMM\nVMM\nDB\nZGB"
+  },
+  {
+   "description": "No really relevant, should always be optional, and could be removed",
+   "fieldname": "section",
+   "fieldtype": "Data",
+   "label": "Abschnitt"
+  },
+  {
+   "fieldname": "section_number",
+   "fieldtype": "Data",
+   "label": "Abs-Nr"
+  },
+  {
+   "fieldname": "section_text",
+   "fieldtype": "Text Editor",
+   "label": "Abs-Text"
+  },
+  {
+   "fieldname": "article_section",
+   "fieldtype": "Section Break",
+   "label": "Article"
+  },
+  {
+   "fieldname": "article_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Art-Nr",
+   "reqd": 1
+  },
+  {
+   "fieldname": "article_text",
+   "fieldtype": "Text Editor",
+   "label": "Art-Text"
+  },
+  {
+   "fieldname": "extra_data_section",
+   "fieldtype": "Section Break",
+   "label": "Verweis"
+  },
+  {
+   "fieldname": "margin",
+   "fieldtype": "Text",
+   "label": "Marginalie"
+  },
+  {
+   "fieldname": "footnote",
+   "fieldtype": "Text Editor",
+   "label": "Fussnote"
+  },
+  {
+   "fieldname": "lit_number",
+   "fieldtype": "Data",
+   "label": "Lit-Nr"
+  },
+  {
+   "fieldname": "lit_text",
+   "fieldtype": "Text Editor",
+   "label": "Lit-Text"
+  },
+  {
+   "fieldname": "begriffe_section",
+   "fieldtype": "Section Break",
+   "label": "Begriffe"
+  },
+  {
+   "fieldname": "term_1",
+   "fieldtype": "Data",
+   "label": "Begriff 1"
+  },
+  {
+   "fieldname": "term_2",
+   "fieldtype": "Data",
+   "label": "Begriff 2"
+  },
+  {
+   "fieldname": "term_3",
+   "fieldtype": "Data",
+   "label": "Begriff 3"
+  },
+  {
+   "fieldname": "fedlex_link",
+   "fieldtype": "Data",
+   "label": "Fedlex Link"
+  },
+  {
+   "fieldname": "references",
+   "fieldtype": "Table MultiSelect",
+   "label": "Verweis",
+   "options": "Gesetze Verweise"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "modified": "2022-07-21 08:57:32.869162",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "Gesetze",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "show_name_in_global_search": 1,
+ "sort_field": "name",
+ "sort_order": "ASC",
+ "track_changes": 1
+}
