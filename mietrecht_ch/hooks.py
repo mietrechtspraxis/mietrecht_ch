@@ -107,7 +107,7 @@ doctype_js = {
 
 scheduler_events = {
     "cron": {
-        "10 * * * *": [
+        "59 23 * * *": [
             "mietrecht_ch.tasks.ebook_cron"
         ]
     },
