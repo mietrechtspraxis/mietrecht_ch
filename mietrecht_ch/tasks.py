@@ -4,15 +4,15 @@ LIMIT_STOCK = 200
 
 
 def all():
-    pass
+    ebook_cron()
 
 
 def ebook_cron():
 
     ebook_quantity = __ebook_quantity__()
 
-    if ebook_quantity <= LIMIT_STOCK:
-        __ebook_sendmail__(ebook_quantity)
+    # if ebook_quantity <= LIMIT_STOCK:
+    __ebook_sendmail__(ebook_quantity)
 
 
 def __ebook_quantity__():
@@ -29,7 +29,7 @@ def __ebook_sendmail__(ebook_quantity):
     email_list_formatted = __get_email_list__()
     if email_list_formatted is not None or '':
         frappe.sendmail(
-            recipients=email_list_formatted,
+            recipients='davidplanchon.68@gmail.com',
             subject=frappe._('E-Book geringe Menge'),
             header=('Der Bestand an E-Books ist gering'),
             template='e-book',
