@@ -1,6 +1,10 @@
 import frappe
 
-LIMIT_STOCK = 199
+LIMIT_STOCK = 200
+
+
+def all():
+    pass
 
 
 def ebook_cron():
@@ -23,8 +27,7 @@ def __ebook_quantity__():
 def __ebook_sendmail__(ebook_quantity):
 
     email_list_formatted = __get_email_list__()
-    print(email_list_formatted[0])
-    if email_list_formatted is not None and '':
+    if email_list_formatted is not None or '':
         frappe.sendmail(
             recipients=email_list_formatted,
             subject=frappe._('E-Book geringe Menge'),
