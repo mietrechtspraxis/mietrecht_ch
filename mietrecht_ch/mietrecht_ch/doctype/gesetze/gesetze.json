@@ -12,18 +12,20 @@
   "article_number",
   "margin",
   "article_text",
-  "section_number",
-  "section_text",
-  "lit_number",
-  "lit_text",
+  "paragraph_number",
+  "paragraph_text",
+  "letter_number",
+  "letter_text",
   "footnote",
+  "old_references",
   "extra_data_section",
   "references",
   "fedlex_link",
   "begriffe_section",
   "term_1",
   "term_2",
-  "term_3"
+  "term_3",
+  "old_id"
  ],
  "fields": [
   {
@@ -39,16 +41,6 @@
    "label": "Abschnitt"
   },
   {
-   "fieldname": "section_number",
-   "fieldtype": "Data",
-   "label": "Abs-Nr"
-  },
-  {
-   "fieldname": "section_text",
-   "fieldtype": "Text Editor",
-   "label": "Abs-Text"
-  },
-  {
    "fieldname": "article_section",
    "fieldtype": "Section Break",
    "label": "Article"
@@ -57,13 +49,13 @@
    "fieldname": "article_number",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Art-Nr",
+   "label": "Article Nummer",
    "reqd": 1
   },
   {
    "fieldname": "article_text",
    "fieldtype": "Text Editor",
-   "label": "Art-Text"
+   "label": "Article Text"
   },
   {
    "fieldname": "extra_data_section",
@@ -79,16 +71,6 @@
    "fieldname": "footnote",
    "fieldtype": "Text Editor",
    "label": "Fussnote"
-  },
-  {
-   "fieldname": "lit_number",
-   "fieldtype": "Data",
-   "label": "Lit-Nr"
-  },
-  {
-   "fieldname": "lit_text",
-   "fieldtype": "Text Editor",
-   "label": "Lit-Text"
   },
   {
    "fieldname": "begriffe_section",
@@ -124,9 +106,41 @@
   {
    "fieldname": "column_break_2",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "paragraph_number",
+   "fieldtype": "Data",
+   "label": "Absatz Nummer"
+  },
+  {
+   "fieldname": "paragraph_text",
+   "fieldtype": "Text Editor",
+   "label": "Absatz Text"
+  },
+  {
+   "fieldname": "letter_number",
+   "fieldtype": "Data",
+   "label": "Littera Nummer"
+  },
+  {
+   "fieldname": "letter_text",
+   "fieldtype": "Text Editor",
+   "label": "Littera Text"
+  },
+  {
+   "fieldname": "old_references",
+   "fieldtype": "Data",
+   "label": "Alter Verweis",
+   "read_only": 1
+  },
+  {
+   "fieldname": "old_id",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Alter ID"
   }
  ],
- "modified": "2022-07-21 08:57:32.869162",
+ "modified": "2022-07-21 15:50:56.044353",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Gesetze",

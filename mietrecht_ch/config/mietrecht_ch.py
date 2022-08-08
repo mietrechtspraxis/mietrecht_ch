@@ -242,7 +242,7 @@ def get_data():
                     "name": "Gesetze",
                     "label": _("Neue Gesetze"),
                     "description": _("Neue Gesetze"),
-                    "link": _("Form/Gesetze/New Gesetze 1")
+                    "link": _("Form/Gesetze/New Gesetze 0")
                 }
             ]
         }
