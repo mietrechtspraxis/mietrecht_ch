@@ -17,15 +17,16 @@
   "letter_number",
   "letter_text",
   "footnote",
-  "old_references",
   "extra_data_section",
   "references",
   "fedlex_link",
+  "column_break_16",
+  "references_old",
   "begriffe_section",
   "term_1",
   "term_2",
   "term_3",
-  "old_id"
+  "id_old"
  ],
  "fields": [
   {
@@ -128,19 +129,23 @@
    "label": "Littera Text"
   },
   {
-   "fieldname": "old_references",
+   "description": "Verweist auf den Importeur der alten Datenbank. Nur zu Informationszwecken",
+   "fieldname": "references_old",
    "fieldtype": "Data",
-   "label": "Alter Verweis",
-   "read_only": 1
+   "label": "Alter Verweis"
   },
   {
-   "fieldname": "old_id",
+   "fieldname": "id_old",
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Alter ID"
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
   }
  ],
- "modified": "2022-07-21 15:50:56.044353",
+ "modified": "2022-08-09 14:02:25.472999",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Gesetze",
