@@ -7,6 +7,7 @@
  "field_order": [
   "cms_key",
   "content",
+  "url",
   "location"
  ],
  "fields": [
@@ -18,6 +19,7 @@
    "unique": 1
   },
   {
+   "description": "Die folgenden Funktionen funktionieren nicht mit der aktuellen Version des CMS: Schriftart, Bilder, Tabellen",
    "fieldname": "content",
    "fieldtype": "Text Editor",
    "in_list_view": 1,
@@ -26,12 +28,19 @@
    "reqd": 1
   },
   {
+   "description": "Wo auf der Seite",
    "fieldname": "location",
    "fieldtype": "Data",
-   "label": "Standort"
+   "label": "Plazierung"
+  },
+  {
+   "description": "Auf welcher Seite wird dieser Inhalt angezeigt?",
+   "fieldname": "url",
+   "fieldtype": "Data",
+   "label": "URL"
   }
  ],
- "modified": "2023-06-01 15:55:43.407123",
+ "modified": "2023-06-07 10:33:08.661093",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "CMS Content",
