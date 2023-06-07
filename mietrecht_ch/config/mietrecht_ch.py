@@ -245,5 +245,17 @@ def get_data():
                     "link": _("Form/Gesetze/New Gesetze 0")
                 }
             ]
+        },
+        {
+            "label": _("CMS"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "CMS Content",
+                    "label": _("CMS Content"),
+                    "description": _("CMS Content")
+                }
+            ]
         }
     ]
