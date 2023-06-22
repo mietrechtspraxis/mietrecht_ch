@@ -1,5 +1,5 @@
 {
- "autoname": "field:value",
+ "autoname": "field:label",
  "creation": "2022-02-23 23:15:45.713894",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -28,7 +28,7 @@
    "unique": 1
   }
  ],
- "modified": "2023-06-22 15:50:59.553518",
+ "modified": "2023-06-22 16:06:26.613029",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Wetterstationen",
