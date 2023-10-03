@@ -132,7 +132,7 @@
   {
    "fieldname": "mp_flash_summary",
    "fieldtype": "Text Editor",
-   "label": "MP Flash Summary"
+   "label": "MP Flash Zusammenfassung"
   },
   {
    "fieldname": "column_break_3",
@@ -271,12 +271,12 @@
   {
    "fieldname": "laws_old",
    "fieldtype": "Data",
-   "label": "Alter Gesetze"
+   "label": "Alte Gesetze"
   },
   {
    "fieldname": "source_old",
    "fieldtype": "Data",
-   "label": "Alter Fundstelle"
+   "label": "Alte Fundstelle"
   },
   {
    "fieldname": "id_old",
@@ -287,10 +287,10 @@
   {
    "fieldname": "keywords_old",
    "fieldtype": "Data",
-   "label": "Alter Stichworte"
+   "label": "Alte Stichworte"
   }
  ],
- "modified": "2022-08-09 16:15:47.786337",
+ "modified": "2023-10-03 08:50:03.179373",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Entscheid",
