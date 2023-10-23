@@ -209,20 +209,20 @@ def get_data():
             ]
         },
         {
-            "label": _("Entscheid"),
+            "label": _("Entscheide"),
             "icon": "fa fa-money",
             "items": [
                 {
                     "type": "doctype",
                     "name": "Entscheid",
-                    "label": _("Entscheid Liste"),
-                    "description": _("Entscheid Liste")
+                    "label": _("Entscheide Liste"),
+                    "description": _("Entscheide Liste")
                 },
                 {
                     "type": "doctype",
                     "name": "Entscheid",
-                    "label": _("Neue Entscheid"),
-                    "description": _("Neue Entscheid"),
+                    "label": _("Neuer Entscheid"),
+                    "description": _("Neuer Entscheid"),
                     "link": _("Form/Entscheid/New Entscheid 1")
                 }
             ]

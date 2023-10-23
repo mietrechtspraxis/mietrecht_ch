@@ -67,7 +67,7 @@
   {
    "fieldname": "title_fr",
    "fieldtype": "Data",
-   "label": "Title (FR)"
+   "label": "Titel (FR)"
   },
   {
    "fieldname": "description_de",
@@ -188,7 +188,7 @@
    "fieldname": "type",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Type",
+   "label": "Typ",
    "options": "Entscheid\nFlash\nAufsatz"
   },
   {
@@ -200,12 +200,12 @@
   {
    "fieldname": "author_de",
    "fieldtype": "Data",
-   "label": "Autor (DE)"
+   "label": "Autor*in (DE)"
   },
   {
    "fieldname": "author_info_de",
    "fieldtype": "Data",
-   "label": "Autor-Infos (DE)"
+   "label": "Autor*in-Infos (DE)"
   },
   {
    "fieldname": "column_break_34",
@@ -214,12 +214,12 @@
   {
    "fieldname": "author_fr",
    "fieldtype": "Data",
-   "label": "Autor (FR)"
+   "label": "Autor*in (FR)"
   },
   {
    "fieldname": "author_info_fr",
    "fieldtype": "Data",
-   "label": "Author-Infos (FR)"
+   "label": "Autor*in-Infos (FR)"
   },
   {
    "fieldname": "gesetze_section",
@@ -271,26 +271,26 @@
   {
    "fieldname": "laws_old",
    "fieldtype": "Data",
-   "label": "Alter Gesetze"
+   "label": "Alte Gesetze"
   },
   {
    "fieldname": "source_old",
    "fieldtype": "Data",
-   "label": "Alter Fundstelle"
+   "label": "Alte Fundstelle"
   },
   {
    "fieldname": "id_old",
    "fieldtype": "Data",
    "hidden": 1,
-   "label": "Alter Id"
+   "label": "Alte Id"
   },
   {
    "fieldname": "keywords_old",
    "fieldtype": "Data",
-   "label": "Alter Stichworte"
+   "label": "Alte Stichworte"
   }
  ],
- "modified": "2022-08-09 16:15:47.786337",
+ "modified": "2023-10-23 21:56:05.920591",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Entscheid",
