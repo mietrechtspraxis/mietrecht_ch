@@ -1,6 +1,8 @@
 import frappe
 from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
 
+MINIMUM_CHARACTER = 4
+
 @frappe.whitelist(allow_guest=True)
 def healthcheck():
     answer = {
@@ -11,7 +13,7 @@ def healthcheck():
 
 @frappe.whitelist(allow_guest=True)
 def search_decision(search=None):
-    if search and len(search) < 4:
+    if search and len(search) < MINIMUM_CHARACTER:
         raise BadRequestException('The search term must have at least 4 characters.')
     
     escaped_searched_term =  ["like", f"%{search}%"]  
@@ -41,7 +43,7 @@ def search_decision(search=None):
 
 @frappe.whitelist(allow_guest=True)
 def search_detailed(name=None):
-    if name and len(name) < 4:
+    if name and len(name) < MINIMUM_CHARACTER:
         raise BadRequestException('The search term must have at least 4 characters.')
     
     searchData = frappe.get_all('Entscheid',
