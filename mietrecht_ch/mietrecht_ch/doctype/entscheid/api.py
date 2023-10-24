@@ -46,6 +46,8 @@ def search_detailed(name=None):
     if name and len(name) < MINIMUM_CHARACTER:
         raise BadRequestException('The search term must have at least 4 characters.')
     
+    escaped_name =  ["like", f"%{name}%"]  
+    
     searchData = frappe.get_all('Entscheid',
         fields={
             "title_de",
@@ -60,7 +62,10 @@ def search_detailed(name=None):
         },
         filters={
             'type': ['in', 'Entscheid', "Aufsatz"],
+        },or_filters={
+            'name': escaped_name,
         }
+        
     )
     
     
