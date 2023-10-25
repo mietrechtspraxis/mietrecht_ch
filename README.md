@@ -23,4 +23,4 @@ Site must enable scheduler in order to make cron jobs work. In frappe-bench -> s
 
 ### Update log
 - Updated to 0.0.5
-- Updated to 0.0.6: ERPNextSwiss Dependencies
+- Updated to 0.0.6: ERPNextSwiss Dependencies.
