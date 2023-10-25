@@ -64,14 +64,12 @@ def get_details(name=None):
         
     ) 
     
-    if len(result_data) != 0 and result_data != '':
+    if len(result_data) != 0 and result_data is not None:
         new_dict = result_data[0]
-    
-        mp_edition = str(new_dict.mp_edition)
-        mp_edition_start_page = str(new_dict.mp_edition_start_page)
+        mp_edition = new_dict.mp_edition
+        mp_edition_start_page = new_dict.mp_edition_start_page
         
-        concatenated_mp = f"{mp_edition} S. {mp_edition_start_page}"
-        new_dict.mp = concatenated_mp
+        new_dict.mp = f"{mp_edition} S. {mp_edition_start_page}"
         return new_dict
     
     raise BadRequestException(f"No data found for {name}")
