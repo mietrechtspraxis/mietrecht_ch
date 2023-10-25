@@ -13,7 +13,7 @@ def healthcheck():
 
 @frappe.whitelist(allow_guest=True)
 def search_decision(search=None):
-    if search and len(search) < MINIMUM_CHARACTER:
+    if len(search) < MINIMUM_CHARACTER:
         raise BadRequestException('The search term must have at least 4 characters.')
     
     escaped_searched_term =  ["like", f"%{search}%"]  
@@ -43,10 +43,11 @@ def search_decision(search=None):
 
 @frappe.whitelist(allow_guest=True)
 def search_detailed(name=None):
-    if name and len(name) < MINIMUM_CHARACTER:
+    if len(name) < MINIMUM_CHARACTER:
         raise BadRequestException('The search term must have at least 4 characters.')
     
-    escaped_name =  ["like", f"%{name}%"]  
+    escaped_name =  ["like", f"%{name}%"]
+    
     
     searchData = frappe.get_all('Entscheid',
         fields={
@@ -66,7 +67,18 @@ def search_detailed(name=None):
             'name': escaped_name,
         }
         
-    )
+    ) 
     
+    if len(searchData) != 0 and searchData != '':
+        mp_edition = searchData[0].mp_edition
+        mp_edition_start_page = searchData[0].mp_edition_start_page
+        
+        concatenated_mp = _mp_concatenation_(mp_edition, mp_edition_start_page)
+        searchData[0].mp = concatenated_mp
+        return searchData
     
-    return searchData
+    raise BadRequestException("No data found for " + name)
+
+
+def _mp_concatenation_(value1, value2):
+    return str(value1) + ' S. ' + str(value2)
