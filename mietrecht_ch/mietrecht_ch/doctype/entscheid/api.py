@@ -18,7 +18,7 @@ def search_decision(search=None):
     
     escaped_searched_term =  ["like", f"%{search}%"]  
   
-    searchData = frappe.get_all('Entscheid',
+    search_data = frappe.get_all('Entscheid',
         fields={
             "court",
             "title_de",
@@ -39,7 +39,7 @@ def search_decision(search=None):
     )
     
     
-    return searchData
+    return search_data
 
 @frappe.whitelist(allow_guest=True)
 def get_details(name=None):
@@ -70,8 +70,9 @@ def get_details(name=None):
         mp_edition = str(new_dict.mp_edition)
         mp_edition_start_page = str(new_dict.mp_edition_start_page)
         
-        concatenated_mp = f'{mp_edition}' + ' S. ' + f'{mp_edition_start_page}'
+        concatenated_mp = f"{mp_edition} S. {mp_edition_start_page}"
         new_dict.mp = concatenated_mp
         return new_dict
     
-    raise BadRequestException("No data found for " + name)
+    raise BadRequestException(f"No data found for {name}")
+    
