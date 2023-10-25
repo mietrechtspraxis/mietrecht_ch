@@ -42,15 +42,12 @@ def search_decision(search=None):
     return searchData
 
 @frappe.whitelist(allow_guest=True)
-def search_detailed(name=None):
+def get_details(name=None):
     if len(name) < MINIMUM_CHARACTER:
-        raise BadRequestException('The search term must have at least 4 characters.')
+        raise BadRequestException(f'The search term must have at least {MINIMUM_CHARACTER} characters.')
     
-    escaped_name =  ["like", f"%{name}%"]
-    
-    
-    searchData = frappe.get_all('Entscheid',
-        fields={
+    result_data = frappe.get_all('Entscheid',
+        fields=[
             "title_de",
             "decision_date",
             "court",
@@ -60,25 +57,21 @@ def search_detailed(name=None):
             "mp_edition",
             "mp_edition_start_page"
             
-        },
-        filters={
-            'type': ['in', 'Entscheid', "Aufsatz"],
-        },or_filters={
-            'name': escaped_name,
-        }
+        ],
+        filters=[
+            ["title_de", "=", name],
+        ]
         
     ) 
     
-    if len(searchData) != 0 and searchData != '':
-        mp_edition = searchData[0].mp_edition
-        mp_edition_start_page = searchData[0].mp_edition_start_page
+    if len(result_data) != 0 and result_data != '':
+        new_dict = result_data[0]
+    
+        mp_edition = str(new_dict.mp_edition)
+        mp_edition_start_page = str(new_dict.mp_edition_start_page)
         
-        concatenated_mp = _mp_concatenation_(mp_edition, mp_edition_start_page)
-        searchData[0].mp = concatenated_mp
-        return searchData
+        concatenated_mp = f'{mp_edition}' + ' S. ' + f'{mp_edition_start_page}'
+        new_dict.mp = concatenated_mp
+        return new_dict
     
     raise BadRequestException("No data found for " + name)
-
-
-def _mp_concatenation_(value1, value2):
-    return str(value1) + ' S. ' + str(value2)
