@@ -20,5 +20,7 @@ See [documentation](https://github.com/resilient-tech/frappe_docs/blob/e07382bfb
 
 Site must enable scheduler in order to make cron jobs work. In frappe-bench -> sites -> `"common_site_config.json"` tweak `"pause_scheduler": 1"` to `"pause_scheduler": 0"`
 
+
 ### Update log
 - Updated to 0.0.5
+- Updated to 0.0.6: ERPNextSwiss Dependencies
