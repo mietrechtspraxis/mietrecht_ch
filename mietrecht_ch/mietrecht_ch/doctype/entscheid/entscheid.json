@@ -58,6 +58,7 @@
    "label": "Ver\u00f6ffentlicht"
   },
   {
+   "default": " ",
    "fieldname": "title_de",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -67,9 +68,10 @@
   {
    "fieldname": "title_fr",
    "fieldtype": "Data",
-   "label": "Title (FR)"
+   "label": "Titel (FR)"
   },
   {
+   "default": " ",
    "fieldname": "description_de",
    "fieldtype": "Text Editor",
    "label": "Regeste (DE)",
@@ -88,11 +90,12 @@
    "label": "Artikel (old)"
   },
   {
+   "default": "N/A",
    "description": "BGE Nummer oder Entscheid Nummer",
    "fieldname": "court",
    "fieldtype": "Select",
    "label": "Gericht",
-   "options": "\nBGE\nAG\nAI\nAR\nBE\nBL\nBS\nFR\nGE\nGL\nGR\nJU\nLU\nNE\nNW\nOW\nSG\nSH\nSO\nSZ\nTG\nTI\nUR\nVD\nVS\nZG\nZH",
+   "options": "N/A\nBGE\nAG\nAI\nAR\nBE\nBL\nBS\nFR\nGE\nGL\nGR\nJU\nLU\nNE\nNW\nOW\nSG\nSH\nSO\nSZ\nTG\nTI\nUR\nVD\nVS\nZG\nZH",
    "reqd": 1
   },
   {
@@ -145,6 +148,7 @@
    "label": "MP Zeitschrift"
   },
   {
+   "default": "1900-01-01",
    "fieldname": "decision_date",
    "fieldtype": "Date",
    "label": "Datum",
@@ -188,7 +192,7 @@
    "fieldname": "type",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Type",
+   "label": "Typ",
    "options": "Entscheid\nFlash\nAufsatz"
   },
   {
@@ -200,12 +204,12 @@
   {
    "fieldname": "author_de",
    "fieldtype": "Data",
-   "label": "Autor (DE)"
+   "label": "Autor*in (DE)"
   },
   {
    "fieldname": "author_info_de",
    "fieldtype": "Data",
-   "label": "Autor-Infos (DE)"
+   "label": "Autor*in-Infos (DE)"
   },
   {
    "fieldname": "column_break_34",
@@ -214,12 +218,12 @@
   {
    "fieldname": "author_fr",
    "fieldtype": "Data",
-   "label": "Autor (FR)"
+   "label": "Autor*in (FR)"
   },
   {
    "fieldname": "author_info_fr",
    "fieldtype": "Data",
-   "label": "Author-Infos (FR)"
+   "label": "Autor*in-Infos (FR)"
   },
   {
    "fieldname": "gesetze_section",
@@ -271,28 +275,26 @@
   {
    "fieldname": "laws_old",
    "fieldtype": "Data",
-   "label": "Alter Gesetze",
-   "set_only_once": 1
+   "label": "Alter Gesetze"
   },
   {
    "fieldname": "source_old",
    "fieldtype": "Data",
-   "label": "Alter Fundstelle",
-   "set_only_once": 1
+   "label": "Alter Fundstelle"
   },
   {
    "fieldname": "id_old",
    "fieldtype": "Data",
    "hidden": 1,
-   "label": "Alter Id"
+   "label": "Alte Id"
   },
   {
    "fieldname": "keywords_old",
    "fieldtype": "Data",
-   "label": "Alter Stichworte"
+   "label": "Alte Stichworte"
   }
  ],
- "modified": "2022-08-08 12:51:53.098721",
+ "modified": "2023-10-24 07:24:32.365923",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Entscheid",
