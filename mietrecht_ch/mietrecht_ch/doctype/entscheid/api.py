@@ -43,6 +43,7 @@ def search_decision(search=None):
 
 @frappe.whitelist(allow_guest=True)
 def search_detailed(name=None):
+    
     if len(name) < MINIMUM_CHARACTER:
         raise BadRequestException('The search term must have at least 4 characters.')
     
