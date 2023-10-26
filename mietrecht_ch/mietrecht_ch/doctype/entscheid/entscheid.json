@@ -1,6 +1,7 @@
 {
- "autoname": "format:{decision_date}-{title_de}",
+ "autoname": "field:id_name",
  "creation": "2022-06-17 16:00:22.785143",
+ "description": "format:{decision_date}-{title_de}",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -47,7 +48,8 @@
   "id_old",
   "laws_old",
   "source_old",
-  "keywords_old"
+  "keywords_old",
+  "id_name"
  ],
  "fields": [
   {
@@ -292,9 +294,15 @@
    "fieldname": "keywords_old",
    "fieldtype": "Data",
    "label": "Alte Stichworte"
+  },
+  {
+   "fieldname": "id_name",
+   "fieldtype": "Data",
+   "label": "ID_name",
+   "unique": 1
   }
  ],
- "modified": "2023-10-24 07:24:32.365923",
+ "modified": "2023-10-26 09:12:25.253562",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Entscheid",
