@@ -257,5 +257,24 @@ def get_data():
                     "description": _("CMS Content")
                 }
             ]
+        },
+        {
+            "label": _("Short URL"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "Short URL",
+                    "label": _("Short URL"),
+                    "description": _("Short URL")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Short URL",
+                    "label": _("Neue Kurze URL"),
+                    "description": _("New Gesetze"),
+                    "link": _("Form/Short URL/New Kurze URL 0")
+                }
+            ]
         }
     ]
