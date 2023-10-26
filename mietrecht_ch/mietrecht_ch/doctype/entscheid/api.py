@@ -4,21 +4,14 @@ from mietrecht_ch.models.exceptions.mietrechtException import BadRequestExceptio
 MINIMUM_CHARACTER = 4
 
 @frappe.whitelist(allow_guest=True)
-def healthcheck():
-    answer = {
-        "code": 200,
-    }
-    return answer
-
-
-@frappe.whitelist(allow_guest=True)
 def search_decision(search=None):
+
     if len(search) < MINIMUM_CHARACTER:
-        raise BadRequestException('The search term must have at least 4 characters.')
+        raise BadRequestException(f'The search term must have at least {MINIMUM_CHARACTER} characters.')
     
     escaped_searched_term =  ["like", f"%{search}%"]  
   
-    searchData = frappe.get_all('Entscheid',
+    search_data = frappe.get_all('Entscheid',
         fields={
             "court",
             "title_de",
@@ -39,19 +32,13 @@ def search_decision(search=None):
     )
     
     
-    return searchData
+    return search_data
 
 @frappe.whitelist(allow_guest=True)
-def search_detailed(name=None):
+def get_details(name=None):
     
-    if len(name) < MINIMUM_CHARACTER:
-        raise BadRequestException('The search term must have at least 4 characters.')
-    
-    escaped_name =  ["like", f"%{name}%"]
-    
-    
-    searchData = frappe.get_all('Entscheid',
-        fields={
+    result_data = frappe.get_all('Entscheid',
+        fields=[
             "title_de",
             "decision_date",
             "court",
@@ -61,25 +48,20 @@ def search_detailed(name=None):
             "mp_edition",
             "mp_edition_start_page"
             
-        },
-        filters={
-            'type': ['in', 'Entscheid', "Aufsatz"],
-        },or_filters={
-            'name': escaped_name,
-        }
+        ],
+        filters=[
+            ["name", "=", name],
+        ]
         
     ) 
     
-    if len(searchData) != 0 and searchData != '':
-        mp_edition = searchData[0].mp_edition
-        mp_edition_start_page = searchData[0].mp_edition_start_page
+    if len(result_data) != 0 and result_data is not None:
+        new_dict = result_data[0]
+        mp_edition = new_dict.mp_edition
+        mp_edition_start_page = new_dict.mp_edition_start_page
         
-        concatenated_mp = _mp_concatenation_(mp_edition, mp_edition_start_page)
-        searchData[0].mp = concatenated_mp
-        return searchData
+        new_dict.mp = f"{mp_edition} S. {mp_edition_start_page}"
+        return new_dict
     
-    raise BadRequestException("No data found for " + name)
-
-
-def _mp_concatenation_(value1, value2):
-    return str(value1) + ' S. ' + str(value2)
+    return None
+    
