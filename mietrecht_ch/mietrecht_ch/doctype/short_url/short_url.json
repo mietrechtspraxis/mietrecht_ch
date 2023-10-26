@@ -1,5 +1,5 @@
 {
- "autoname": "format:{uri}",
+ "autoname": "Prompt",
  "creation": "2023-10-25 08:57:00.318546",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -16,7 +16,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Interner uri",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "redirect",
@@ -36,7 +37,7 @@
    "label": "Endtermin"
   }
  ],
- "modified": "2023-10-26 09:13:52.542028",
+ "modified": "2023-10-26 13:09:59.261141",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Short URL",

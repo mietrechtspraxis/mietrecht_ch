@@ -9,10 +9,14 @@ frappe.ui.form.on('Short URL', {
 		cleanUri(fieldUri)
 
 		function cleanUri(uri) {
-			const regex = /^[A-Za-z0-9-]+$/;
+			const regex = /^[A-Za-z0-9]+(?:[-/][A-Za-z0-9]+)*$/;
+
+			if (fieldUri.startsWith('/') || fieldUri.endsWith('/') ) {
+				frappe.throw("Uri cannot start or end with a /.")
+			}
 	
 			if (!regex.test(fieldUri)) {
-				const newUriValue = fieldUri.replace(/[^0-9A-Za-z-]/g, "");
+				const newUriValue = fieldUri.replace(/[^0-9A-Za-z-\/]/g, "");
 				frm.set_value('uri', newUriValue)
 			}
 		}

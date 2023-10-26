@@ -20,12 +20,16 @@ def short_url(uri):
         ],
     )
     
-    result_dict = search_data[0]
     
-    start_date = result_dict.start_date
-    end_date= result_dict.end_date
+    if search_data is not None and len(search_data) != 0:
+        result_dict = search_data[0]
+        
+        start_date = result_dict.start_date
+        end_date= result_dict.end_date
 
-    if start_date <= current_day <= end_date:
-        return result_dict
-    
+        if start_date <= current_day <= end_date:
+            return result_dict
+
+    return None
+        
         
