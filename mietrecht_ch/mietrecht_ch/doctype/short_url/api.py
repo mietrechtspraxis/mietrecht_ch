@@ -1,10 +1,13 @@
 import frappe
+import re
 from datetime import date
+from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
+import datetime 
 
 @frappe.whitelist(allow_guest=True)
 def short_url(uri):
     
-    current_day = date.today()
+    current_day = datetime.datetime.now().date()
     
     search_data = frappe.get_all('Short URL',
         fields=[
@@ -14,9 +17,15 @@ def short_url(uri):
         ],
         filters=[
             ['uri', '=', uri],
-            ['start_date', '>=', current_day],
-            ['end_date', '<=', current_day]
         ],
     )
     
-    return search_data
+    result_dict = search_data[0]
+    
+    start_date = result_dict.start_date
+    end_date= result_dict.end_date
+
+    if start_date <= current_day <= end_date:
+        return result_dict
+    
+        
