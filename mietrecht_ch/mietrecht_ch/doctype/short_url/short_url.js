@@ -20,7 +20,6 @@ frappe.ui.form.on('Short URL', {
 				frm.set_value('uri', newUriValue)
 			}
 		}
-
 		function checkUrl(url) {
 			var pattern = /^(\/|https?:\/\/)/;
 			pattern.test(url);
@@ -28,7 +27,8 @@ frappe.ui.form.on('Short URL', {
 				frappe.throw(`The url ${url} used is not a conform url. Please use a valid url starting with '/' , 'http://' or 'https://'.'`);
 			}
 		}
-
 	}
+
+	
 
 });
