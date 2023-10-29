@@ -276,5 +276,24 @@ def get_data():
                     "link": _("Form/Short URL/New Kurze URL 0")
                 }
             ]
+        },
+        {
+            "label": _("Kurse und Seminare"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "Kurse und Seminare",
+                    "label": _("Kurse und Seminare"),
+                    "description": _("Kurse und Seminare")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Kurse und Seminare",
+                    "label": _("Neue Kurse und Seminare"),
+                    "description": _("New Kurse und Seminare"),
+                    "link": _("Form/Kurse und Seminare/New Kurse und Seminare 0")
+                }
+            ]
         }
     ]
