@@ -49,7 +49,8 @@
   "laws_old",
   "source_old",
   "keywords_old",
-  "id_name"
+  "id_name",
+  "authority"
  ],
  "fields": [
   {
@@ -277,12 +278,12 @@
   {
    "fieldname": "laws_old",
    "fieldtype": "Data",
-   "label": "Alter Gesetze"
+   "label": "Alte Gesetze"
   },
   {
    "fieldname": "source_old",
    "fieldtype": "Data",
-   "label": "Alter Fundstelle"
+   "label": "Alte Fundstelle"
   },
   {
    "fieldname": "id_old",
@@ -300,9 +301,15 @@
    "fieldtype": "Data",
    "label": "ID_name",
    "unique": 1
+  },
+  {
+   "description": "Informationen zu kantonalen Beh\u00f6rden",
+   "fieldname": "authority",
+   "fieldtype": "Small Text",
+   "label": "Beh\u00f6rde"
   }
  ],
- "modified": "2023-10-26 09:12:25.253562",
+ "modified": "2023-10-30 00:03:27.777127",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Entscheid",
