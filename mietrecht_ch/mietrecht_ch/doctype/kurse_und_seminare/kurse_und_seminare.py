@@ -7,7 +7,7 @@ from frappe.model.document import Document
 # import frappe
 
 class KurseundSeminare(Document):
-	def before_insert(self):
+	def autoname(self):
 		self.name = remove_special_characters_and_accents(self.title)
 
      
