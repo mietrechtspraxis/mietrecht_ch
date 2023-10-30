@@ -28,7 +28,17 @@ frappe.ui.form.on('Short URL', {
 			}
 		}
 	}
+});
 
-	
-
+frappe.ui.form.on('Short URL', {
+	test_redirect: function(frm) {
+		if (window.location.hostname == "mietrecht.localhost") {
+			var webserver = 'mietrecht.localhost:4200';
+		} else if (window.location.hostname == 'erpnext.staging.mietrecht.ch' ) {
+			var webserver = 'staging.mietrecht.ch';
+		} else {
+			var webserver = 'mietrecht.ch' ;
+		}
+		var openlink = window.open('https://'+ webserver +'/'+frm.doc.uri);
+	}
 });
