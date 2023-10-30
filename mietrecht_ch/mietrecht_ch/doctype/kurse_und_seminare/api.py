@@ -7,7 +7,8 @@ def get_all():
     fields=[
         "title",
         "iframe_uri",
-        "display_order"
+        "display_order",
+        "name"
     ], 
     order_by="display_order ASC"
     
@@ -25,7 +26,8 @@ def get_by_name(name):
     fields=[
         "title",
         "iframe_uri",
-        "display_order"
+        "display_order",
+        "name"
     ],
        filters=[
             ['name', '=', name],
