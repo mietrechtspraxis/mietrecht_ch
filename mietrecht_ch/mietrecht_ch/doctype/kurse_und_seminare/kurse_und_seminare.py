@@ -4,7 +4,6 @@
 import unicodedata
 import re
 from frappe.model.document import Document
-# import frappe
 
 class KurseundSeminare(Document):
 	def autoname(self):
