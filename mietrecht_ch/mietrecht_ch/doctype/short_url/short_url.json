@@ -1,4 +1,5 @@
 {
+ "allow_rename": 1,
  "autoname": "Prompt",
  "creation": "2023-10-25 08:57:00.318546",
  "doctype": "DocType",
@@ -21,7 +22,7 @@
   },
   {
    "fieldname": "redirect",
-   "fieldtype": "Data",
+   "fieldtype": "Long Text",
    "in_list_view": 1,
    "label": "Umleiten",
    "reqd": 1
@@ -37,7 +38,7 @@
    "label": "Endtermin"
   }
  ],
- "modified": "2023-10-26 13:09:59.261141",
+ "modified": "2023-10-27 11:41:17.398945",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Short URL",

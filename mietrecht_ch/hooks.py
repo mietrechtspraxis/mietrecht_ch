@@ -38,6 +38,8 @@ app_license = "AGPL"
 doctype_js = {
     "Heizgradtagzahlen": "common/javascript/doctype_utils.js",
     "Heizolpreise": "common/javascript/doctype_utils.js",
+    "short_url": "common/javascript/doctype_utils.js",
+    "kurse_und_seminare": "common/javascript/doctype_utils.js",
 }
 
 
