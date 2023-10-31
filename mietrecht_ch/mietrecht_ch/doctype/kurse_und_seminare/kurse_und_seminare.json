@@ -1,4 +1,5 @@
 {
+ "allow_rename": 1,
  "autoname": "format:{title}",
  "creation": "2023-10-27 14:22:22.282571",
  "doctype": "DocType",
@@ -13,6 +14,7 @@
   {
    "fieldname": "title",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Titel",
    "reqd": 1
   },
@@ -26,11 +28,12 @@
    "fieldname": "display_order",
    "fieldtype": "Int",
    "in_list_view": 1,
-   "label": "Listenauftrag",
+   "label": "Listenreihenfolge",
+   "options": "Mit einer Zahl zwischen 0 und 100 kann die Reihenfolge gesteuert werden.",
    "reqd": 1
   }
  ],
- "modified": "2023-10-27 15:13:45.570221",
+ "modified": "2023-10-31 17:13:55.050065",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Kurse und Seminare",
@@ -50,7 +53,7 @@
   }
  ],
  "quick_entry": 1,
- "sort_field": "modified",
- "sort_order": "DESC",
+ "sort_field": "display_order",
+ "sort_order": "ASC",
  "track_changes": 1
 }
