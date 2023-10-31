@@ -24,7 +24,10 @@ def translate_string(text):
 	char_replacements = {
 		'ä': 'ae',
 		'ö': 'oe',
-		'ü': 'ue'
+		'ü': 'ue',
+		'Ä': 'ae',
+		'Ö': 'oe',
+		'Ü': 'ue',
 	}
 
 	# Create a regex pattern that matches any of the special characters
