@@ -14,13 +14,7 @@ class CMSActions(Document):
   
 	def check_if_internal(self):
      
-		pattern = r'https?://'
-  
-		if len(self.url) == 0:
-			frappe.throw("url cannot be empty.")
-   
-		
-		check_url = re.search(pattern, self.url)
+		check_url = self.not_empty_string_allowed()
 
 		if bool(check_url) == True:
 			self.is_internal = 0
@@ -33,3 +27,10 @@ class CMSActions(Document):
 		if len(url) != 0 and file is not None:
 			frappe.throw("Please add either a url OR a file not both.")
 		
+	def not_empty_string_allowed(self):
+		pattern = r'https?://'
+
+		if len(self.url) == 0:
+			frappe.throw("url cannot be empty.")	
+
+		return re.search(pattern, self.url)
