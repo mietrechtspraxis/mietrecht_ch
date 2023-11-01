@@ -5,6 +5,7 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
+import re
 
 class CMSActions(Document):
 	def validate(self):
@@ -12,8 +13,15 @@ class CMSActions(Document):
 		self.allow_one_field()
   
 	def check_if_internal(self):
-		check_url = self.url.startswith("http://") or self.url.startswith("https://")
-		print(check_url)
+     
+		pattern = r'https?://'
+  
+		if len(self.url) == 0:
+			frappe.throw("url cannot be empty.")
+   
+		
+		check_url = re.search(pattern, self.url)
+
 		if bool(check_url) == True:
 			self.is_internal = 0
 		else:
