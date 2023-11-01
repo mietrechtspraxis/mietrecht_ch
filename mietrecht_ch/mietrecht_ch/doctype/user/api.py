@@ -29,32 +29,32 @@ def auth(user, expires_in=3600, expire_on=None):
     return decoded_jwt
 
 
-@frappe.whitelist(allow_guest=True)
-def reset_password(user, email):
+# @frappe.whitelist(allow_guest=True)
+# def reset_password(user, email):
     
-    if (len(user) == 0 and user is None) and (len(email) == 0 and email is None):
-        raise BadRequestException('User and password cannot be empty.')
+#     if (len(user) == 0 and user is None) and (len(email) == 0 and email is None):
+#         raise BadRequestException('User and password cannot be empty.')
     
-    check_email = frappe.db.get_value('User', user, "email")
+#     check_email = frappe.db.get_value('User', user, "email")
 
-    if bool(email != check_email):
-        raise BadRequestException("Email don't match.")
+#     if bool(email != check_email):
+#         raise BadRequestException("Email don't match.")
         
-    # envoie d'email avec link to reset a password.
-    recipients = [
-    'david.planchon@liip.ch',
-    ]      
+#     # envoie d'email avec link to reset a password.
+#     recipients = [
+#     'david.planchon@liip.ch',
+#     ]      
     
-    reset_password_link = 'http://reset-password'
-    message = 'Hello, here is you link to reset your password because your email matched our database.'
+#     reset_password_link = 'http://reset-password'
+#     message = 'Hello, here is you link to reset your password because your email matched our database.'
 
-    frappe.sendmail(
-        recipients=recipients,
-        subject=frappe._('Password reseting'),
-        args=dict(
-            reset_password_link=reset_password_link,
-            message=message,
-        ),
-        header=_('Password resetting')
-    )
+#     frappe.sendmail(
+#         recipients=recipients,
+#         subject=frappe._('Password reseting'),
+#         args=dict(
+#             reset_password_link=reset_password_link,
+#             message=message,
+#         ),
+#         header=_('Password resetting')
+#     )
     
