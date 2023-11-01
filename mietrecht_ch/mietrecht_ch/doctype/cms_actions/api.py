@@ -29,7 +29,7 @@ def get_cms_actions(action_group_key):
             'title': db_action[1],
             'url': db_action[2],
             'description': db_action[3],
-            'isInternal': db_action[4],
+            'isInternal': True if db_action[4] == 1 else False,
             'fileUrl': f"{site_url}{db_action[5]}" if db_action[5] is not None else None,
         }
         actions.append(action)
