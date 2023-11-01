@@ -24,13 +24,13 @@ class CMSActions(Document):
 	def allow_one_field(self):
 		url = self.url
 		file = self.file
-		if len(url) != 0 and file is not None:
+		if (url is not None and len(url) != 0) and file is not None:
 			frappe.throw("Please add either a url OR a file not both.")
 		
 	def not_empty_string_allowed(self):
 		pattern = r'https?://'
 
-		if len(self.url) == 0:
+		if self.url is not None and len(self.url) == 0:
 			frappe.throw("url cannot be empty.")	
 
-		return re.search(pattern, self.url)
+		return re.search(pattern, str(self.url))
