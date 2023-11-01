@@ -1,6 +1,5 @@
 {
- "autoname": "format:{title}",
- "creation": "2023-11-01 10:18:39.895886",
+ "creation": "2023-11-01 11:00:20.737658",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -8,20 +7,11 @@
   "cms_key",
   "title",
   "url",
-  "is_internal"
+  "is_internal",
+  "description",
+  "file"
  ],
  "fields": [
-  {
-   "fieldname": "title",
-   "fieldtype": "Data",
-   "label": "Titel"
-  },
-  {
-   "fieldname": "url",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Url"
-  },
   {
    "fieldname": "cms_key",
    "fieldtype": "Data",
@@ -30,16 +20,38 @@
    "reqd": 1
   },
   {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Titel",
+   "reqd": 1
+  },
+  {
+   "fieldname": "url",
+   "fieldtype": "Data",
+   "label": "Url"
+  },
+  {
    "fieldname": "is_internal",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "Is Internal"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "label": "Beschreibung"
+  },
+  {
+   "fieldname": "file",
+   "fieldtype": "Link",
+   "label": "File",
+   "options": "File"
   }
  ],
- "modified": "2023-11-01 10:30:56.774095",
+ "modified": "2023-11-01 11:00:20.737658",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
- "name": "Editable Actions",
+ "name": "CMS Actions",
  "owner": "Administrator",
  "permissions": [
   {
