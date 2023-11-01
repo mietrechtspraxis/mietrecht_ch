@@ -1,8 +1,5 @@
-import json
 import frappe
 from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
-from pprint import pprint
-from urllib.parse import urlparse
 
 from mietrecht_ch.utils.hostUtils import get_website_url
 
@@ -17,7 +14,8 @@ def get_cms_actions(action_group_key):
         SELECT a.cms_key, a.title, a.url, a.description, a.is_internal, f.file_url
         FROM `tabCMS Actions` AS a
         LEFT JOIN tabFile AS f ON a.file=f.name
-    """)
+        WHERE a.cms_key = %(key)s
+    """, values={'key': action_group_key})
 
     actions = []
 
