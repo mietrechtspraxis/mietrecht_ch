@@ -7,4 +7,13 @@ from __future__ import unicode_literals
 from frappe.model.document import Document
 
 class CMSActions(Document):
-	pass
+	def validate(self):
+		self.check_if_internal()
+  
+	def check_if_internal(self):
+		check_url = self.url.startswith("http://") or self.url.startswith("https://")
+		print(check_url)
+		if check_url == True:
+			self.is_internal == 0
+		else:
+			self.is_internal == 1

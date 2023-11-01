@@ -8,12 +8,11 @@ def get_cms_actions(action_group_key):
         raise BadRequestException('Name cannot be empty.')
     
     
-    
     test_sql = frappe.db.sql(""" 
         SELECT 
         a.cms_key, a.title, a.url, a.description, a.is_internal, f.file_url, file_name
         FROM `tabCMS Actions` AS a
-        JOIN tabFile AS f ON a.file=f.name
+        LEFT JOIN tabFile AS f ON a.file=f.name
     """)
     return test_sql
     
