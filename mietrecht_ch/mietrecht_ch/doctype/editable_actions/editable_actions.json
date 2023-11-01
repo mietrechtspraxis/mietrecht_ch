@@ -5,9 +5,10 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "cms_key",
   "title",
-  "description",
-  "url"
+  "url",
+  "is_internal"
  ],
  "fields": [
   {
@@ -16,17 +17,26 @@
    "label": "Titel"
   },
   {
-   "fieldname": "description",
-   "fieldtype": "Data",
-   "label": "Description"
-  },
-  {
    "fieldname": "url",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Url"
+  },
+  {
+   "fieldname": "cms_key",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "CMS Key",
+   "reqd": 1
+  },
+  {
+   "fieldname": "is_internal",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Is Internal"
   }
  ],
- "modified": "2023-11-01 10:18:39.895886",
+ "modified": "2023-11-01 10:30:56.774095",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Editable Actions",
