@@ -16,7 +16,7 @@
    "fieldname": "cms_key",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "CMS Key",
+   "label": "CMS Group Key",
    "reqd": 1
   },
   {
@@ -32,8 +32,10 @@
    "label": "Url"
   },
   {
+   "default": "0",
    "fieldname": "is_internal",
-   "fieldtype": "Data",
+   "fieldtype": "Check",
+   "hidden": 1,
    "label": "Is Internal"
   },
   {
@@ -48,7 +50,7 @@
    "options": "File"
   }
  ],
- "modified": "2023-11-01 11:00:20.737658",
+ "modified": "2023-11-01 11:44:37.912966",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "CMS Actions",
@@ -70,5 +72,6 @@
  "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "title",
  "track_changes": 1
 }
