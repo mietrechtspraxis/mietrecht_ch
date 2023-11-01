@@ -50,7 +50,7 @@
    "options": "File"
   }
  ],
- "modified": "2023-11-01 11:44:37.912966",
+ "modified": "2023-11-01 13:01:34.278338",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "CMS Actions",
@@ -69,7 +69,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "title",
