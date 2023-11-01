@@ -295,5 +295,24 @@ def get_data():
                     "link": _("Form/Kurse und Seminare/New Kurse und Seminare 0")
                 }
             ]
+        },
+        {
+            "label": _("CMS Actions"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "CMS Actions",
+                    "label": _("CMS Aktionen"),
+                    "description": _("CMS Aktionen")
+                },
+                {
+                    "type": "doctype",
+                    "name": "CMS Actions",
+                    "label": _("Neue CMS Aktionen"),
+                    "description": _("New CMS Aktionen"),
+                    "link": _("Form/CMS Actions/New CMS Aktionen 0")
+                }
+            ]
         }
     ]
