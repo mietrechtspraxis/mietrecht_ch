@@ -7,8 +7,12 @@ def get_by_key(key = None):
     if (key == None):
         raise BadRequestException("Please provide the parameter key")
 
-    content = frappe.get_doc(
-        'CMS Content',
-        key
-    )
-    return content
+    try:
+        content = frappe.get_doc(
+            'CMS Content',
+            key
+        )
+        return content
+    
+    except frappe.exceptions.DoesNotExistError:
+        return None
