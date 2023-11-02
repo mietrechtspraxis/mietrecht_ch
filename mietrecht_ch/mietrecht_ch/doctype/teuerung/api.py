@@ -44,10 +44,9 @@ def extract_average(indexes):
     average_value = None
     for item in reversed(indexes):
         if str(item['publish_date']).endswith("-12-31"):
-            last_element = item
-            average_value = last_element['value']
-            item['average'] = last_element['value']
-            indexes.remove(last_element)
+            average_value = item['value']
+            indexes.remove(item)
+            break 
                 
     return average_value
 
