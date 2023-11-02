@@ -17,27 +17,30 @@ from itertools import groupby
 
 @frappe.whitelist(allow_guest=True)
 def get_indexes_by_basis(basis):
-    all_basis = frappe.get_all(
-        'Teuerung',
-        fields=['value', 'publish_date'],
-        filters=[
-            ['base_year', '=', basis]
-        ],
-        order_by='publish_date asc'
-    )
     
-    values = []
-    for key, group in groupby(all_basis, key=lambda x: datetime.strptime(str(x['publish_date']), '%Y-%m-%d').year):
-        value = {}
-        indexes = list(group)
-        value['year'] = key
-        value['average'] = __extract_average__(indexes)
-        value['indexes'] = indexes
-        values.append(value)
+    if basis is not None and len(basis) != 0:
+        all_basis = frappe.get_all(
+            'Teuerung',
+            fields=['value', 'publish_date'],
+            filters=[
+                ['base_year', '=', basis]
+            ],
+            order_by='publish_date asc'
+        )
         
-    result = {'basis':basis, 'values': values}
-    
-    return result
+        values = []
+        for key, group in groupby(all_basis, key=lambda x: datetime.strptime(str(x['publish_date']), '%Y-%m-%d').year):
+            value = {}
+            indexes = list(group)
+            value['year'] = key
+            value['average'] = __extract_average__(indexes)
+            value['indexes'] = indexes
+            values.append(value)
+            
+        result = {'basis':basis, 'values': values}
+        
+        return result
+    return None
 
 
 def __extract_average__(indexes):
