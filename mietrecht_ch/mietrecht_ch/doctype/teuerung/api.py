@@ -31,7 +31,7 @@ def get_indexes_by_basis(basis):
         value = {}
         indexes = list(group)
         value['year'] = key
-        value['average'] = extract_average(indexes)
+        value['average'] = __extract_average__(indexes)
         value['indexes'] = indexes
         values.append(value)
         
@@ -40,7 +40,7 @@ def get_indexes_by_basis(basis):
     return result
 
 
-def extract_average(indexes):
+def __extract_average__(indexes):
     average_value = None
     for item in reversed(indexes):
         if str(item['publish_date']).endswith("-12-31"):
