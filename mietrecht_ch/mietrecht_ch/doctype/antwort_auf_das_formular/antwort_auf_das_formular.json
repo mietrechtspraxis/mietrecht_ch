@@ -1,0 +1,100 @@
+{
+ "creation": "2023-11-02 12:07:36.241900",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "genre",
+  "first_name",
+  "last_name",
+  "company",
+  "street",
+  "company_number",
+  "zip_code",
+  "email",
+  "annotation",
+  "additional_data",
+  "type"
+ ],
+ "fields": [
+  {
+   "fieldname": "genre",
+   "fieldtype": "Select",
+   "label": "Anrede",
+   "options": "Frau\nHerr"
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "Vorname"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Nachname"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Data",
+   "label": "Firma"
+  },
+  {
+   "fieldname": "street",
+   "fieldtype": "Data",
+   "label": "Strasse"
+  },
+  {
+   "fieldname": "company_number",
+   "fieldtype": "Data",
+   "label": "Postfach"
+  },
+  {
+   "fieldname": "zip_code",
+   "fieldtype": "Data",
+   "label": "PLZ/Ort"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  },
+  {
+   "fieldname": "annotation",
+   "fieldtype": "Long Text",
+   "label": "Bermerkungen"
+  },
+  {
+   "fieldname": "additional_data",
+   "fieldtype": "Long Text",
+   "label": "Erg\u00e4nzende Daten"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "type",
+   "options": "Bestellformular \u201cKurs- und Seminarprogramm\u201d\nKontakt\nAndere"
+  }
+ ],
+ "modified": "2023-11-02 12:16:48.482129",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "Antwort auf das Formular",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
