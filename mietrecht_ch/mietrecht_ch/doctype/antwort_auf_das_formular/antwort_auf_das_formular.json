@@ -8,6 +8,7 @@
   "first_name",
   "last_name",
   "company",
+  "address_complement",
   "street",
   "company_number",
   "zip_code",
@@ -20,18 +21,24 @@
   {
    "fieldname": "genre",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Anrede",
-   "options": "Frau\nHerr"
+   "options": "Frau\nHerr",
+   "reqd": 1
   },
   {
    "fieldname": "first_name",
    "fieldtype": "Data",
-   "label": "Vorname"
+   "in_list_view": 1,
+   "label": "Vorname",
+   "reqd": 1
   },
   {
    "fieldname": "last_name",
    "fieldtype": "Data",
-   "label": "Nachname"
+   "in_list_view": 1,
+   "label": "Nachname",
+   "reqd": 1
   },
   {
    "fieldname": "company",
@@ -41,22 +48,26 @@
   {
    "fieldname": "street",
    "fieldtype": "Data",
-   "label": "Strasse"
+   "in_list_view": 1,
+   "label": "Strasse",
+   "reqd": 1
   },
   {
    "fieldname": "company_number",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Postfach"
   },
   {
    "fieldname": "zip_code",
    "fieldtype": "Data",
-   "label": "PLZ/Ort"
+   "label": "PLZ/Ort",
+   "reqd": 1
   },
   {
    "fieldname": "email",
    "fieldtype": "Data",
-   "label": "Email"
+   "label": "Email",
+   "reqd": 1
   },
   {
    "fieldname": "annotation",
@@ -73,9 +84,14 @@
    "fieldtype": "Select",
    "label": "type",
    "options": "Bestellformular \u201cKurs- und Seminarprogramm\u201d\nKontakt\nAndere"
+  },
+  {
+   "fieldname": "address_complement",
+   "fieldtype": "Long Text",
+   "label": "Zusatz"
   }
  ],
- "modified": "2023-11-02 12:16:48.482129",
+ "modified": "2023-11-02 14:05:27.577959",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",
