@@ -359,6 +359,28 @@ components:
           type: array
           items:
             $ref: "#components/schemas/CourseAndSeminare"      
+    CMSAction:
+      description: Return Course and Seminare structure
+      properties:
+        key:
+          type: string
+        title:
+          type: string
+        url:
+          type: integer         
+        description:
+          type: string
+        is_Internal:
+          type: boolean
+        fileUrl:
+          type: string
+    CMSActionResult:
+      description: Return Course and Seminare full structure
+      properties:
+        message:
+          type: array
+          items:
+            $ref: "#components/schemas/CMSAction"      
 tags:
   - name: Healthcheck
   - name: Heizölpreise
@@ -374,6 +396,7 @@ tags:
   - name: Entscheid
   - name: Short Url
   - name: Course and Seminare
+  - name: CMS Action
 paths:
   /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_single_oil_price:
     get:
@@ -1320,6 +1343,25 @@ paths:
           schema:
             type: string
           example: "Netto-/Bruttorendite"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#components/schemas/CourseAndSeminare"
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.cms_actions.api.get_cms_actions:
+    get:
+      tags:
+        - CMS Action
+      summary: Get all the CMS Actions informations
+      parameters:
+        - name: action_group_key
+          required: true
+          in: query
+          schema:
+            type: string
+          example: "LEBENSDAUER_HILFE"
       responses:
         "200":
           content:
