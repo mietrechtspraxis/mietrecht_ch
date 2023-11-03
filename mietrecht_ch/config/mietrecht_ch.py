@@ -255,6 +255,25 @@ def get_data():
                     "name": "CMS Content",
                     "label": _("CMS Content"),
                     "description": _("CMS Content")
+                },
+                {
+                    "type": "doctype",
+                    "name": "CMS Content",
+                    "label": _("Neue CMS Content"),
+                    "description": _("Form/CMS Content/New CMS Content 0")
+                },
+                {
+                    "type": "doctype",
+                    "name": "CMS Actions",
+                    "label": _("CMS Aktionen"),
+                    "description": _("CMS Aktionen")
+                },
+                {
+                    "type": "doctype",
+                    "name": "CMS Actions",
+                    "label": _("Neue CMS Aktionen"),
+                    "description": _("Neue CMS Aktionen"),
+                    "link": _("Form/CMS Actions/New CMS Aktionen 0")
                 }
             ]
         },
@@ -296,23 +315,4 @@ def get_data():
                 }
             ]
         },
-        {
-            "label": _("CMS Actions"),
-            "icon": "fa fa-money",
-            "items": [
-                {
-                    "type": "doctype",
-                    "name": "CMS Actions",
-                    "label": _("CMS Aktionen"),
-                    "description": _("CMS Aktionen")
-                },
-                {
-                    "type": "doctype",
-                    "name": "CMS Actions",
-                    "label": _("Neue CMS Aktionen"),
-                    "description": _("New CMS Aktionen"),
-                    "link": _("Form/CMS Actions/New CMS Aktionen 0")
-                }
-            ]
-        }
     ]
