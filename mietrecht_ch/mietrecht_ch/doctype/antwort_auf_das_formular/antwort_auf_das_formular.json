@@ -23,8 +23,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Anrede",
-   "options": "Frau\nHerr",
-   "reqd": 1
+   "options": "Frau\nHerr"
   },
   {
    "fieldname": "first_name",
@@ -49,8 +48,7 @@
    "fieldname": "street",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Strasse",
-   "reqd": 1
+   "label": "Strasse"
   },
   {
    "fieldname": "company_number",
@@ -60,14 +58,14 @@
   {
    "fieldname": "zip_code",
    "fieldtype": "Data",
-   "label": "PLZ/Ort",
-   "reqd": 1
+   "label": "PLZ/Ort"
   },
   {
    "fieldname": "email",
    "fieldtype": "Data",
    "label": "Email",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "annotation",
@@ -91,7 +89,7 @@
    "label": "Zusatz"
   }
  ],
- "modified": "2023-11-02 14:05:27.577959",
+ "modified": "2023-11-03 15:31:38.039834",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",
