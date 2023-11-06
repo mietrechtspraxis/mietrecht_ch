@@ -374,6 +374,8 @@ tags:
   - name: Entscheid
   - name: Short Url
   - name: Course and Seminare
+  - name: Antwort auf das Formular
+
 paths:
   /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_single_oil_price:
     get:
@@ -1327,4 +1329,90 @@ paths:
               schema:
                 type: object
                 $ref: "#components/schemas/CourseAndSeminare"
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.antwort_auf_das_formular.api.create_response_form:
+    post:
+      tags:
+        - Antwort auf das Formular
+      summary: Get all the Course and Seminare entries in database
+      parameters:
+        - name: genre
+          required: False
+          in: query
+          schema:
+            type: string
+          example: "Frau"
+        - name: First Name
+          required: True
+          in: query
+          schema:
+            type: string
+          example: "Jhon"
+        - name: Last Name
+          required: True
+          in: query
+          schema:
+            type: string
+          example: "Doe"
+        - name: Company
+          required: false
+          in: query
+          schema:
+            type: string
+          example: "Mietrecht"
+        - name: Street
+          required: false
+          in: query
+          schema:
+            type: string
+          example: "Sattelgasse 4"
+        - name: Company Number
+          required: false
+          in: query
+          schema:
+            type: string
+          example: "CHE-123.456. 789"
+        - name: Zip Code
+          required: True
+          in: query
+          schema:
+            type: string
+          example: "4008 - Basel Stad"
+        - name: Address Complement
+          required: false
+          in: query
+          schema:
+            type: string
+          example: "Switzerland"
+        - name: Email
+          required: false
+          in: query
+          schema:
+            type: string
+          example: "miet@mietrecht.ch"
+        - name: Annotation
+          required: false
+          in: query
+          schema:
+            type: string
+          example: "Annotation you want."
+        - name: Additional Data
+          required: false
+          in: query
+          schema:
+            type: string
+          example: "Additional Data..."
+        - name: Company
+          required: false
+          in: query
+          schema:
+            type: string
+          example: "Mietrecht Zurich"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#components/schemas/CourseAndSeminare"
+
                 
