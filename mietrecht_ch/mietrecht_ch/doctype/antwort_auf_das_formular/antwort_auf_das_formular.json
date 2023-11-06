@@ -1,4 +1,5 @@
 {
+ "autoname": "format:{first_name} {last_name}",
  "creation": "2023-11-02 12:07:36.241900",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -29,15 +30,13 @@
    "fieldname": "first_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Vorname",
-   "reqd": 1
+   "label": "Vorname"
   },
   {
    "fieldname": "last_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Nachname",
-   "reqd": 1
+   "label": "Nachname"
   },
   {
    "fieldname": "company",
@@ -64,7 +63,6 @@
    "fieldname": "email",
    "fieldtype": "Data",
    "label": "Email",
-   "reqd": 1,
    "unique": 1
   },
   {
@@ -89,7 +87,7 @@
    "label": "Zusatz"
   }
  ],
- "modified": "2023-11-03 15:31:38.039834",
+ "modified": "2023-11-06 13:45:35.307157",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",
