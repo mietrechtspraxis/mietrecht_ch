@@ -314,5 +314,24 @@ def get_data():
                     "link": _("Form/CMS Actions/New CMS Aktionen 0")
                 }
             ]
+        },
+        {
+            "label": _("Antwort auf das Formular"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "Antwort auf das Formular",
+                    "label": _("Antwort auf das Formular"),
+                    "description": _("Antwort auf das Formular")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Antwort auf das Formular",
+                    "label": _("Neue Antwort auf das Formular"),
+                    "description": _("New Antwort auf das Formular"),
+                    "link": _("Form/Antwort auf das Formular/New Antwort auf das Formular 0")
+                }
+            ]
         }
     ]
