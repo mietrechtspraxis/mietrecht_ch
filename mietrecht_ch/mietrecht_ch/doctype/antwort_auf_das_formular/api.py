@@ -9,7 +9,7 @@ def create_response_form():
 
     if request is not None and len(request) != 0:
 
-        if __validate_fields__(request) is None:
+        if not __validate_fields__(request):
            return __insert_new_document__(request)
             
         return __validate_fields__(request)
