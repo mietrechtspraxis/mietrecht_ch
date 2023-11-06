@@ -19,6 +19,7 @@ def search_decision(term=None):
             "name",
             "description_de",
             "decision_number",
+            "article_new"
         },
         filters={
             'type': ['in', 'Entscheid', "Aufsatz"],
@@ -27,7 +28,8 @@ def search_decision(term=None):
             'title_de': escaped_searched_term,
             'description_de': escaped_searched_term,
             'decision_number': escaped_searched_term,
-            'official_collection': escaped_searched_term
+            'official_collection': escaped_searched_term,
+            'article_new': escaped_searched_term
         }
     )
     
