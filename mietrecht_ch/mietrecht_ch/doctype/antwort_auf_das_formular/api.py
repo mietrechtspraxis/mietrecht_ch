@@ -33,14 +33,19 @@ def __insert_new_document__(request):
     doc.zip_code = zip_code
     doc.street = street
     doc.company_number = company_number
-    doc.insert(ignore_permissions=True)
+    # doc.insert(ignore_permissions=True)
     
-    # frappe.sendmail(
-    #     ["david.planchon@liip.ch"],
-    #     message="## hello, *bro*",
-    #     attachments=[{"file_url": "/files/hello.png"}],
-    #     as_markdown=True
-    #     )
+    recipients = [
+        'gavin@erpnext.com',
+        'hussain@erpnext.com'
+    ]
+
+    frappe.sendmail(
+        recipients=recipients,
+        subject=frappe._('Test Form Mietrecht'),
+        message="Test Form Mietrecht",
+        header=_('Test Form Mietrecht')
+    )
     
     # start creating the new_doc based on received data
     return {'response': 'Die Bestellung eines Kursprogramms wurde erfolgreich gesendet.'}
