@@ -6,7 +6,7 @@ class JWTGenerator:
         self.algorithm = algorithm
         
     def generate_token(self, payload:dict):
-        return jwt.encode(payload, self.secret, algorithm=self.algorithm)
+        return jwt.encode(payload, self.secret, algorithm=self.algorithm).decode('utf-8')
     
     def decode_token(self, token:dict):
         return jwt.decode(token, self.secret, algorithm=self.algorithm)

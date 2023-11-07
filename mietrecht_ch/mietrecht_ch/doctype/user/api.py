@@ -1,13 +1,9 @@
 import frappe
 import datetime
-import base64
-import json
 from frappe import _
 from frappe.auth import LoginManager
-from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
 from mietrecht_ch.models.jwt import JWTGenerator
 
-login = LoginManager()
 
 @frappe.whitelist(allow_guest=True)
 def auth(user, pwd, expires_in=3600, expire_on=None):
@@ -43,7 +39,7 @@ def __generate_jwt__(user, user_role):
     token = JWTGenerator('secret')
     expire_time = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
     payload = {'user': user, 'role': user_role, 'exp': expire_time}
-    generated_jwt = token.generate_token(payload).decode('utf-8')
+    generated_jwt = token.generate_token(payload)
     print(generated_jwt)
     return generated_jwt
 
