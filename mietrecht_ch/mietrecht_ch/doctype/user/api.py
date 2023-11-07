@@ -27,9 +27,9 @@ def auth(user, expires_in=3600, expire_on=None):
     generated_jwt = token.generate_token(payload)
     decoded_jwt = token.decode_token(generated_jwt)
     # login.authenticate(user, 'mietrecht*')
-    return frappe.session
-    login.logout()
-    return login.login_as(user)
+    login.login_as(user)
+    # Return the current user session.
+    return frappe.session.user
 
     return decoded_jwt
 
