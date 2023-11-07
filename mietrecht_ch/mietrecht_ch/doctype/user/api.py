@@ -1,6 +1,6 @@
 import frappe
 from frappe import _
-from frappe.auth import LoginManager
+from frappe.auth import LoginManager, CookieManager
 from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
 from mietrecht_ch.models.jwt import JWTGenerator
 
@@ -10,7 +10,7 @@ login = LoginManager()
 def auth(user, expires_in=3600, expire_on=None):
     login = LoginManager()
     token = JWTGenerator('secret')
-    
+
     # Email used to check not name
     if not frappe.db.exists("User", user):
         raise frappe.ValidationError(_("Invalide User"))
@@ -26,8 +26,12 @@ def auth(user, expires_in=3600, expire_on=None):
     payload = {'user': user, 'role': user_role}
     generated_jwt = token.generate_token(payload)
     decoded_jwt = token.decode_token(generated_jwt)
-    return decoded_jwt
+    # login.authenticate(user, 'mietrecht*')
+    return frappe.session
+    login.logout()
+    return login.login_as(user)
 
+    return decoded_jwt
 
 # @frappe.whitelist(allow_guest=True)
 # def reset_password(user, email):
