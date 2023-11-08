@@ -359,6 +359,28 @@ components:
           type: array
           items:
             $ref: "#components/schemas/CourseAndSeminare"      
+    CMSAction:
+      description: Return Course and Seminare structure
+      properties:
+        key:
+          type: string
+        title:
+          type: string
+        url:
+          type: integer         
+        description:
+          type: string
+        is_Internal:
+          type: boolean
+        fileUrl:
+          type: string
+    CMSActionResult:
+      description: Return Course and Seminare full structure
+      properties:
+        message:
+          type: array
+          items:
+            $ref: "#components/schemas/CMSAction"      
 tags:
   - name: Healthcheck
   - name: Heizölpreise
