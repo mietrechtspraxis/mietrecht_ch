@@ -8,7 +8,7 @@ from frappe.model.document import Document
 
 class Stichworte(Document):
 
-	def validate(self):
+	def before_insert(self):
 		self.build_breadcrum()
 		self.update_auto_name()
 
