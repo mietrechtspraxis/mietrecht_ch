@@ -1,0 +1,53 @@
+{
+ "creation": "2023-11-09 11:31:14.506229",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "monat",
+  "location",
+  "hot_days"
+ ],
+ "fields": [
+  {
+   "fieldname": "monat",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Monat",
+   "reqd": 1
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Ort",
+   "options": "Wetterstationen"
+  },
+  {
+   "fieldname": "hot_days",
+   "fieldtype": "Float",
+   "label": "K\u00fchlgradtagzahlen"
+  }
+ ],
+ "modified": "2023-11-09 11:31:14.506229",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "Kuhlgradtagzahlen",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
