@@ -9,8 +9,13 @@ def create_response_form():
 
     if request is not None and len(request) != 0:
 
-        if not __validate_fields__(request):
-           return __insert_new_document__(request)
+        try:
+            if not __validate_fields__(request):
+                return __insert_new_document__(request)
+            
+            return __validate_fields__(request)
+        except Exception as e:
+            return f"An error occurred: {str(e)}"
             
         return __validate_fields__(request)
         
@@ -50,7 +55,7 @@ def __insert_new_document__(request):
     doc.insert(ignore_permissions=True)
     
     # start creating the new_doc based on received data
-    return {'response': 'Die Bestellung eines Kursprogramms wurde erfolgreich gesendet.'}
+    return {'success': True}
     
 def __validate_fields__(request):
     errors = []
