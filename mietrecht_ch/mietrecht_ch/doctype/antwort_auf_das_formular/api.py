@@ -78,7 +78,6 @@ def __validate_fields__(request):
 def is_post_method():
     if frappe.request.method == "POST":
         if frappe.get_request_header('Content-Type') != 'application/json':
-            # Return an error response if the content type is not JSON
             frappe.throw("Invalid content type. Expected application/json.", title="Bad Request")
     
     request_data = frappe.local.request.data
