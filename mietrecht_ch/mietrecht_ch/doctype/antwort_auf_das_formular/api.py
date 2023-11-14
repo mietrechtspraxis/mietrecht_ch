@@ -76,8 +76,7 @@ def __validate_fields__(request):
 def return_json_data():
     if frappe.get_request_header('Content-Type') != 'application/json':
         frappe.throw("Invalid content type. Expected application/json.", title="Bad Request")
-
-    request_data = frappe.local.request.data
-    request_data_str = request_data.decode('utf-8')
+        
+    request_data_str = frappe.local.request.data.decode('utf-8')
 
     return json.loads(request_data_str)
