@@ -38,7 +38,7 @@ def search_decision(term=None):
 
 @frappe.whitelist(allow_guest=True)
 def get_details(name=None):
-    
+    frappe.only_for("mp_web_user_abo", "mp_web_admin")
     result_data = frappe.get_all('Entscheid',
         fields=[
             "title_de",
