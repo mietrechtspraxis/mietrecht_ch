@@ -19,12 +19,19 @@ def create_response_form():
     
 
 def __insert_new_document__(request):
+    genre = request.get('genre')
     first_name = request.get('first_name')
     last_name = request.get('last_name')
-    firma = request.get('firma')
+    company = request.get('company')
     street = request.get('street')
-    zip_code = request.get('zip_code')
     company_number = request.get('company_number')
+    zip_code = request.get('zip_code')
+    address_complement = request.get('address_complement')
+    email = request.get('email')
+    annotation = request.get('annotation')
+    additional_data = request.get('additional_data')
+    type_form = request.get('type')
+    firma = request.get('firma')
     
     doc = frappe.new_doc('Antwort auf das Formular')
     doc.first_name = first_name
@@ -33,19 +40,14 @@ def __insert_new_document__(request):
     doc.zip_code = zip_code
     doc.street = street
     doc.company_number = company_number
-    # doc.insert(ignore_permissions=True)
-    
-    recipients = [
-        'gavin@erpnext.com',
-        'hussain@erpnext.com'
-    ]
-
-    frappe.sendmail(
-        recipients=recipients,
-        subject=frappe._('Test Form Mietrecht'),
-        message="Test Form Mietrecht",
-        header=_('Test Form Mietrecht')
-    )
+    doc.type = type_form
+    doc.email = email
+    doc.genre = genre
+    doc.annotation = annotation
+    doc.address_complement = address_complement
+    doc.additional_data = additional_data
+    doc.company = company
+    doc.insert(ignore_permissions=True)
     
     # start creating the new_doc based on received data
     return {'response': 'Die Bestellung eines Kursprogramms wurde erfolgreich gesendet.'}
