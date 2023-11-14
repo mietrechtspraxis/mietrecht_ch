@@ -16,8 +16,6 @@ def create_response_form():
             return __validate_fields__(request)
         except Exception as e:
             return f"An error occurred: {str(e)}"
-            
-        
         
     return BadRequestException('The form cannot be empty.')
     
