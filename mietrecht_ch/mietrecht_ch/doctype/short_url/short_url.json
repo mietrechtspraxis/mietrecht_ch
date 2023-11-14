@@ -7,8 +7,11 @@
  "engine": "InnoDB",
  "field_order": [
   "uri",
+  "test_redirect",
   "redirect",
+  "start_end_section",
   "start_date",
+  "2col",
   "end_date"
  ],
  "fields": [
@@ -16,6 +19,7 @@
    "fieldname": "uri",
    "fieldtype": "Data",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Interner uri",
    "reqd": 1,
    "unique": 1
@@ -30,15 +34,31 @@
   {
    "fieldname": "start_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Startdatum"
   },
   {
    "fieldname": "end_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Endtermin"
+  },
+  {
+   "fieldname": "test_redirect",
+   "fieldtype": "Button",
+   "label": "Test"
+  },
+  {
+   "fieldname": "2col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "start_end_section",
+   "fieldtype": "Section Break",
+   "label": "Zeitsteuerung"
   }
  ],
- "modified": "2023-10-27 11:41:17.398945",
+ "modified": "2023-10-30 23:34:07.902580",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Short URL",

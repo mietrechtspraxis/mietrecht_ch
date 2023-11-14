@@ -11,14 +11,14 @@ def get_data():
                 {
                     "type": "doctype",
                     "name": "Heizolpreise",
-                    "label": _("Heizolpreise Liste"),
-                    "description": _("Heizolpreise Liste")
+                    "label": _("Heizölpreise Liste"),
+                    "description": _("Heizölpreise Liste")
                 },
                 {
                     "type": "doctype",
                     "name": "Heizolpreise",
-                    "label": _("Neue Heizolpreise"),
-                    "description": _("Neue Heizolpreise"),
+                    "label": _("Heizölpreise hinzufügen"),
+                    "description": _("Heizölpreise hinzufügen"),
                     "link": _("Form/Heizolpreise/New Heizolpreise 1")
                 },
                 {
@@ -30,42 +30,42 @@ def get_data():
                 {
                     "type": "doctype",
                     "name": "Heizgradtagzahlen",
-                    "label": _("Neue Heizgradtagzahlen"),
-                    "description": _("Neue Heizgradtagzahlen"),
+                    "label": _("Heizgradtagzahlen hinzufügen"),
+                    "description": _("Heizgradtagzahlen hinzufügen"),
                     "link": _("Form/Heizgradtagzahlen/New Heizgradtagzahlen 1")
                 }
             ]
         },
         {
-            "label": _("Lebensdauer"),
+            "label": _("Lebensdauertabelle"),
             "icon": "fa fa-money",
             "items": [
                 {
                     "type": "doctype",
                     "name": "LebensdauerGruppe",
-                    "label": _("Gruppe Liste"),
-                    "description": _("Gruppe Liste")
+                    "label": _("Stichworte"),
+                    "description": _("Stichworte")
                 },
-                {
-                    "type": "doctype",
-                    "name": "LebensdauerGruppe",
-                    "label": _("Neue Gruppe"),
-                    "description": _("Neue Gruppe"),
-                    "link": _("Form/LebensdauerGruppe/New LebensdauerGruppe 1")
-                },
-                {
-                    "type": "doctype",
-                    "name": "LebensdauerObjekte",
-                    "label": _("Objekte Liste"),
-                    "description": _("Objekte Liste")
-                },
+                #{
+                #    "type": "doctype",
+                #    "label": _("Neue Gruppe"),
+                #    "name": "LebensdauerGruppe",
+                #    "description": _("Neue Gruppe"),
+                #    "link": _("Form/LebensdauerGruppe/New LebensdauerGruppe 1")
+                #},
                 {
                     "type": "doctype",
                     "name": "LebensdauerObjekte",
-                    "label": _("Neue Objekte"),
-                    "description": _("Neue Objekte"),
-                    "link": _("Form/LebensdauerObjekte/New LebensdauerObjekte 1")
+                    "label": _("Objekte"),
+                    "description": _("Objekte")
                 },
+                #{
+                #    "type": "doctype",
+                #    "name": "LebensdauerObjekte",
+                #    "label": _("Neue Objekte"),
+                #    "description": _("Neue Objekte"),
+                #    "link": _("Form/LebensdauerObjekte/New LebensdauerObjekte 1")
+                #},
             ]
         },
         {
@@ -159,16 +159,16 @@ def get_data():
                 {
                     "type": "doctype",
                     "name": "Wetterstationen",
-                    "label": _("Wetterstationen Liste"),
-                    "description": _("Wetterstationen Liste")
+                    "label": _("Wetterstationen"),
+                    "description": _("Wetterstationen")
                 },
-                {
-                    "type": "doctype",
-                    "name": "Wetterstationen",
-                    "label": _("Neue Wetterstationen"),
-                    "description": _("Neue Wetterstationen"),
-                    "link": _("Form/Wetterstationen/New Wetterstationen 1")
-                }
+                #{
+                #    "type": "doctype",
+                #    "name": "Wetterstationen",
+                #    "label": _("Neue Wetterstationen"),
+                #    "description": _("Neue Wetterstationen"),
+                #    "link": _("Form/Wetterstationen/New Wetterstationen 1")
+                #}
             ]
         },
         {
@@ -203,8 +203,8 @@ def get_data():
                 {
                     "type": "doctype",
                     "name": "Pak",
-                    "label": _("Pak Liste"),
-                    "description": _("Pak Liste")
+                    "label": _("PAK Liste"),
+                    "description": _("PAK Liste")
                 }
             ]
         },
@@ -240,8 +240,8 @@ def get_data():
                 {
                     "type": "doctype",
                     "name": "Gesetze",
-                    "label": _("Neue Gesetze"),
-                    "description": _("Neue Gesetze"),
+                    "label": _("Gesetz hinzufügen"),
+                    "description": _("Gesetz hinzufügen"),
                     "link": _("Form/Gesetze/New Gesetze 0")
                 }
             ]
@@ -255,24 +255,43 @@ def get_data():
                     "name": "CMS Content",
                     "label": _("CMS Content"),
                     "description": _("CMS Content")
+                },
+                {
+                    "type": "doctype",
+                    "name": "CMS Content",
+                    "label": _("Neue CMS Content"),
+                    "description": _("Form/CMS Content/New CMS Content 0")
+                },
+                {
+                    "type": "doctype",
+                    "name": "CMS Actions",
+                    "label": _("CMS Aktionen"),
+                    "description": _("CMS Aktionen")
+                },
+                {
+                    "type": "doctype",
+                    "name": "CMS Actions",
+                    "label": _("Neue CMS Aktionen"),
+                    "description": _("Neue CMS Aktionen"),
+                    "link": _("Form/CMS Actions/New CMS Aktionen 0")
                 }
             ]
         },
         {
-            "label": _("Short URL"),
+            "label": _("Short URL/Weiterleitung"),
             "icon": "fa fa-money",
             "items": [
                 {
                     "type": "doctype",
                     "name": "Short URL",
-                    "label": _("Short URL"),
-                    "description": _("Short URL")
+                    "label": _("Liste der Weiterleitungen"),
+                    "description": _("Liste der Weiterleitungen")
                 },
                 {
                     "type": "doctype",
                     "name": "Short URL",
-                    "label": _("Neue Kurze URL"),
-                    "description": _("New Gesetze"),
+                    "label": _("Weiterleitung hinzufügen"),
+                    "description": _("Weiterleitung hinzufügen"),
                     "link": _("Form/Short URL/New Kurze URL 0")
                 }
             ]
@@ -295,5 +314,5 @@ def get_data():
                     "link": _("Form/Kurse und Seminare/New Kurse und Seminare 0")
                 }
             ]
-        }
+        },
     ]

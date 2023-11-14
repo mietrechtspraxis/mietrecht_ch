@@ -1,0 +1,100 @@
+{
+ "creation": "2023-11-01 11:00:20.737658",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "cms_key",
+  "title",
+  "url",
+  "is_internal",
+  "description",
+  "weighting",
+  "section_file",
+  "file",
+  "file_attachment",
+  "file_url"
+ ],
+ "fields": [
+  {
+   "fieldname": "cms_key",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "CMS Group Key",
+   "reqd": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Titel",
+   "reqd": 1
+  },
+  {
+   "fieldname": "url",
+   "fieldtype": "Data",
+   "label": "Url"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_internal",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Is Internal"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "label": "Beschreibung"
+  },
+  {
+   "fieldname": "file",
+   "fieldtype": "Link",
+   "label": "File",
+   "options": "File"
+  },
+  {
+   "fieldname": "section_file",
+   "fieldtype": "Section Break",
+   "label": "File"
+  },
+  {
+   "fieldname": "file_attachment",
+   "fieldtype": "Attach",
+   "label": "Attachment"
+  },
+  {
+   "fieldname": "file_url",
+   "fieldtype": "Data",
+   "label": "File URL"
+  },
+  {
+   "fieldname": "weighting",
+   "fieldtype": "Int",
+   "label": "Gewichtung"
+  }
+ ],
+ "modified": "2023-11-10 11:09:49.157727",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "CMS Actions",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "title",
+ "track_changes": 1
+}

@@ -13,6 +13,46 @@ from mietrecht_ch.utils.inflation import __round_inflation_number__, __rounding_
 from mietrecht_ch.utils.validationUtils import data_empty_value
 from mietrecht_ch.utils.validationTypeUtils import data_type_validation_str
 
+from itertools import groupby
+
+@frappe.whitelist(allow_guest=True)
+def get_indexes_by_basis(basis):
+    
+    if basis is not None and len(basis) != 0:
+        all_basis = frappe.get_all(
+            'Teuerung',
+            fields=['value', 'publish_date'],
+            filters=[
+                ['base_year', '=', basis]
+            ],
+            order_by='publish_date asc'
+        )
+        
+        values = []
+        for key, group in groupby(all_basis, key=lambda x: datetime.strptime(str(x['publish_date']), '%Y-%m-%d').year):
+            value = {}
+            indexes = list(group)
+            value['year'] = key
+            value['average'] = __extract_average__(indexes)
+            value['indexes'] = indexes
+            values.append(value)
+            
+        result = {'basis':basis, 'values': values}
+        
+        return result
+    return None
+
+
+def __extract_average__(indexes):
+    average_value = None
+    for item in reversed(indexes):
+        if str(item['publish_date']).endswith("-12-31"):
+            average_value = item['value']
+            indexes.remove(item)
+            break 
+                
+    return average_value
+
 
 @frappe.whitelist(allow_guest=True)
 def get_all_basis():

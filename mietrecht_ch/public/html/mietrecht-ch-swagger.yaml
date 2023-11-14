@@ -3,8 +3,8 @@ info:
   title: Mietrecht - Open API
   version: 1.0.0
 servers:
-  - url: https://erpnext.staging.mietrecht.ch/
   - url: http://mietrecht.localhost:8000/
+  - url: https://erpnext.staging.mietrecht.ch/
 components:
   securitySchemes:
     noauthAuth:
@@ -310,6 +310,77 @@ components:
         costLevel:
           type: object
           $ref: "#components/schemas/CostLevel"
+    Decision:
+      description: Return Decision structure
+      properties:
+        description_de:
+          type: string
+        name:
+          type: string
+        court:
+          type: string
+        title_de:
+          type: string
+        decision_date:
+          type: date
+        decision_number:
+          type: string
+    DecisionResult:
+      description: Return Decision structure
+      properties:
+        message:
+          type: array
+          items:
+            $ref: "#components/schemas/Decision"       
+    ShortUrl:
+      description: Return Short Url Structure
+      properties:
+        redirect:
+          type: string
+        start_date:
+          type: date
+        end_date:
+          type: date         
+    CourseAndSeminare:
+      description: Return Course and Seminare structure
+      properties:
+        title:
+          type: string
+        iframe_uri:
+          type: string
+        display_order:
+          type: integer         
+        name:
+          type: string      
+    CourseAndSeminareResult:
+      description: Return Course and Seminare structure
+      properties:
+        message:
+          type: array
+          items:
+            $ref: "#components/schemas/CourseAndSeminare"      
+    CMSAction:
+      description: Return Course and Seminare structure
+      properties:
+        key:
+          type: string
+        title:
+          type: string
+        url:
+          type: integer         
+        description:
+          type: string
+        is_Internal:
+          type: boolean
+        fileUrl:
+          type: string
+    CMSActionResult:
+      description: Return Course and Seminare full structure
+      properties:
+        message:
+          type: array
+          items:
+            $ref: "#components/schemas/CMSAction"      
 tags:
   - name: Healthcheck
   - name: Heizölpreise
@@ -322,6 +393,10 @@ tags:
   - name: LandesIndex
   - name: Wertvermehrende Investitionen
   - name: Voucher
+  - name: Entscheid
+  - name: Short Url
+  - name: Course and Seminare
+  - name: CMS Action
 paths:
   /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_single_oil_price:
     get:
@@ -982,8 +1057,8 @@ paths:
               schema:
                 type: object
                 $ref: "#components/schemas/HypothekarzinsDataset"
-  ? /api/method/mietrecht_ch.mietrecht_ch.doctype.voucher.api.get_voucher_informations
-  : post:
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.voucher.api.get_voucher_informations:
+   post:
       tags:
         - Voucher
       summary: Get the data about voucher
@@ -993,7 +1068,7 @@ paths:
           in: query
           schema:
             type: string
-          example: "RRHF-Q68H-TXYY-F29B-3XKP"
+          example: Klagebewilligung
         - name: email
           in: query
           schema:
@@ -1193,3 +1268,105 @@ paths:
               schema:
                 type: object
                 $ref: "#components/schemas/CalculatorMasterResult"
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.entscheid.api.search_decision:
+    get:
+      tags:
+        - Entscheid
+      summary: Get all the decision in database
+      parameters:
+        - name: term
+          required: true
+          in: query
+          schema:
+            type: string
+          example: "Klagebewilligung"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.entscheid.api.get_details:
+    get:
+      tags:
+        - Entscheid
+      summary: Get the detail for a specific Entscheid
+      parameters:
+        - name: name
+          required: true
+          in: query
+          schema:
+            type: string
+          example: "-Instandstellungskosten nach Auszug"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.short_url.api.short_url:
+    get:
+      tags:
+        - Short Url
+      summary: Get the detail for a specific Short Url
+      parameters:
+        - name: uri
+          required: true
+          in: query
+          schema:
+            type: string
+          example: "kurs_zpo"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.kurse_und_seminare.api.get_all:
+    get:
+      tags:
+        - Course and Seminare
+      summary: Get all the Course and Seminare entries in database
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#components/schemas/CourseAndSeminare"
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.kurse_und_seminare.api.get_by_name:
+    get:
+      tags:
+        - Course and Seminare
+      summary: Get all the Course and Seminare entries in database
+      parameters:
+        - name: name
+          required: true
+          in: query
+          schema:
+            type: string
+          example: "Netto-/Bruttorendite"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#components/schemas/CourseAndSeminare"
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.cms_actions.api.get_cms_actions:
+    get:
+      tags:
+        - CMS Action
+      summary: Get all the CMS Actions informations
+      parameters:
+        - name: action_group_key
+          required: true
+          in: query
+          schema:
+            type: string
+          example: "LEBENSDAUER_HILFE"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#components/schemas/CourseAndSeminare"
+                

@@ -45,6 +45,7 @@
   "gesetze_section",
   "published",
   "article_old",
+  "article_new",
   "id_old",
   "laws_old",
   "source_old",
@@ -307,9 +308,14 @@
    "fieldname": "authority",
    "fieldtype": "Small Text",
    "label": "Beh\u00f6rde"
+  },
+  {
+   "fieldname": "article_new",
+   "fieldtype": "Data",
+   "label": "Artikel (neu)"
   }
  ],
- "modified": "2023-10-30 00:03:27.777127",
+ "modified": "2023-11-06 16:28:39.531955",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Entscheid",
