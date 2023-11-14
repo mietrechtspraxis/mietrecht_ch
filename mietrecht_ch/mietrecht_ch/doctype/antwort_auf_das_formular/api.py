@@ -80,6 +80,4 @@ def return_json_data():
     request_data = frappe.local.request.data
     request_data_str = request_data.decode('utf-8')
 
-    request_data = json.loads(request_data_str)
-
-    return request_data
+    return json.loads(request_data_str)
