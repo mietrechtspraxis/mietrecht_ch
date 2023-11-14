@@ -51,7 +51,6 @@ def __insert_new_document__(request):
     doc.company = company
     doc.insert(ignore_permissions=True)
     
-    # start creating the new_doc based on received data
     return {'success': True}
     
 def __validate_fields__(request):
