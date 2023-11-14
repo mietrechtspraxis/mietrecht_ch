@@ -19,12 +19,11 @@ def create_response_form():
         
     return BadRequestException('The form cannot be empty.')
     
-
+    
 def __insert_new_document__(request):
     genre = request.get('genre')
     first_name = request.get('first_name')
     last_name = request.get('last_name')
-    company = request.get('company')
     street = request.get('street')
     company_number = request.get('company_number')
     zip_code = request.get('zip_code')
@@ -33,7 +32,7 @@ def __insert_new_document__(request):
     annotation = request.get('annotation')
     additional_data = request.get('additional_data')
     type_form = request.get('type')
-    firma = request.get('firma')
+    firma = request.get('company')
     
     doc = frappe.new_doc('Antwort auf das Formular')
     doc.first_name = first_name
@@ -48,7 +47,6 @@ def __insert_new_document__(request):
     doc.annotation = annotation
     doc.address_complement = address_complement
     doc.additional_data = additional_data
-    doc.company = company
     doc.insert(ignore_permissions=True)
     
     return {'success': True}
