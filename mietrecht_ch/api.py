@@ -25,8 +25,8 @@ def login(user, pwd):
         login = LoginManager()
         login.authenticate(user=user, pwd=pwd)
         login.post_login()
-        frappe.clear_messages()
     except:
+        frappe.clear_messages()
         frappe.local.response["message"] = {
             "success": False,
             "message": "Authentication Error!"
