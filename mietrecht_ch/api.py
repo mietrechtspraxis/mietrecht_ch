@@ -36,17 +36,25 @@ def login(user, pwd):
     user_roles = frappe.get_roles(frappe.session.user)
     
     mp_roles = [role for role in user_roles if role.startswith("mp_web")]
+
+    if (len(mp_roles) == 0):
+        frappe.response["message"] = {
+            "success": False,
+            "message": "Not allowed",
+        }
+        login.logout()
+        return
     
     frappe.local.cookie_manager.set_cookie("mp_roles", json.dumps(mp_roles))
     del frappe.local.response["home_page"]
     del frappe.local.response["full_name"]
     
-    response = frappe.response["message"] = {
+    frappe.response["message"] = {
         "success": True,
         "message": "Authentication success",
     }
     
-    return response
+    return
 
 @frappe.whitelist(allow_guest=True)
 def logout():
