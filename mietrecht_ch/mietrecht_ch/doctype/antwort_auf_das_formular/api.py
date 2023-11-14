@@ -3,12 +3,12 @@ from mietrecht_ch.models.exceptions.mietrechtException import BadRequestExceptio
 import json
 from frappe import _
 
-@frappe.whitelist(allow_guest=True, methods=["POST"])
+@frappe.whitelist(allow_guest=True, methods=['POST'])
 def create_response_form():
     request = is_post_method()
 
     if request is not None and len(request) != 0:
-
+        
         try:
             if not __validate_fields__(request):
                 return __insert_new_document__(request)
@@ -17,7 +17,6 @@ def create_response_form():
         except Exception as e:
             return f"An error occurred: {str(e)}"
             
-        return __validate_fields__(request)
         
         
     return BadRequestException('The form cannot be empty.')
@@ -67,10 +66,10 @@ def __validate_fields__(request):
         company_number = k['company_number']
         zip_code = k['zip_code']
         
-        if (first_name == "" and len(first_name) == 0 or last_name == "" and len(last_name) == 0) and firma == "" and len(firma) == 0 :
+        if (first_name == "" or last_name == "" ) and firma == "":
             errors.append({'error' : 'Please add either a First Name and Last Name or a Firma value.'})
             
-        if (street == "" and len(street) == 0 or zip_code == "" and len(zip_code) == 0) and (company_number == "" and len(company_number) == 0):  
+        if (street == "" or zip_code == "") and (company_number == ""):  
             errors.append({'error' : 'Please add either a Street and zip code or a valid Company Number.'})
     
     if errors:
@@ -78,9 +77,13 @@ def __validate_fields__(request):
 
 def is_post_method():
     if frappe.request.method == "POST":
-        request_data = frappe.local.request.data
-        request_data_str = request_data.decode('utf-8')
+        if frappe.get_request_header('Content-Type') != 'application/json':
+            # Return an error response if the content type is not JSON
+            frappe.throw("Invalid content type. Expected application/json.", title="Bad Request")
+    
+    request_data = frappe.local.request.data
+    request_data_str = request_data.decode('utf-8')
 
-        request_data = json.loads(request_data_str)
+    request_data = json.loads(request_data_str)
 
-        return request_data
+    return request_data
