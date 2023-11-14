@@ -5,7 +5,7 @@ from frappe import _
 
 @frappe.whitelist(allow_guest=True, methods=['POST'])
 def create_response_form():
-    request = is_post_method()
+    request = return_json_data()
 
     if request is not None and len(request) != 0:
         
@@ -73,11 +73,10 @@ def __validate_fields__(request):
     if errors:
         return errors
 
-def is_post_method():
-    if frappe.request.method == "POST":
-        if frappe.get_request_header('Content-Type') != 'application/json':
-            frappe.throw("Invalid content type. Expected application/json.", title="Bad Request")
-    
+def return_json_data():
+    if frappe.get_request_header('Content-Type') != 'application/json':
+        frappe.throw("Invalid content type. Expected application/json.", title="Bad Request")
+
     request_data = frappe.local.request.data
     request_data_str = request_data.decode('utf-8')
 
