@@ -27,9 +27,9 @@ def login(user, pwd):
         
         mp_roles = get_mp_roles(frappe.session.user)
 
-        authentication_info = generate_api_keys(frappe.session.user)
+        user_details = generate_api_keys(frappe.session.user)
 
-        token = get_jwt(authentication_info, mp_roles)
+        token = get_jwt(user_details, mp_roles)
     
         success_auth_reponse({'token': token})
     
