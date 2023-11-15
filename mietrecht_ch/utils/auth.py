@@ -1,6 +1,7 @@
 import frappe
 import jwt
 import datetime
+from frappe.auth import LoginManager
 
 MP_WEB_USER_ROLE = "mp_web_user_abo"
 MP_WEB_ADMIN_ROLE = "mp_web_admin"
@@ -44,7 +45,7 @@ def generate_api_keys(user):
     api_key = frappe.generate_hash(length=15)
     user_details.api_key = api_key
   user_details.api_secret = api_secret
-  user_details.save()
+  user_details.save(ignore_permissions=True)
 
 
   decrypted_secret = frappe.utils.password.get_decrypted_password("User",
@@ -58,7 +59,7 @@ def remove_api_key(user):
   user_details = frappe.get_doc("User", user)
   user_details.api_key = None
   user_details.api_secret = None
-  user_details.save()
+  user_details.save(ignore_permissions=True)
 
 def clean_response():
   if ('home_page' in frappe.local.response):
