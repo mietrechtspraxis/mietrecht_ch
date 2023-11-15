@@ -64,7 +64,7 @@ doctype_js = {
 # ------------
 
 # before_install = "mietrecht_ch.install.before_install"
-after_install = "mietrecht_ch.install.after_install"
+# after_install = "mietrecht_ch.install.after_install"
 
 # Desk Notifications
 # ------------------
