@@ -11,10 +11,9 @@ def healthcheck():
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     answer = {
         "code": 200,
-        "message": "Bor to be Alive",
+        "message": "Born to be Alive",
         "timeStamp": dt_string,
-        "version": "0.0.5",
-        "branch": "ebook"
+        "version": "0.0.9",
         }
     return answer
 
