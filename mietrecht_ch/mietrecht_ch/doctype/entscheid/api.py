@@ -1,5 +1,6 @@
 import frappe
 from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
+from mietrecht_ch.utils.auth import MP_WEB_ADMIN_ROLE, MP_WEB_USER_ROLE
 
 MINIMUM_CHARACTER = 4
 
@@ -38,7 +39,7 @@ def search_decision(term=None):
 
 @frappe.whitelist(allow_guest=True)
 def get_details(name=None):
-    frappe.only_for("mp_web_user_abo", "mp_web_admin")
+    frappe.only_for(MP_WEB_USER_ROLE, MP_WEB_ADMIN_ROLE)
     result_data = frappe.get_all('Entscheid',
         fields=[
             "title_de",
