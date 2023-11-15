@@ -1,8 +1,11 @@
 import frappe
-from frappe.auth import LoginManager
+import jwt
+import datetime
 
 MP_WEB_USER_ROLE = "mp_web_user_abo"
 MP_WEB_ADMIN_ROLE = "mp_web_admin"
+
+JWT_HOURS_EXPIRY = 24
 
 def failed_auth_response():
   clean_response()
@@ -43,8 +46,9 @@ def generate_api_keys(user):
   decrypted_secret = frappe.utils.password.get_decrypted_password("User",
 			user_details.name, fieldname='api_secret')
   
-  print(f"Returning")
-  return { 'api_key': user_details.api_key, 'api_secret': decrypted_secret}
+  user_details.api_secret = decrypted_secret
+  
+  return user_details
 
 def remove_api_key(user):
   user_details = frappe.get_doc("User", user)
@@ -58,6 +62,25 @@ def clean_response():
   if ('full_name' in frappe.local.response):
     del frappe.local.response["full_name"]
 
-def set_jwt_in_response(authentication_info, mp_roles):
-  frappe.local.response["token"] = authentication_info
-  frappe.local.response["roles"] = mp_roles
+def set_jwt_in_response(user_details, mp_roles):
+  secret = "some_secret"
+
+  payload = {
+    'iss': 'mietrecht.ch',
+    'sub': user_details.username,
+    'aud': 'mietrecht.ch',
+    'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=JWT_HOURS_EXPIRY),
+    'iat': datetime.datetime.utcnow(),
+    'api_key': user_details.api_key,
+    'api_secret': user_details.api_secret,
+    'email': user_details.email,
+    'first_name': user_details.first_name,
+    'last_name': user_details.last_name,
+    'mp_roles': mp_roles
+  }
+
+  token_bytes = jwt.encode(payload, secret, algorithm="HS256")
+
+  token = token_bytes.decode('utf-8') 
+
+  frappe.local.response["token"] = token
