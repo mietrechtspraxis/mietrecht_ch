@@ -2,8 +2,8 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _
 from frappe.auth import LoginManager
-import json
 from datetime import datetime
+from mietrecht_ch.utils.auth import *
 
 @frappe.whitelist(allow_guest=True)
 def healthcheck():
@@ -22,39 +22,24 @@ def healthcheck():
 @frappe.whitelist(allow_guest=True)
 def login(user, pwd):
     try:
-        login = LoginManager()
-        login.authenticate(user=user, pwd=pwd)
-        login.post_login()
-    except:
-        frappe.clear_messages()
-        frappe.local.response["message"] = {
-            "success": False,
-            "message": "Authentication Error!"
-        }
-        return 
-    
-    user_roles = frappe.get_roles(frappe.session.user)
-    
-    mp_roles = [role for role in user_roles if role.startswith("mp_web")]
+        login_manager = LoginManager()
+        login_manager.authenticate(user=user, pwd=pwd)
+        login_manager.post_login()
+        
+        mp_roles = get_mp_roles(frappe.session.user)
 
-    if (len(mp_roles) == 0):
-        frappe.response["message"] = {
-            "success": False,
-            "message": "Not allowed",
-        }
-        login.logout()
-        return
+        authentication_info = generate_api_keys(frappe.session.user)
+
+        set_jwt_in_response(authentication_info, mp_roles)
     
-    frappe.local.cookie_manager.set_cookie("mp_roles", json.dumps(mp_roles))
-    del frappe.local.response["home_page"]
-    del frappe.local.response["full_name"]
+        success_auth_reponse()
     
-    frappe.response["message"] = {
-        "success": True,
-        "message": "Authentication success",
-    }
-    
-    return
+    except Exception as e:
+        print(e)
+        login_manager.logout()
+        frappe.clear_messages()
+        failed_auth_response()
+
 
 @frappe.whitelist(allow_guest=True)
 def logout():
@@ -62,6 +47,14 @@ def logout():
     frappe.local.response["message"]= {
         'success': True,
         "message": "Logout success",
+    }
+
+@frappe.whitelist()
+def restricted():
+    frappe.only_for(MP_WEB_ADMIN_ROLE)
+    frappe.local.response["message"]= {
+        'success': True,
+        "message": "Restricted access success",
     }
 
 
