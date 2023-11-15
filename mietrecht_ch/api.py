@@ -18,7 +18,7 @@ def healthcheck():
     return answer
 
 
-@frappe.whitelist(allow_guest=True)
+@frappe.whitelist(allow_guest=True, methods='POST')
 def login(user, pwd):
     try:
         login_manager = LoginManager()
@@ -29,12 +29,12 @@ def login(user, pwd):
 
         authentication_info = generate_api_keys(frappe.session.user)
 
-        set_jwt_in_response(authentication_info, mp_roles)
+        token = get_jwt(authentication_info, mp_roles)
     
-        success_auth_reponse()
+        success_auth_reponse({'token': token})
     
     except Exception as e:
-        frappe.log_error(e)
+        print(e)
         login_manager.logout()
         frappe.clear_messages()
         failed_auth_response()
@@ -44,15 +44,12 @@ def login(user, pwd):
 def logout():
     remove_api_key(frappe.session.user)
     LoginManager().logout()
-    success_auth_reponse("Logout success")
+    success_auth_reponse()
 
 @frappe.whitelist()
 def restricted():
     frappe.only_for(MP_WEB_ADMIN_ROLE)
-    frappe.local.response["message"]= {
-        'success': True,
-        "message": "Restricted access success",
-    }
+    success_auth_reponse()
 
 
 

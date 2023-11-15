@@ -14,12 +14,16 @@ def failed_auth_response():
       "message": "Not allowed",
   }
 
-def success_auth_reponse(message = None):
+def success_auth_reponse(extra_info = None):
   clean_response()
-  frappe.response["message"] = {
+  response = {
       "success": True,
-      "message": message if message is not None else "Authentication success",
   }
+
+  if (extra_info is not None):
+    response = {**response, **extra_info}
+
+  frappe.response["message"] = response
 
 def get_mp_roles(user):
   user_roles = frappe.get_roles(user)
@@ -62,7 +66,7 @@ def clean_response():
   if ('full_name' in frappe.local.response):
     del frappe.local.response["full_name"]
 
-def set_jwt_in_response(user_details, mp_roles):
+def get_jwt(user_details, mp_roles):
   secret = "some_secret"
 
   payload = {
@@ -83,4 +87,4 @@ def set_jwt_in_response(user_details, mp_roles):
 
   token = token_bytes.decode('utf-8') 
 
-  frappe.local.response["token"] = token
+  return token
