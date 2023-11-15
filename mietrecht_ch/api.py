@@ -2,12 +2,12 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _
 from frappe.auth import LoginManager
-from datetime import datetime
+import datetime
 from mietrecht_ch.utils.auth import *
 
 @frappe.whitelist(allow_guest=True)
 def healthcheck():
-    now = datetime.now()
+    now = datetime.datetime.utcnow()
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     answer = {
         "code": 200,
