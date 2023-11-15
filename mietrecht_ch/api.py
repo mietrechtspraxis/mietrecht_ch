@@ -45,11 +45,3 @@ def logout():
     remove_api_key(frappe.session.user)
     LoginManager().logout()
     success_auth_reponse()
-
-@frappe.whitelist()
-def restricted():
-    frappe.only_for(MP_WEB_ADMIN_ROLE)
-    success_auth_reponse()
-
-
-
