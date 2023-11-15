@@ -11,11 +11,11 @@ def failed_auth_response():
       "message": "Not allowed",
   }
 
-def success_auth_reponse():
+def success_auth_reponse(message = None):
   clean_response()
   frappe.response["message"] = {
       "success": True,
-      "message": "Authentication success",
+      "message": message if message is not None else "Authentication success",
   }
 
 def get_mp_roles(user):
@@ -46,9 +46,17 @@ def generate_api_keys(user):
   print(f"Returning")
   return { 'api_key': user_details.api_key, 'api_secret': decrypted_secret}
 
+def remove_api_key(user):
+  user_details = frappe.get_doc("User", user)
+  user_details.api_key = None
+  user_details.api_secret = None
+  user_details.save()
+
 def clean_response():
-  del frappe.local.response["home_page"]
-  del frappe.local.response["full_name"]
+  if ('home_page' in frappe.local.response):
+    del frappe.local.response["home_page"]
+  if ('full_name' in frappe.local.response):
+    del frappe.local.response["full_name"]
 
 def set_jwt_in_response(authentication_info, mp_roles):
   frappe.local.response["token"] = authentication_info

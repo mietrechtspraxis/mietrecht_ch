@@ -42,11 +42,9 @@ def login(user, pwd):
 
 @frappe.whitelist(allow_guest=True)
 def logout():
+    remove_api_key(frappe.session.user)
     LoginManager().logout()
-    frappe.local.response["message"]= {
-        'success': True,
-        "message": "Logout success",
-    }
+    success_auth_reponse("Logout success")
 
 @frappe.whitelist()
 def restricted():
