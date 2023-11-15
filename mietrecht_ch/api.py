@@ -34,7 +34,7 @@ def login(user, pwd):
         success_auth_reponse()
     
     except Exception as e:
-        print(e)
+        frappe.log_error(e)
         login_manager.logout()
         frappe.clear_messages()
         failed_auth_response()
