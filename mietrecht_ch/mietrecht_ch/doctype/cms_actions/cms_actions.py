@@ -9,8 +9,8 @@ import re
 
 class CMSActions(Document):
 	def validate(self):
-		self.check_if_internal()
 		self.allow_one_field()
+		self.check_if_internal()
   
 	def check_if_internal(self):
      
@@ -24,13 +24,18 @@ class CMSActions(Document):
 	def allow_one_field(self):
 		url = self.url
 		file = self.file
-		if (url is not None and len(url) != 0) and file is not None:
+		if (len(url) == 0) and file is None :
 			frappe.throw("Please add either a url OR a file not both.")
 		
 	def not_empty_string_allowed(self):
 		pattern = r'https?://'
+  
+		if self.url == "":
+			return
 
-		if self.url is not None and len(self.url) == 0:
-			frappe.throw("url cannot be empty.")	
+		match = re.search(pattern, str(self.url))
+  
+		if not match:
+			frappe.throw("The url must start with https:// or http://")
 
-		return re.search(pattern, str(self.url))
+
