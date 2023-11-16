@@ -21,12 +21,14 @@ class CMSActions(Document):
 		else:
 			self.is_internal = 1
    
-	def allow_one_field(self):
-		url = self.url
-		file = self.file
-		if (len(url) == 0) and file is None :
-			frappe.throw("Please add either a url OR a file not both.")
-		
+	def allow_one_field(self):  
+		filled_fields = [field for field in [self.url, self.file_url, self.file_attachment] if field ]
+
+		if len(filled_fields) == 1:
+			pass
+		else: 
+			frappe.throw("Please only fill either 'Url' or 'File Url' or 'File Attachement'.")
+        
 	def not_empty_string_allowed(self):
 		pattern = r'(https?://|/)'
   

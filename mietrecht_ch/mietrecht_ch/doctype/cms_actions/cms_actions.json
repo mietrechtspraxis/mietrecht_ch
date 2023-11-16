@@ -11,7 +11,6 @@
   "description",
   "weighting",
   "section_file",
-  "file",
   "file_attachment",
   "file_url"
  ],
@@ -48,12 +47,6 @@
    "label": "Beschreibung"
   },
   {
-   "fieldname": "file",
-   "fieldtype": "Link",
-   "label": "File",
-   "options": "File"
-  },
-  {
    "fieldname": "section_file",
    "fieldtype": "Section Break",
    "label": "File"
@@ -61,7 +54,8 @@
   {
    "fieldname": "file_attachment",
    "fieldtype": "Attach",
-   "label": "Attachment"
+   "label": "Attachment",
+   "options": "File"
   },
   {
    "fieldname": "file_url",
@@ -74,7 +68,7 @@
    "label": "Gewichtung"
   }
  ],
- "modified": "2023-11-10 11:09:49.157727",
+ "modified": "2023-11-16 15:59:39.512557",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "CMS Actions",
