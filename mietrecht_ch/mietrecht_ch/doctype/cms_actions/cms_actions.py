@@ -28,7 +28,7 @@ class CMSActions(Document):
 			frappe.throw("Please add either a url OR a file not both.")
 		
 	def not_empty_string_allowed(self):
-		pattern = r'https?://'
+		pattern = r'(https?://|/)'
   
 		if self.url == "":
 			return
@@ -36,6 +36,6 @@ class CMSActions(Document):
 		match = re.search(pattern, str(self.url))
   
 		if not match:
-			frappe.throw("The url must start with https:// or http://")
+			frappe.throw("The url must start with https:// - http:// or /")
 
 
