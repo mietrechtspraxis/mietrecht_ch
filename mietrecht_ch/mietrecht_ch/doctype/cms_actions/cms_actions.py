@@ -24,10 +24,9 @@ class CMSActions(Document):
 	def allow_one_field(self):  
 		filled_fields = [field for field in [self.url, self.file_url, self.file_attachment] if field ]
 
-		if len(filled_fields) == 1:
-			pass
-		else: 
+		if len(filled_fields) > 1:
 			frappe.throw("Please only fill either 'Url' or 'File Url' or 'File Attachement'.")
+
         
 	def not_empty_string_allowed(self):
 		pattern = r'(https?://|/)'
