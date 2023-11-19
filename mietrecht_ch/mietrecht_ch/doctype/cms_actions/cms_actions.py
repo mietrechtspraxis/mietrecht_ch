@@ -15,7 +15,8 @@ class CMSActions(Document):
 	def check_if_internal(self):
 		url = self.url
 		file_url = self.file_url
-
+  
+		check_url = ''
 		if url is not None and len(url) != 0:
 			check_url = not_empty_string_allowed(url)
 		if file_url is not None and len(file_url) != 0:
