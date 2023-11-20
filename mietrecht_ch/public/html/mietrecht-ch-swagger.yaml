@@ -385,6 +385,8 @@ tags:
   - name: Healthcheck
   - name: Heizölpreise
   - name: Heizgradtagzahlen
+  - name: kuhlgradtagzahlen
+  - name: Akkumulierte Temperaturdifferenzen
   - name: Ortschaft
   - name: Lebensdauer Gruppen
   - name: Lebensdauer
@@ -614,6 +616,214 @@ paths:
                   message:
                     type: string
                     format: date
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.kuhlgradtagzahlen.api.get_sum_for_month:
+    get:
+      tags:
+        - kuhlgradtagzahlen
+      summary: Get Sum For Month
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: month
+          in: query
+          schema:
+            type: integer
+          example: "4"
+        - name: year
+          in: query
+          schema:
+            type: integer
+          example: "2015"
+        - name: location
+          in: query
+          schema:
+            type: string
+          example: bern_zollikofen
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.kuhlgradtagzahlen.api.get_sum_for_period:
+    get:
+      tags:
+        - kuhlgradtagzahlen
+      summary: Get Sum For Period
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: fromMonth
+          in: query
+          schema:
+            type: integer
+          example: "12"
+        - name: fromYear
+          in: query
+          schema:
+            type: integer
+          example: "2021"
+        - name: location
+          in: query
+          schema:
+            type: string
+          example: napf
+        - name: toMonth
+          in: query
+          schema:
+            type: integer
+          example: "3"
+        - name: toYear
+          in: query
+          schema:
+            type: integer
+          example: "2021"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.kuhlgradtagzahlen.api.get_list_for_period:
+    get:
+      tags:
+        - kuhlgradtagzahlen
+      summary: Get List For Period
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: fromMonth
+          in: query
+          schema:
+            type: integer
+          example: "3"
+        - name: fromYear
+          in: query
+          schema:
+            type: integer
+          example: "2017"
+        - name: location
+          in: query
+          schema:
+            type: string
+          example: zurich_fluntern
+        - name: toMonth
+          in: query
+          schema:
+            type: integer
+          example: "6"
+        - name: toYear
+          in: query
+          schema:
+            type: integer
+          example: "2017"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.akkumulierte_temperaturdifferenzen.api.get_sum_for_month:
+    get:
+      tags:
+        - Akkumulierte Temperaturdifferenzen
+      summary: Get Sum For Month
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: month
+          in: query
+          schema:
+            type: integer
+          example: "4"
+        - name: year
+          in: query
+          schema:
+            type: integer
+          example: "2015"
+        - name: location
+          in: query
+          schema:
+            type: string
+          example: bern_zollikofen
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.akkumulierte_temperaturdifferenzen.api.get_sum_for_period:
+    get:
+      tags:
+        - Akkumulierte Temperaturdifferenzen
+      summary: Get Sum For Period
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: fromMonth
+          in: query
+          schema:
+            type: integer
+          example: "12"
+        - name: fromYear
+          in: query
+          schema:
+            type: integer
+          example: "2021"
+        - name: location
+          in: query
+          schema:
+            type: string
+          example: napf
+        - name: toMonth
+          in: query
+          schema:
+            type: integer
+          example: "3"
+        - name: toYear
+          in: query
+          schema:
+            type: integer
+          example: "2021"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.akkumulierte_temperaturdifferenzen.api.get_list_for_period:
+    get:
+      tags:
+        - Akkumulierte Temperaturdifferenzen
+      summary: Get List For Period
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: fromMonth
+          in: query
+          schema:
+            type: integer
+          example: "3"
+        - name: fromYear
+          in: query
+          schema:
+            type: integer
+          example: "2017"
+        - name: location
+          in: query
+          schema:
+            type: string
+          example: zurich_fluntern
+        - name: toMonth
+          in: query
+          schema:
+            type: integer
+          example: "6"
+        - name: toYear
+          in: query
+          schema:
+            type: integer
+          example: "2017"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
   /api/method/mietrecht_ch.mietrecht_ch.doctype.wetterstationen.api.get_all:
     get:
       tags:
