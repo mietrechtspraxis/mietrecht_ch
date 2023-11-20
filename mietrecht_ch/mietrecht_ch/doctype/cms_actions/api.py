@@ -31,7 +31,6 @@ def get_cms_actions(action_group_key):
             'isInternal': True if db_action[4] == 1 else False,
             'attachment': f"{site_url}{db_action[6]}" if db_action[6] is not None else None,
             'fileUrl': db_action[7],
-            'sort_display': db_action[8]
             
         }
         actions.append(action)
