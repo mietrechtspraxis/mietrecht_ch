@@ -16,7 +16,10 @@
   "email",
   "annotation",
   "additional_data",
-  "type"
+  "type",
+  "products",
+  "delivery_address",
+  "different_delivery_address"
  ],
  "fields": [
   {
@@ -85,9 +88,25 @@
    "fieldname": "address_complement",
    "fieldtype": "Long Text",
    "label": "Zusatz"
+  },
+  {
+   "fieldname": "products",
+   "fieldtype": "Text",
+   "label": "Produkts"
+  },
+  {
+   "fieldname": "delivery_address",
+   "fieldtype": "Text",
+   "label": "Lieferadresse"
+  },
+  {
+   "default": "0",
+   "fieldname": "different_delivery_address",
+   "fieldtype": "Check",
+   "label": "Abweichende Lieferadresse"
   }
  ],
- "modified": "2023-11-06 13:45:35.307157",
+ "modified": "2023-11-21 09:00:44.394786",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",
