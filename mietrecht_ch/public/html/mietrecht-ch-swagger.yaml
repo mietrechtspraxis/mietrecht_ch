@@ -380,7 +380,55 @@ components:
         message:
           type: array
           items:
-            $ref: "#components/schemas/CMSAction"      
+            $ref: "#components/schemas/CMSAction"
+    BuildingAddress:
+      description: Address structure
+      properties:
+        gender:
+            type: string
+        first_name:
+            type: string  
+        last_name:
+            type: string  
+        company:
+            type: string  
+        additional_info:
+            type: string  
+        street:
+            type: string  
+        po_box:
+            type: string  
+        zip_and_city:
+            type: string
+    FormData:
+      desrcription: Data not nested
+      properties:
+        email:
+          type: string
+        remarks:
+          type: string
+        different_delivery_address:
+          type: boolean
+        type:
+          type: string
+    FormAntwort:
+      description: Return the structure of a Building Address
+      properties:
+        billing_address:
+            $ref: "#components/schemas/BuildingAddress"
+        email:
+          type: string
+        remarks:
+          type: string
+        different_delivery_address:
+          type: string
+        type:
+          type: string
+        delivery_address:
+            $ref: "#components/schemas/BuildingAddress"
+        data:
+          type: object
+          
 tags:
   - name: Healthcheck
   - name: Heizölpreise
@@ -1331,7 +1379,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#components/schemas/CourseAndSeminare"
+                $ref: "#/components/schemas/CourseAndSeminare"
   /api/method/mietrecht_ch.mietrecht_ch.doctype.kurse_und_seminare.api.get_by_name:
     get:
       tags:
@@ -1350,91 +1398,42 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#components/schemas/CourseAndSeminare"
+                $ref: "#/components/schemas/CourseAndSeminare"
   /api/method/mietrecht_ch.mietrecht_ch.doctype.antwort_auf_das_formular.api.create_response_form:
     post:
       tags:
         - Antwort auf das Formular
       summary: Get all the Course and Seminare entries in database
-      parameters:
-        - name: genre
-          required: False
-          in: query
-          schema:
-            type: string
-          example: "Frau"
-        - name: First Name
-          required: True
-          in: query
-          schema:
-            type: string
-          example: "Jhon"
-        - name: Last Name
-          required: True
-          in: query
-          schema:
-            type: string
-          example: "Doe"
-        - name: Company
-          required: false
-          in: query
-          schema:
-            type: string
-          example: "Mietrecht"
-        - name: Street
-          required: false
-          in: query
-          schema:
-            type: string
-          example: "Sattelgasse 4"
-        - name: Company Number
-          required: false
-          in: query
-          schema:
-            type: string
-          example: "CHE-123.456. 789"
-        - name: Zip Code
-          required: True
-          in: query
-          schema:
-            type: string
-          example: "4008 - Basel Stad"
-        - name: Address Complement
-          required: false
-          in: query
-          schema:
-            type: string
-          example: "Switzerland"
-        - name: Email
-          required: false
-          in: query
-          schema:
-            type: string
-          example: "miet@mietrecht.ch"
-        - name: Annotation
-          required: false
-          in: query
-          schema:
-            type: string
-          example: "Annotation you want."
-        - name: Additional Data
-          required: false
-          in: query
-          schema:
-            type: string
-          example: "Additional Data..."
-        - name: Company
-          required: false
-          in: query
-          schema:
-            type: string
-          example: "Mietrecht Zurich"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormAntwort'
       responses:
-        "200":
+        '201':
+          description: Created
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#components/schemas/CourseAndSeminare"
-
+                properties:
+                  created:
+                    type: boolean
+                    example: True
+                  orderNumber:
+                    type: string
+                    example: "shop-00029"
+        '400':
+          description: Not created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  notCreted:
+                    type: boolean
+                    example: False
+                  cmsErrorKey:
+                    type: string
+                    example: "SHOP_ERROR_BESTELLUNG"
                 
