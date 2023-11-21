@@ -7,15 +7,15 @@ MESSAGE_ERROR = { 'created': False, 'cmsErrorKey' : 'SHOP_ERROR_BESTELLUNG' }
 
 @frappe.whitelist(allow_guest=True, methods=['POST'])
 def create_response_form():
-    request = return_json_data()
+    try:
+        request = return_json_data()
 
-    if request is not None and len(request) != 0:
-        try:
+        if request is not None and len(request) != 0:
             if not __validate_fields__(request):
                 return create_form_response(request)
             return __validate_fields__(request)
-        except Exception as e:
-            return f"An error occurred: {str(e)}"
+    except Exception as e:
+        return f"An error occurred: {str(e)}"
         
     return BadRequestException('The form cannot be empty.')
     
@@ -49,7 +49,7 @@ def create_form_response(request):
     email = request.get('email')
     remarks = request.get('remarks')
     type_form = request.get('type')
-    data = json.dumps(request.get('data'), indent=2, ensure_ascii=False)
+    data = json.dumps(json.loads(request.get('data')), indent=2)
     different_delivery_address = request.get('different_delivery_address')
 
     # Create main form response document
@@ -79,7 +79,7 @@ def create_form_response(request):
 
     doc.insert(ignore_permissions=True)
 
-    return { 'created': True }
+    return { 'created': True, 'order_number': doc.name }
     
 def __validate_fields__(request):
     for k in [request]:
