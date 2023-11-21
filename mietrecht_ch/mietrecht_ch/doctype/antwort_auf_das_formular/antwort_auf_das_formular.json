@@ -1,4 +1,5 @@
 {
+ "autoname": "format:{type}-{#####}",
  "creation": "2023-11-02 12:07:36.241900",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -53,7 +54,6 @@
   {
    "fieldname": "street",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Strasse"
   },
   {
@@ -75,6 +75,7 @@
    "default": "andere",
    "fieldname": "type",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Type",
    "options": "kontakt\nandere\nabo\nshop"
   },
@@ -172,7 +173,7 @@
    "fieldtype": "Column Break"
   }
  ],
- "modified": "2023-11-21 14:48:15.503005",
+ "modified": "2023-11-21 15:37:24.135665",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",

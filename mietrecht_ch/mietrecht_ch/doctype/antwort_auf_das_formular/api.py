@@ -49,7 +49,7 @@ def create_form_response(request):
     email = request.get('email')
     remarks = request.get('remarks')
     type_form = request.get('type')
-    data = request.get('data')
+    data = json.dumps(request.get('data'), indent=2, ensure_ascii=False)
     different_delivery_address = request.get('different_delivery_address')
 
     # Create main form response document
@@ -90,22 +90,6 @@ def __validate_fields__(request):
         street = billing_address['street']
         company_number = billing_address['company']
         zip_code = billing_address['zip_and_city']
-        
-        if (first_name == "" or last_name == "" ) and firma == "":
-            return MESSAGE_ERROR
-            
-        if (street == "" or zip_code == "") and (company_number == ""):  
-            return MESSAGE_ERROR
-
-def __validate_delivery_address_fields__(request):
-    for k in [request]:
-        delivery_address = k['delivery_address']
-        first_name = delivery_address['first_name']
-        last_name = delivery_address['last_name']
-        firma = delivery_address['po_box']
-        street = delivery_address['street']
-        company_number = delivery_address['company']
-        zip_code = delivery_address['zip_and_city']
         
         if (first_name == "" or last_name == "" ) and firma == "":
             return MESSAGE_ERROR
