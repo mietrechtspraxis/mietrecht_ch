@@ -24,9 +24,9 @@ def get_address_data(request, address_key):
         'gender': delivery_address.get('gender'),
         'first_name': delivery_address.get('first_name'),
         'last_name': delivery_address.get('last_name'),
-        'firma': delivery_address.get('company'),
+        'firma': delivery_address.get('po_box'),
         'street': delivery_address.get('street'),
-        'company': delivery_address.get('po_box'),
+        'company': delivery_address.get('company'),
         'zip_code': delivery_address.get('zip_and_city'),
         'additional_info': delivery_address.get('additional_info'),
     }
@@ -38,10 +38,10 @@ def create_form_response(request):
     gender = billing_address.get('gender')
     first_name = billing_address.get('first_name')
     last_name = billing_address.get('last_name')
-    firma = billing_address.get('company')
+    firma = billing_address.get('po_box')
     additional_info = billing_address.get('additional_info')
     street = billing_address.get('street')
-    company_number = billing_address.get('po_box')
+    company_number = billing_address.get('company')
     zip_code = billing_address.get('zip_and_city')
     
     email = request.get('email')
@@ -87,13 +87,13 @@ def __validate_fields__(request):
         last_name = billing_address['last_name']
         firma = billing_address['po_box']
         street = billing_address['street']
-        company_number = billing_address['po_box']
+        company_number = billing_address['company']
         zip_code = billing_address['zip_and_city']
         
         if (first_name == "" or last_name == "" ) and firma == "":
             errors.append({'error' : 'Please add either a First Name and Last Name or a Firma value.'})
             
-        if (street == "" or zip_code == "") and (company_number == None):  
+        if (street == "" or zip_code == "") and (company_number == ""):  
             errors.append({'error' : 'Please add either a Street and zip code or a valid Company Number.'})
     
     if errors:
