@@ -6,7 +6,10 @@
  "engine": "InnoDB",
  "field_order": [
   "email",
+  "column_break_2",
+  "type",
   "info_break",
+  "check_3",
   "gender",
   "first_name",
   "last_name",
@@ -16,6 +19,7 @@
   "company_number",
   "zip_code",
   "different_delivery_section",
+  "different_delivery_address",
   "delivery_gender",
   "delivery_first_name",
   "delivery_last_name",
@@ -24,9 +28,7 @@
   "delivery_street",
   "delivery_company_number",
   "delivery_zip_code",
-  "different_delivery_address",
   "product_break_section",
-  "type",
   "column_break",
   "remarks",
   "section_break_25",
@@ -72,10 +74,11 @@
    "label": "Email"
   },
   {
+   "default": "andere",
    "fieldname": "type",
-   "fieldtype": "Text",
+   "fieldtype": "Select",
    "label": "Type",
-   "options": "Bestellformular \u201cKurs- und Seminarprogramm\u201d\nKontakt\nAndere\nshop"
+   "options": "kontakt\nandere\nabo\nshop"
   },
   {
    "default": "0",
@@ -111,8 +114,7 @@
   },
   {
    "fieldname": "product_break_section",
-   "fieldtype": "Section Break",
-   "label": "Daten"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "column_break",
@@ -135,7 +137,7 @@
   },
   {
    "fieldname": "delivery_additional_info",
-   "fieldtype": "Long Text",
+   "fieldtype": "Data",
    "label": "Liefreung Zusatz"
   },
   {
@@ -166,9 +168,18 @@
   {
    "fieldname": "section_break_25",
    "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "check_3",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
   }
  ],
- "modified": "2023-11-21 14:23:18.939996",
+ "modified": "2023-11-21 14:31:36.622542",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",
