@@ -81,21 +81,57 @@ def create_form_response(request):
 
     return { 'created': True, 'orderNumber': doc.name }
     
-def __validate_fields__(request):
-    for k in [request]:
-        billing_address = k['billing_address']
-        first_name = billing_address['first_name']
-        last_name = billing_address['last_name']
-        firma = billing_address['po_box']
-        street = billing_address['street']
-        company_number = billing_address['company']
-        zip_code = billing_address['zip_and_city']
+# def __validate_fields__(request):
+#     for k in [request]:
+#         billing_address = k['billing_address']
+#         first_name = billing_address['first_name']
+#         last_name = billing_address['last_name']
+#         firma = billing_address['po_box']
+#         street = billing_address['street']
+#         company_number = billing_address['company']
+#         zip_code = billing_address['zip_and_city']
         
-        if (first_name == "" or last_name == "" ) and firma == "":
-            return MESSAGE_ERROR
+#         if (first_name == "" or last_name == "" ) and firma == "":
+#             return MESSAGE_ERROR
             
-        if (street == "" or zip_code == "") and (company_number == ""):  
-            return MESSAGE_ERROR
+#         if (street == "" or zip_code == "") and (company_number == ""):  
+#             return MESSAGE_ERROR
+
+def __validate_address_fields__(address):
+    first_name = address.get('first_name', '')
+    last_name = address.get('last_name', '')
+    firma = address.get('po_box', '')
+    street = address.get('street', '')
+    company_number = address.get('company', '')
+    zip_code = address.get('zip_and_city', '')
+
+    if (first_name == "" or last_name == "") and firma == "":
+        return MESSAGE_ERROR
+
+    if (street == "" or zip_code == "") and company_number == "":
+        return MESSAGE_ERROR
+
+    # Validation succeeded
+    return None
+
+def __validate_fields__(request):
+    billing_address = request.get('billing_address', {})
+    delivery_address = request.get('delivery_address', {})
+
+    # Validate billing address
+    billing_error = __validate_address_fields__(billing_address)
+    if billing_error:
+        return billing_error
+
+    # Validate delivery address
+    delivery_error = __validate_address_fields__(delivery_address)
+    if delivery_error:
+        return delivery_error
+
+    # Additional validations for other fields can be added here
+
+    # All validations succeeded
+    return None
 
 def return_json_data():
     if frappe.get_request_header('Content-Type') != 'application/json':
