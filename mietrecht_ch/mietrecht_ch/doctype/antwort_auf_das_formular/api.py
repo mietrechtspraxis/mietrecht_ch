@@ -79,7 +79,7 @@ def create_form_response(request):
 
     doc.insert(ignore_permissions=True)
 
-    return { 'created': True, 'order_number': doc.name }
+    return { 'created': True, 'orderNumber': doc.name }
     
 def __validate_fields__(request):
     for k in [request]:
