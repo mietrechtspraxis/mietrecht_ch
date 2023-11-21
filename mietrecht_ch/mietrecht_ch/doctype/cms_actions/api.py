@@ -13,7 +13,7 @@ def get_cms_actions(action_group_key):
     db_actions = frappe.db.sql(""" 
         SELECT a.cms_key, a.title, a.url, a.description, a.is_internal ,f.file_url, a.file_attachment, a.file_url, a.weighting
         FROM `tabCMS Actions` AS a
-        LEFT JOIN tabFile AS f ON a.file=f.name
+        LEFT JOIN tabFile AS f ON a.file_attachment=f.name
         WHERE a.cms_key = %(key)s
         ORDER BY a.weighting ASC
     """, values={'key': action_group_key})
