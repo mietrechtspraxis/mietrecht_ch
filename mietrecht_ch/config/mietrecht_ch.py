@@ -16,23 +16,21 @@ def get_data():
                 },
                 {
                     "type": "doctype",
-                    "name": "Heizolpreise",
-                    "label": _("Heizölpreise hinzufügen"),
-                    "description": _("Heizölpreise hinzufügen"),
-                    "link": _("Form/Heizolpreise/New Heizolpreise 1")
-                },
-                {
-                    "type": "doctype",
                     "name": "Heizgradtagzahlen",
                     "label": _("Heizgradtagzahlen Liste"),
                     "description": _("Heizgradtagzahlen Liste")
                 },
                 {
                     "type": "doctype",
-                    "name": "Heizgradtagzahlen",
-                    "label": _("Heizgradtagzahlen hinzufügen"),
-                    "description": _("Heizgradtagzahlen hinzufügen"),
-                    "link": _("Form/Heizgradtagzahlen/New Heizgradtagzahlen 1")
+                    "name": "Akkumulierte Temperaturdifferenzen",
+                    "label": _("Akkumulierte Temperaturdifferenzen Liste"),
+                    "description": _("Akkumulierte Temperaturdifferenzen Liste")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Kuhlgradtagzahlen",
+                    "label": _("Kühlgradtagzahlen Liste"),
+                    "description": _("Kühlgradtagzahlen Liste")
                 }
             ]
         },

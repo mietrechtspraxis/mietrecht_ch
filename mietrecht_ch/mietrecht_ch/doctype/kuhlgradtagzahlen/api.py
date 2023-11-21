@@ -18,7 +18,8 @@ def get_sum_for_month(location, year, month):
     hotDays = execute_query("""SELECT `monat` as `month`, HEIZ.`hot_days` as `sum`
                                 FROM `tabKuhlgradtagzahlen` AS HEIZ
                                 JOIN `tabWetterstationen` AS LOC ON HEIZ.`location` = LOC.`label`
-                                WHERE HEIZ.`monat` LIKE '{date}' AND LOC.`value` LIKE '{location}';""".format(location=location, date=buildFullDate(year, month)))
+                                WHERE HEIZ.`monat` LIKE '{date}' AND LOC.`value` LIKE '{location}'
+                                ;""".format(location=location, date=buildFullDate(year, month)))
 
     calculatorResult = CalculatorResult(
         hotDays[0] if hotDays else None, None)
@@ -72,7 +73,8 @@ def get_list_for_period(location, fromYear, fromMonth, toYear, toMonth):
     hotDays = execute_query("""SELECT HEIZ.`monat` as `month`, HEIZ.`hot_days` as `sum`
                                 FROM `tabKuhlgradtagzahlen` AS HEIZ
                                 JOIN `tabWetterstationen` AS LOC ON HEIZ.`location` = LOC.`label`
-                                WHERE LOC.`value` LIKE '{location}' AND HEIZ.`monat` BETWEEN '{fromFull}' AND '{toFull}';"""
+                                WHERE LOC.`value` LIKE '{location}' AND HEIZ.`monat` BETWEEN '{fromFull}' AND '{toFull}'
+                                ORDER BY HEIZ.`monat`;"""
                              .format(location=location, fromFull=fromFull, toFull=toFull))
 
     resultTableDescriptions = [

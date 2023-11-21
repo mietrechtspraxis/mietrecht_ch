@@ -75,7 +75,8 @@ def get_list_for_period(location, fromYear, fromMonth, toYear, toMonth):
     coldDays = execute_query("""SELECT HEIZ.`monat` as `month`, HEIZ.`cold_days` as `sum`
                                 FROM `tabHeizgradtagzahlen` AS HEIZ
                                 JOIN `tabWetterstationen` AS LOC ON HEIZ.`location` = LOC.`label`
-                                WHERE LOC.`value` LIKE '{location}' AND HEIZ.`monat` BETWEEN '{fromFull}' AND '{toFull}';"""
+                                WHERE LOC.`value` LIKE '{location}' AND HEIZ.`monat` BETWEEN '{fromFull}' AND '{toFull}'
+                                ORDER BY HEIZ.`monat`;"""
                              .format(location=location, fromFull=fromFull, toFull=toFull))
 
     resultTableDescriptions = [
