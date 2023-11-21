@@ -91,7 +91,7 @@ def __validate_fields__(request):
         company_number = billing_address['company']
         zip_code = billing_address['zip_and_city']
         
-        if (first_name == "" or last_name == "" ) and firma == "" or:
+        if (first_name == "" or last_name == "" ) and firma == "":
             return MESSAGE_ERROR
             
         if (street == "" or zip_code == "") and (company_number == ""):  
