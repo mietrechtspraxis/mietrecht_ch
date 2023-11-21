@@ -8,63 +8,92 @@ def create_response_form():
     request = return_json_data()
 
     if request is not None and len(request) != 0:
-        
         try:
             if not __validate_fields__(request):
-                return __insert_new_document__(request)
-            
+                return create_form_response(request)
             return __validate_fields__(request)
         except Exception as e:
             return f"An error occurred: {str(e)}"
         
     return BadRequestException('The form cannot be empty.')
     
+def get_address_data(request, address_key):
+    delivery_address = request.get('delivery_address')
     
-def __insert_new_document__(request):
-    genre = request.get('genre')
-    first_name = request.get('first_name')
-    last_name = request.get('last_name')
-    street = request.get('street')
-    company_number = request.get('company_number')
-    zip_code = request.get('zip_code')
-    address_complement = request.get('address_complement')
+    return {
+        'gender': delivery_address.get('gender'),
+        'first_name': delivery_address.get('first_name'),
+        'last_name': delivery_address.get('last_name'),
+        'firma': delivery_address.get('company'),
+        'street': delivery_address.get('street'),
+        'company': delivery_address.get('po_box'),
+        'zip_code': delivery_address.get('zip_and_city'),
+        'additional_info': delivery_address.get('additional_info'),
+    }
+
+    
+def create_form_response(request):
+    # Main form data
+    billing_address = request.get('billing_address')
+    gender = billing_address.get('gender')
+    first_name = billing_address.get('first_name')
+    last_name = billing_address.get('last_name')
+    firma = billing_address.get('company')
+    additional_info = billing_address.get('additional_info')
+    street = billing_address.get('street')
+    company_number = billing_address.get('po_box')
+    zip_code = billing_address.get('zip_and_city')
+    
     email = request.get('email')
-    annotation = request.get('annotation')
-    additional_data = request.get('additional_data')
+    remarks = request.get('remarks')
     type_form = request.get('type')
-    firma = request.get('company')
-    
+    data = json.dumps(request.get('products'))
+    different_delivery_address = request.get('different_delivery_address')
+
+    # Create main form response document
     doc = frappe.new_doc('Antwort auf das Formular')
-    doc.first_name = first_name
-    doc.last_name = last_name
-    doc.firma = firma
-    doc.zip_code = zip_code
-    doc.street = street
-    doc.company_number = company_number
-    doc.type = type_form
-    doc.email = email
-    doc.genre = genre
-    doc.annotation = annotation
-    doc.address_complement = address_complement
-    doc.additional_data = additional_data
+    doc.update({
+        'gender': gender,
+        'first_name': first_name,
+        'last_name': last_name,
+        'company': company_number,
+        'additional_info': additional_info,
+        'street': street,
+        'company_number': firma,
+        'zip_code': zip_code,
+        'email': email,
+        'type': type_form,
+        'data': data,
+        'remarks': remarks,
+        'different_delivery_address': different_delivery_address,
+    })
+
+    # Create or update delivery address
+    if different_delivery_address:
+        delivery_data = get_address_data(request, 'delivery_address')
+        doc.update({
+            'delivery_' + key: value for key, value in delivery_data.items()
+        })
+
     doc.insert(ignore_permissions=True)
-    
+
     return {'success': True}
     
 def __validate_fields__(request):
     errors = []
     for k in [request]:
-        first_name = k['first_name']
-        last_name = k['last_name']
-        firma = k['firma']
-        street = k['street']
-        company_number = k['company_number']
-        zip_code = k['zip_code']
+        billing_address = k['billing_address']
+        first_name = billing_address['first_name']
+        last_name = billing_address['last_name']
+        firma = billing_address['po_box']
+        street = billing_address['street']
+        company_number = billing_address['po_box']
+        zip_code = billing_address['zip_and_city']
         
         if (first_name == "" or last_name == "" ) and firma == "":
             errors.append({'error' : 'Please add either a First Name and Last Name or a Firma value.'})
             
-        if (street == "" or zip_code == "") and (company_number == ""):  
+        if (street == "" or zip_code == "") and (company_number == None):  
             errors.append({'error' : 'Please add either a Street and zip code or a valid Company Number.'})
     
     if errors:
