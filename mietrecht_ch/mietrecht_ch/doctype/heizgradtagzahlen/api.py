@@ -82,7 +82,7 @@ def get_list_for_period(location, fromYear, fromMonth, toYear, toMonth):
     resultTableDescriptions = [
         ResultTableDescription("Monat", "month"),
         ResultTableDescription("Jahr", "year"),
-        ResultTableDescription("Tage", "number"),
+        ResultTableDescription("°C", "number"),
     ]
 
     results = []
