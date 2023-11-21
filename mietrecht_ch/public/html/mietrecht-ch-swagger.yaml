@@ -415,7 +415,7 @@ components:
       description: Return the structure of a Building Address
       properties:
         billing_address:
-            $ref: "#components/schemas/BuildingAddress"
+            $ref: "#/components/schemas/BuildingAddress"
         email:
           type: string
         remarks:
@@ -425,7 +425,7 @@ components:
         type:
           type: string
         delivery_address:
-            $ref: "#components/schemas/BuildingAddress"
+            $ref: "#/components/schemas/BuildingAddress"
         data:
           type: object
           
@@ -1430,7 +1430,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  notCreted:
+                  notCreated:
                     type: boolean
                     example: False
                   cmsErrorKey:
