@@ -69,8 +69,7 @@
   {
    "fieldname": "email",
    "fieldtype": "Data",
-   "label": "Email",
-   "unique": 1
+   "label": "Email"
   },
   {
    "fieldname": "type",
@@ -86,12 +85,12 @@
   },
   {
    "fieldname": "additional_info",
-   "fieldtype": "Long Text",
+   "fieldtype": "Data",
    "label": "Zusatz"
   },
   {
    "fieldname": "remarks",
-   "fieldtype": "Long Text",
+   "fieldtype": "Text",
    "label": "Bermerkungen"
   },
   {
@@ -169,7 +168,7 @@
    "fieldtype": "Section Break"
   }
  ],
- "modified": "2023-11-21 13:35:24.378774",
+ "modified": "2023-11-21 14:23:18.939996",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",

@@ -49,7 +49,7 @@ def create_form_response(request):
     email = request.get('email')
     remarks = request.get('remarks')
     type_form = request.get('type')
-    data = json.dumps(request.get('products'))
+    data = json.dumps(request.get('data'))
     different_delivery_address = request.get('different_delivery_address')
 
     # Create main form response document
