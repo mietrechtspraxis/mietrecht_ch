@@ -3,6 +3,8 @@ from mietrecht_ch.models.exceptions.mietrechtException import BadRequestExceptio
 import json
 from frappe import _
 
+MESSAGE_ERROR = { 'created': False, 'cmsErrorKey' : 'SHOP_ERROR_BESTELLUNG' }
+
 @frappe.whitelist(allow_guest=True, methods=['POST'])
 def create_response_form():
     request = return_json_data()
@@ -77,10 +79,9 @@ def create_form_response(request):
 
     doc.insert(ignore_permissions=True)
 
-    return {'success': True}
+    return { 'created': True }
     
 def __validate_fields__(request):
-    errors = []
     for k in [request]:
         billing_address = k['billing_address']
         first_name = billing_address['first_name']
@@ -90,14 +91,12 @@ def __validate_fields__(request):
         company_number = billing_address['company']
         zip_code = billing_address['zip_and_city']
         
-        if (first_name == "" or last_name == "" ) and firma == "":
-            errors.append({'error' : 'Please add either a First Name and Last Name or a Firma value.'})
+        if (first_name == "" or last_name == "" ) and firma == "" or:
+            return MESSAGE_ERROR
             
         if (street == "" or zip_code == "") and (company_number == ""):  
-            errors.append({'error' : 'Please add either a Street and zip code or a valid Company Number.'})
-    
-    if errors:
-        return errors
+            return MESSAGE_ERROR
+
 
 def return_json_data():
     if frappe.get_request_header('Content-Type') != 'application/json':
