@@ -5,6 +5,9 @@
 from __future__ import unicode_literals
 # import frappe
 from frappe.model.document import Document
+from frappe.utils import get_datetime_str, formatdate
 
 class AkkumulierteTemperaturdifferenzen(Document):
-	pass
+	def autoname(self):
+		_date = formatdate(get_datetime_str(self.monat), "yyyy-MM")
+		self.name = "atd-{}-{}".format(_date, self.loc)

@@ -6,7 +6,8 @@
  "field_order": [
   "monat",
   "location",
-  "cold_days"
+  "cold_days",
+  "loc"
  ],
  "fields": [
   {
@@ -28,9 +29,14 @@
    "label": "Monat",
    "reqd": 1,
    "set_only_once": 1
+  },
+  {
+   "fieldname": "loc",
+   "fieldtype": "Data",
+   "label": "loc"
   }
  ],
- "modified": "2022-02-24 14:45:48.994336",
+ "modified": "2023-11-21 14:35:58.539201",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Heizgradtagzahlen",

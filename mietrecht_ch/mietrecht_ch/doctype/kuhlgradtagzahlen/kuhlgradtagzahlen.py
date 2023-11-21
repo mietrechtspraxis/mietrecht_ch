@@ -9,5 +9,5 @@ from frappe.utils import get_datetime_str, formatdate
 
 class Kuhlgradtagzahlen(Document):
 	def autoname(self):
-		_date = formatdate(get_datetime_str(self.monat), "yyyy-MM-dd")
-		self.name = "heizgradtagzahlen-{}-{}".format(_date, self.location)
+		_date = formatdate(get_datetime_str(self.monat), "yyyy-MM")
+		self.name = "cdd-{}-{}".format(_date, self.loc)

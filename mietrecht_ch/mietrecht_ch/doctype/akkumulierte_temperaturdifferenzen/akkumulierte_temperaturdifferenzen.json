@@ -6,7 +6,8 @@
  "field_order": [
   "monat",
   "location",
-  "days"
+  "days",
+  "loc"
  ],
  "fields": [
   {
@@ -26,9 +27,14 @@
    "fieldname": "days",
    "fieldtype": "Float",
    "label": "Akkumulierte Temperaturdifferenzen"
+  },
+  {
+   "fieldname": "loc",
+   "fieldtype": "Data",
+   "label": "Loc"
   }
  ],
- "modified": "2023-11-09 13:17:48.869100",
+ "modified": "2023-11-21 14:35:16.753257",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Akkumulierte Temperaturdifferenzen",

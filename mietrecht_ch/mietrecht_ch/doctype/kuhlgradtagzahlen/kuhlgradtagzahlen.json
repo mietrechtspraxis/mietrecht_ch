@@ -6,7 +6,8 @@
  "field_order": [
   "monat",
   "location",
-  "hot_days"
+  "hot_days",
+  "loc"
  ],
  "fields": [
   {
@@ -26,9 +27,14 @@
    "fieldname": "hot_days",
    "fieldtype": "Float",
    "label": "K\u00fchlgradtagzahlen"
+  },
+  {
+   "fieldname": "loc",
+   "fieldtype": "Data",
+   "label": "loc"
   }
  ],
- "modified": "2023-11-09 11:31:14.506229",
+ "modified": "2023-11-21 14:34:31.406459",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Kuhlgradtagzahlen",
