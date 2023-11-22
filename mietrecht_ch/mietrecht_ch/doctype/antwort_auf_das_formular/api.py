@@ -6,7 +6,7 @@ from frappe import _
 MESSAGE_ERROR = { 'created': False, 'cmsErrorKey' : 'SHOP_ERROR_BESTELLUNG' }
 
 @frappe.whitelist(allow_guest=True, methods=['POST'])
-def create_response_form():
+def create_form_answer():
     try:
         request = return_json_data()
 
