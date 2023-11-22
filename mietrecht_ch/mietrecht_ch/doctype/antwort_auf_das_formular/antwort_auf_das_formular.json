@@ -15,7 +15,7 @@
   "company",
   "additional_info",
   "street",
-  "company_number",
+  "po_box",
   "zip_code",
   "different_delivery_section",
   "different_delivery_address",
@@ -25,7 +25,7 @@
   "delivery_company",
   "delivery_additional_info",
   "delivery_street",
-  "delivery_company_number",
+  "delivery_po_box",
   "delivery_zip_code",
   "product_break_section",
   "column_break",
@@ -55,11 +55,6 @@
    "fieldname": "street",
    "fieldtype": "Data",
    "label": "Strasse"
-  },
-  {
-   "fieldname": "company_number",
-   "fieldtype": "Data",
-   "label": "Postfach"
   },
   {
    "fieldname": "zip_code",
@@ -145,11 +140,6 @@
    "label": "Lieferung Strasse"
   },
   {
-   "fieldname": "delivery_company_number",
-   "fieldtype": "Data",
-   "label": "Lieferung Postfach"
-  },
-  {
    "fieldname": "delivery_zip_code",
    "fieldtype": "Data",
    "label": "Lieferung PLZ/Ort"
@@ -171,9 +161,19 @@
   {
    "fieldname": "column_break_2",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "po_box",
+   "fieldtype": "Data",
+   "label": "Postfach"
+  },
+  {
+   "fieldname": "delivery_po_box",
+   "fieldtype": "Data",
+   "label": "Lieferung Postfach"
   }
  ],
- "modified": "2023-11-21 15:37:24.135665",
+ "modified": "2023-11-22 08:45:21.431740",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",

@@ -26,9 +26,9 @@ def get_address_data(request, address_key):
         'gender': delivery_address.get('gender'),
         'first_name': delivery_address.get('first_name'),
         'last_name': delivery_address.get('last_name'),
-        'firma': delivery_address.get('po_box'),
+        'firma': delivery_address.get('company'),
         'street': delivery_address.get('street'),
-        'company': delivery_address.get('company'),
+        'po_box': delivery_address.get('po_box'),
         'zip_code': delivery_address.get('zip_and_city'),
         'additional_info': delivery_address.get('additional_info'),
     }
@@ -40,10 +40,10 @@ def create_form_response(request):
     gender = billing_address.get('gender')
     first_name = billing_address.get('first_name')
     last_name = billing_address.get('last_name')
-    firma = billing_address.get('po_box')
+    firma = billing_address.get('company')
     additional_info = billing_address.get('additional_info')
     street = billing_address.get('street')
-    company_number = billing_address.get('company')
+    po_box = billing_address.get('po_box')
     zip_code = billing_address.get('zip_and_city')
     
     email = request.get('email')
@@ -58,10 +58,10 @@ def create_form_response(request):
         'gender': gender,
         'first_name': first_name,
         'last_name': last_name,
-        'company': company_number,
+        'company': firma,
         'additional_info': additional_info,
         'street': street,
-        'company_number': firma,
+        'po_box': po_box,
         'zip_code': zip_code,
         'email': email,
         'type': type_form,
@@ -82,17 +82,15 @@ def create_form_response(request):
     return { 'created': True, 'orderNumber': doc.name }
 
 def __validate_address_fields__(address):
-    first_name = address.get('first_name', '')
     last_name = address.get('last_name', '')
-    firma = address.get('po_box', '')
+    company = address.get('company', '')
     street = address.get('street', '')
-    company_number = address.get('company', '')
-    zip_code = address.get('zip_and_city', '')
+    po_box = address.get('po_box', '')
 
-    if (first_name == "" or last_name == "") and firma == "":
+    if last_name == "" and company == "":
         return MESSAGE_ERROR
 
-    if (street == "" or zip_code == "") and company_number == "":
+    if street == "" and po_box == "":
         return MESSAGE_ERROR
 
     # Validation succeeded
