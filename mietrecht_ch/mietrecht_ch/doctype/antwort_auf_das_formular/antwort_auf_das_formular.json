@@ -1,0 +1,198 @@
+{
+ "autoname": "format:{type}-{#####}",
+ "creation": "2023-11-02 12:07:36.241900",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "email",
+  "column_break_2",
+  "type",
+  "info_break",
+  "gender",
+  "first_name",
+  "last_name",
+  "company",
+  "additional_info",
+  "street",
+  "po_box",
+  "zip_code",
+  "different_delivery_section",
+  "different_delivery_address",
+  "delivery_gender",
+  "delivery_first_name",
+  "delivery_last_name",
+  "delivery_company",
+  "delivery_additional_info",
+  "delivery_street",
+  "delivery_po_box",
+  "delivery_zip_code",
+  "product_break_section",
+  "column_break",
+  "remarks",
+  "section_break_25",
+  "data"
+ ],
+ "fields": [
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Vorname"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Nachname"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Data",
+   "label": "Firma"
+  },
+  {
+   "fieldname": "street",
+   "fieldtype": "Data",
+   "label": "Strasse"
+  },
+  {
+   "fieldname": "zip_code",
+   "fieldtype": "Data",
+   "label": "PLZ/Ort"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  },
+  {
+   "default": "andere",
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type",
+   "options": "kontakt\nandere\nabo\nshop"
+  },
+  {
+   "default": "0",
+   "fieldname": "different_delivery_address",
+   "fieldtype": "Check",
+   "label": "Abweichende Lieferadresse"
+  },
+  {
+   "fieldname": "additional_info",
+   "fieldtype": "Data",
+   "label": "Zusatz"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Text",
+   "label": "Bermerkungen"
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Anrede",
+   "options": "Frau\nHerr\nkeines von beiden"
+  },
+  {
+   "fieldname": "data",
+   "fieldtype": "Text",
+   "label": "Daten"
+  },
+  {
+   "fieldname": "different_delivery_section",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "product_break_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "delivery_first_name",
+   "fieldtype": "Data",
+   "label": "Lieferung Vorname"
+  },
+  {
+   "fieldname": "delivery_last_name",
+   "fieldtype": "Data",
+   "label": "Lieferung Nachname"
+  },
+  {
+   "fieldname": "delivery_company",
+   "fieldtype": "Data",
+   "label": "Lieferung Firma"
+  },
+  {
+   "fieldname": "delivery_additional_info",
+   "fieldtype": "Data",
+   "label": "Liefreung Zusatz"
+  },
+  {
+   "fieldname": "delivery_street",
+   "fieldtype": "Data",
+   "label": "Lieferung Strasse"
+  },
+  {
+   "fieldname": "delivery_zip_code",
+   "fieldtype": "Data",
+   "label": "Lieferung PLZ/Ort"
+  },
+  {
+   "fieldname": "info_break",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "delivery_gender",
+   "fieldtype": "Select",
+   "label": "Lieferung Anrede",
+   "options": "Frau\nHerr\nkeines von beiden"
+  },
+  {
+   "fieldname": "section_break_25",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "po_box",
+   "fieldtype": "Data",
+   "label": "Postfach"
+  },
+  {
+   "fieldname": "delivery_po_box",
+   "fieldtype": "Data",
+   "label": "Lieferung Postfach"
+  }
+ ],
+ "modified": "2023-11-22 08:45:21.431740",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "Antwort auf das Formular",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

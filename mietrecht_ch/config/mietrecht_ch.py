@@ -313,4 +313,42 @@ def get_data():
                 }
             ]
         },
+        {
+            "label": _("CMS Actions"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "CMS Actions",
+                    "label": _("CMS Aktionen"),
+                    "description": _("CMS Aktionen")
+                },
+                {
+                    "type": "doctype",
+                    "name": "CMS Actions",
+                    "label": _("Neue CMS Aktionen"),
+                    "description": _("New CMS Aktionen"),
+                    "link": _("Form/CMS Actions/New CMS Aktionen 0")
+                }
+            ]
+        },
+        {
+            "label": _("Antwort auf das Formular"),
+            "icon": "fa fa-money",
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "Antwort auf das Formular",
+                    "label": _("Antwort auf das Formular"),
+                    "description": _("Antwort auf das Formular")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Antwort auf das Formular",
+                    "label": _("Neue Antwort auf das Formular"),
+                    "description": _("New Antwort auf das Formular"),
+                    "link": _("Form/Antwort auf das Formular/New Antwort auf das Formular 0")
+                }
+            ]
+        }
     ]

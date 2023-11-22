@@ -380,7 +380,55 @@ components:
         message:
           type: array
           items:
-            $ref: "#components/schemas/CMSAction"      
+            $ref: "#components/schemas/CMSAction"
+    BuildingAddress:
+      description: Address structure
+      properties:
+        gender:
+            type: string
+        first_name:
+            type: string  
+        last_name:
+            type: string  
+        company:
+            type: string  
+        additional_info:
+            type: string  
+        street:
+            type: string  
+        po_box:
+            type: string  
+        zip_and_city:
+            type: string
+    FormData:
+      desrcription: Data not nested
+      properties:
+        email:
+          type: string
+        remarks:
+          type: string
+        different_delivery_address:
+          type: boolean
+        type:
+          type: string
+    FormAntwort:
+      description: Return the structure of a Building Address
+      properties:
+        billing_address:
+            $ref: "#/components/schemas/BuildingAddress"
+        email:
+          type: string
+        remarks:
+          type: string
+        different_delivery_address:
+          type: string
+        type:
+          type: string
+        delivery_address:
+            $ref: "#/components/schemas/BuildingAddress"
+        data:
+          type: object
+          
 tags:
   - name: Healthcheck
   - name: Heizölpreise
@@ -398,7 +446,8 @@ tags:
   - name: Entscheid
   - name: Short Url
   - name: Course and Seminare
-  - name: CMS Action
+  - name: Antwort auf das Formular
+
 paths:
   /api/method/mietrecht_ch.mietrecht_ch.doctype.heizolpreise.api.get_single_oil_price:
     get:
@@ -1540,7 +1589,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#components/schemas/CourseAndSeminare"
+                $ref: "#/components/schemas/CourseAndSeminare"
   /api/method/mietrecht_ch.mietrecht_ch.doctype.kurse_und_seminare.api.get_by_name:
     get:
       tags:
@@ -1559,24 +1608,42 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#components/schemas/CourseAndSeminare"
-  /api/method/mietrecht_ch.mietrecht_ch.doctype.cms_actions.api.get_cms_actions:
-    get:
+                $ref: "#/components/schemas/CourseAndSeminare"
+  /api/method/mietrecht_ch.mietrecht_ch.doctype.antwort_auf_das_formular.api.create_response_form:
+    post:
       tags:
-        - CMS Action
-      summary: Get all the CMS Actions informations
-      parameters:
-        - name: action_group_key
-          required: true
-          in: query
-          schema:
-            type: string
-          example: "LEBENSDAUER_HILFE"
+        - Antwort auf das Formular
+      summary: Get all the Course and Seminare entries in database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormAntwort'
       responses:
-        "200":
+        '201':
+          description: Created
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#components/schemas/CourseAndSeminare"
+                properties:
+                  created:
+                    type: boolean
+                    example: True
+                  orderNumber:
+                    type: string
+                    example: "shop-00029"
+        '400':
+          description: Not created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  notCreated:
+                    type: boolean
+                    example: False
+                  cmsErrorKey:
+                    type: string
+                    example: "SHOP_ERROR_BESTELLUNG"
                 
