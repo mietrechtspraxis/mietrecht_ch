@@ -13,7 +13,7 @@ def create_response_form():
         if request is not None and len(request) != 0:
             if not __validate_fields__(request):
                 return create_form_response(request)
-            return __validate_fields__(request)
+            return MESSAGE_ERROR
     except Exception as e:
         return f"An error occurred: {str(e)}"
         
@@ -29,7 +29,7 @@ def get_address_data(request, address_key):
         'firma': delivery_address.get('company'),
         'street': delivery_address.get('street'),
         'po_box': delivery_address.get('po_box'),
-        'zip_code': delivery_address.get('zip_and_city'),
+        'zip_and_city': delivery_address.get('zip_and_city'),
         'additional_info': delivery_address.get('additional_info'),
     }
 
@@ -44,7 +44,7 @@ def create_form_response(request):
     additional_info = billing_address.get('additional_info')
     street = billing_address.get('street')
     po_box = billing_address.get('po_box')
-    zip_code = billing_address.get('zip_and_city')
+    zip_and_city = billing_address.get('zip_and_city')
     
     email = request.get('email')
     remarks = request.get('remarks')
@@ -62,7 +62,7 @@ def create_form_response(request):
         'additional_info': additional_info,
         'street': street,
         'po_box': po_box,
-        'zip_code': zip_code,
+        'zip_and_city': zip_and_city,
         'email': email,
         'type': type_form,
         'data': data,
@@ -86,11 +86,15 @@ def __validate_address_fields__(address):
     company = address.get('company', '')
     street = address.get('street', '')
     po_box = address.get('po_box', '')
+    zip_and_city = address.get('zip_and_city', '')
 
     if last_name == "" and company == "":
         return MESSAGE_ERROR
 
     if street == "" and po_box == "":
+        return MESSAGE_ERROR
+    
+    if zip_and_city == "":
         return MESSAGE_ERROR
 
     # Validation succeeded
