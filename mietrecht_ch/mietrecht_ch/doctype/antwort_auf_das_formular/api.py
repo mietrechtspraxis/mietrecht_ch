@@ -19,7 +19,7 @@ def create_form_answer():
         
     return BadRequestException('The form cannot be empty.')
     
-def get_address_data(request, address_key):
+def get_address_data(request):
     delivery_address = request.get('delivery_address')
     
     return {
