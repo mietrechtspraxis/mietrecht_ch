@@ -80,22 +80,6 @@ def create_form_response(request):
     doc.insert(ignore_permissions=True)
 
     return { 'created': True, 'orderNumber': doc.name }
-    
-# def __validate_fields__(request):
-#     for k in [request]:
-#         billing_address = k['billing_address']
-#         first_name = billing_address['first_name']
-#         last_name = billing_address['last_name']
-#         firma = billing_address['po_box']
-#         street = billing_address['street']
-#         company_number = billing_address['company']
-#         zip_code = billing_address['zip_and_city']
-        
-#         if (first_name == "" or last_name == "" ) and firma == "":
-#             return MESSAGE_ERROR
-            
-#         if (street == "" or zip_code == "") and (company_number == ""):  
-#             return MESSAGE_ERROR
 
 def __validate_address_fields__(address):
     first_name = address.get('first_name', '')
@@ -128,9 +112,6 @@ def __validate_fields__(request):
     if delivery_error:
         return delivery_error
 
-    # Additional validations for other fields can be added here
-
-    # All validations succeeded
     return None
 
 def return_json_data():
