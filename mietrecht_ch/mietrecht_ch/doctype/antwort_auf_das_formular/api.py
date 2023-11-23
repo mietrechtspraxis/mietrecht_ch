@@ -2,24 +2,30 @@ import frappe
 from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
 import json
 from frappe import _
+from datetime import datetime
+from frappe.config import get_modules_from_all_apps
+from frappe.exceptions import DoesNotExistError
+
 
 MESSAGE_ERROR = { 'created': False, 'cmsErrorKey' : 'SHOP_ERROR_BESTELLUNG' }
+MP_ABO_ROLE = "mp_web_user_abo"
 
 @frappe.whitelist(allow_guest=True, methods=['POST'])
 def create_form_answer():
     try:
-        request = return_json_data()
+        request = __return_json_data__()
 
         if request is not None and len(request) != 0:
             if not __validate_fields__(request):
                 return create_form_response(request)
+            clean_response()
             return MESSAGE_ERROR
     except Exception as e:
         return f"An error occurred: {str(e)}"
-        
+
     return BadRequestException('The form cannot be empty.')
     
-def get_address_data(request):
+def __get_address_data__(request):
     delivery_address = request.get('delivery_address')
     
     return {
@@ -33,9 +39,41 @@ def get_address_data(request):
         'additional_info': delivery_address.get('additional_info'),
     }
 
-    
 def create_form_response(request):
-    # Main form data
+    # Create doctype structure
+    first_name, last_name, email, different_delivery_address, doc = __create_doctype_structure__(request)
+
+    # Add delivery address to the doctype if different address is checked
+    if different_delivery_address:
+        __add_different_address_to_doctype__(request, doc)
+
+    data = json.loads(request.get('data'))
+    abo_data = data.get('abo')
+
+    if abo_data and abo_data.startswith(("PERI-ABO-", "PERI-3DAY%", "Probe-Abo")):
+        try:
+            frappe.get_doc('User', email)
+            __add_role_mp__(email)
+        except DoesNotExistError:
+            __create_base_user__(first_name, last_name, email)
+            __add_role_mp__(email)
+        except:
+            return MESSAGE_ERROR
+        finally:
+            clean_response()
+        
+    
+    doc.insert(ignore_permissions=True)
+    
+    return { 'created': True, 'orderNumber': doc.name }
+
+def clean_response():
+  if ('_server_messages' in frappe.response):
+    del frappe.response["_server_messages"]
+  if ('exc_type' in frappe.response):
+    del frappe.response["exc_type"]
+
+def __create_doctype_structure__(request):
     billing_address = request.get('billing_address')
     gender = billing_address.get('gender')
     first_name = billing_address.get('first_name')
@@ -69,18 +107,68 @@ def create_form_response(request):
         'remarks': remarks,
         'different_delivery_address': different_delivery_address,
     })
+    
+    return first_name,last_name,email,different_delivery_address,doc
 
-    # Create or update delivery address
-    if different_delivery_address:
-        delivery_data = get_address_data(request)
-        doc.update({
+def __add_different_address_to_doctype__(request, doc):
+    delivery_data = __get_address_data__(request)
+    doc.update({
             'delivery_' + key: value for key, value in delivery_data.items()
         })
     
+def __add_role_mp__(email):
+    user_modification = frappe.get_doc('User', email)
+    user_modification.flags.ignore_permissions = True
+    user_modification.remove_roles()
+        
+    user_modification.add_roles(MP_ABO_ROLE)
+    user_modification.save()
 
-    doc.insert(ignore_permissions=True)
+def __create_base_user__(first_name, last_name, email):
+    user = frappe.get_doc({
+            "doctype":"User",
+            "email": email,
+            "first_name": first_name,
+            "last_name": last_name,
+            "user_type": "Website User"
+            })
+    
+    user.flags.ignore_permissions = True
+    user.flags.ignore_password_policy = True
+    user.block_modules = __blocked_modules__(email)
+    user.insert()
 
-    return { 'created': True, 'orderNumber': doc.name }
+def __generate_random_code__():
+    return frappe.generate_hash(length=10)
+
+def __remove_modules_to_user__(index, module, date, email):
+    random_code = __generate_random_code__()
+    module_doctype = frappe.get_doc({
+        "creation": date,
+        "docstatus": 0,
+        "doctype": "Block Module",
+        "idx": index + 1,
+        "modified": date,
+        "modified_by": "Administrator",
+        "module": module['module_name'],
+        "name": random_code,
+        "owner": "Administrator",
+        "parent": email,
+        "parentfield": "block_modules",
+        "parenttype": "User"
+    })
+    return module_doctype
+
+def __blocked_modules__(email):
+    all_modules = get_modules_from_all_apps()
+    blocked_modules = []
+    date = datetime.now()
+
+    for index, module in enumerate(all_modules):
+        module_doctype = __remove_modules_to_user__(index, module, date, email)
+        blocked_modules.append(module_doctype)
+
+    return blocked_modules
 
 def __validate_address_fields__(address):
     last_name = address.get('last_name', '')
@@ -90,12 +178,15 @@ def __validate_address_fields__(address):
     zip_and_city = address.get('zip_and_city', '')
 
     if last_name == "" and company == "":
+        clean_response()
         return MESSAGE_ERROR
 
     if street == "" and po_box == "":
+        clean_response()
         return MESSAGE_ERROR
     
     if zip_and_city == "":
+        clean_response()
         return MESSAGE_ERROR
 
     # Validation succeeded
@@ -108,16 +199,18 @@ def __validate_fields__(request):
     # Validate billing address
     billing_error = __validate_address_fields__(billing_address)
     if billing_error:
+        clean_response()
         return billing_error
 
     # Validate delivery address
     delivery_error = __validate_address_fields__(delivery_address)
     if delivery_error:
+        clean_response()
         return delivery_error
 
     return None
 
-def return_json_data():
+def __return_json_data__():
     if frappe.get_request_header('Content-Type') != 'application/json':
         frappe.throw("Invalid content type. Expected application/json.", title="Bad Request")
         
