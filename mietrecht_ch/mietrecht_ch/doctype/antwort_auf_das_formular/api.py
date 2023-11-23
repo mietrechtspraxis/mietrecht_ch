@@ -4,8 +4,6 @@ import json
 from frappe import _
 from datetime import datetime
 from frappe.config import get_modules_from_all_apps
-import secrets
-import string
 
 
 MESSAGE_ERROR = { 'created': False, 'cmsErrorKey' : 'SHOP_ERROR_BESTELLUNG' }
@@ -18,11 +16,12 @@ def create_form_answer():
 
         if request is not None and len(request) != 0:
             if not __validate_fields__(request):
+                frappe.clear_messages()
                 return create_form_response(request)
             return MESSAGE_ERROR
     except Exception as e:
         return f"An error occurred: {str(e)}"
-        
+
     return BadRequestException('The form cannot be empty.')
     
 def __get_address_data__(request):
@@ -52,13 +51,17 @@ def create_form_response(request):
 
     if abo_data and abo_data.startswith(("PERI-ABO-", "PERI-3DAY%", "Probe-Abo")):
         try:
-            __create_base_user__(first_name, last_name, email)   
-            __add_role_mp__(email)
+            current_user = frappe.get_doc('User', email)
+            # current_role = current_user.roles[0].role
+            if current_user:
+               __add_role_mp__(email)
+            else:
+                __create_base_user__(first_name, last_name, email)   
         except:
             return MESSAGE_ERROR
     
     doc.insert(ignore_permissions=True)
-
+    frappe.clear_messages()
     return { 'created': True, 'orderNumber': doc.name }
 
 def __create_doctype_structure__(request):
@@ -104,7 +107,6 @@ def __add_different_address_to_doctype__(request, doc):
             'delivery_' + key: value for key, value in delivery_data.items()
         })
     
-
 def __add_role_mp__(email):
     user_modification = frappe.get_doc('User', email)
     user_modification.flags.ignore_permissions = True
@@ -112,7 +114,6 @@ def __add_role_mp__(email):
         
     user_modification.add_roles(MP_ABO_ROLE)
     user_modification.save()
-    return user_modification
 
 def __create_base_user__(first_name, last_name, email):
     user = frappe.get_doc({
@@ -128,8 +129,8 @@ def __create_base_user__(first_name, last_name, email):
     user.block_modules = __blocked_modules__(email)
     user.insert()
 
-def __generate_random_code__(length=10):
-    return ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(length))
+def __generate_random_code__():
+    return frappe.generate_hash(length=10)
 
 def __remove_modules_to_user__(index, module, date, email):
     random_code = __generate_random_code__()
@@ -168,12 +169,15 @@ def __validate_address_fields__(address):
     zip_and_city = address.get('zip_and_city', '')
 
     if last_name == "" and company == "":
+        frappe.clear_messages()
         return MESSAGE_ERROR
 
     if street == "" and po_box == "":
+        frappe.clear_messages()
         return MESSAGE_ERROR
     
     if zip_and_city == "":
+        frappe.clear_messages()
         return MESSAGE_ERROR
 
     # Validation succeeded
@@ -186,11 +190,13 @@ def __validate_fields__(request):
     # Validate billing address
     billing_error = __validate_address_fields__(billing_address)
     if billing_error:
+        frappe.clear_messages()
         return billing_error
 
     # Validate delivery address
     delivery_error = __validate_address_fields__(delivery_address)
     if delivery_error:
+        frappe.clear_messages()
         return delivery_error
 
     return None
