@@ -16,8 +16,8 @@ def create_form_answer():
 
         if request is not None and len(request) != 0:
             if not __validate_fields__(request):
-                frappe.clear_messages()
                 return create_form_response(request)
+            clean_response()
             return MESSAGE_ERROR
     except Exception as e:
         return f"An error occurred: {str(e)}"
@@ -52,17 +52,21 @@ def create_form_response(request):
     if abo_data and abo_data.startswith(("PERI-ABO-", "PERI-3DAY%", "Probe-Abo")):
         try:
             current_user = frappe.get_doc('User', email)
-            # current_role = current_user.roles[0].role
             if current_user:
-               __add_role_mp__(email)
+                __add_role_mp__(email)
             else:
                 __create_base_user__(first_name, last_name, email)   
         except:
+            clean_response()
             return MESSAGE_ERROR
     
     doc.insert(ignore_permissions=True)
-    frappe.clear_messages()
+    
     return { 'created': True, 'orderNumber': doc.name }
+
+def clean_response():
+  if ('_server_messages' in frappe.local.response):
+    del frappe.local.response["_server_messages"]
 
 def __create_doctype_structure__(request):
     billing_address = request.get('billing_address')
@@ -169,15 +173,15 @@ def __validate_address_fields__(address):
     zip_and_city = address.get('zip_and_city', '')
 
     if last_name == "" and company == "":
-        frappe.clear_messages()
+        clean_response()
         return MESSAGE_ERROR
 
     if street == "" and po_box == "":
-        frappe.clear_messages()
+        clean_response()
         return MESSAGE_ERROR
     
     if zip_and_city == "":
-        frappe.clear_messages()
+        clean_response()
         return MESSAGE_ERROR
 
     # Validation succeeded
@@ -190,13 +194,13 @@ def __validate_fields__(request):
     # Validate billing address
     billing_error = __validate_address_fields__(billing_address)
     if billing_error:
-        frappe.clear_messages()
+        clean_response()
         return billing_error
 
     # Validate delivery address
     delivery_error = __validate_address_fields__(delivery_address)
     if delivery_error:
-        frappe.clear_messages()
+        clean_response()
         return delivery_error
 
     return None
