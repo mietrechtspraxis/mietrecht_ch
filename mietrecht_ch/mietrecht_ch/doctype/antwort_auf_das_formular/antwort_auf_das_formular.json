@@ -16,7 +16,7 @@
   "additional_info",
   "street",
   "po_box",
-  "zip_code",
+  "zip_and_city",
   "different_delivery_section",
   "different_delivery_address",
   "delivery_gender",
@@ -26,7 +26,7 @@
   "delivery_additional_info",
   "delivery_street",
   "delivery_po_box",
-  "delivery_zip_code",
+  "delivery_zip_and_city",
   "product_break_section",
   "column_break",
   "remarks",
@@ -55,11 +55,6 @@
    "fieldname": "street",
    "fieldtype": "Data",
    "label": "Strasse"
-  },
-  {
-   "fieldname": "zip_code",
-   "fieldtype": "Data",
-   "label": "PLZ/Ort"
   },
   {
    "fieldname": "email",
@@ -91,6 +86,7 @@
    "label": "Bermerkungen"
   },
   {
+   "default": "keines von beiden",
    "fieldname": "gender",
    "fieldtype": "Select",
    "in_list_view": 1,
@@ -140,11 +136,6 @@
    "label": "Lieferung Strasse"
   },
   {
-   "fieldname": "delivery_zip_code",
-   "fieldtype": "Data",
-   "label": "Lieferung PLZ/Ort"
-  },
-  {
    "fieldname": "info_break",
    "fieldtype": "Section Break"
   },
@@ -171,9 +162,19 @@
    "fieldname": "delivery_po_box",
    "fieldtype": "Data",
    "label": "Lieferung Postfach"
+  },
+  {
+   "fieldname": "zip_and_city",
+   "fieldtype": "Data",
+   "label": "PLZ/Ort"
+  },
+  {
+   "fieldname": "delivery_zip_and_city",
+   "fieldtype": "Data",
+   "label": "Lieferung PLZ/Ort"
   }
  ],
- "modified": "2023-11-22 08:45:21.431740",
+ "modified": "2023-11-23 16:57:16.762098",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",

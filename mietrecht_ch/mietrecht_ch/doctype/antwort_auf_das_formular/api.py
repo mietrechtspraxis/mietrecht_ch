@@ -32,7 +32,7 @@ def __get_address_data__(request):
         'gender': delivery_address.get('gender'),
         'first_name': delivery_address.get('first_name'),
         'last_name': delivery_address.get('last_name'),
-        'firma': delivery_address.get('company'),
+        'company': delivery_address.get('company'),
         'street': delivery_address.get('street'),
         'po_box': delivery_address.get('po_box'),
         'zip_and_city': delivery_address.get('zip_and_city'),
@@ -78,7 +78,7 @@ def __create_doctype_structure__(request):
     gender = billing_address.get('gender')
     first_name = billing_address.get('first_name')
     last_name = billing_address.get('last_name')
-    firma = billing_address.get('company')
+    company = billing_address.get('company')
     additional_info = billing_address.get('additional_info')
     street = billing_address.get('street')
     po_box = billing_address.get('po_box')
@@ -96,7 +96,7 @@ def __create_doctype_structure__(request):
         'gender': gender,
         'first_name': first_name,
         'last_name': last_name,
-        'company': firma,
+        'company': company,
         'additional_info': additional_info,
         'street': street,
         'po_box': po_box,
