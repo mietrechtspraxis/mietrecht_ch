@@ -104,6 +104,7 @@ def __add_different_address_to_doctype__(request, doc):
     doc.update({
             'delivery_' + key: value for key, value in delivery_data.items()
         })
+    
 
 def __add_role_mp__(email):
     user_modification = frappe.get_doc('User', email)
