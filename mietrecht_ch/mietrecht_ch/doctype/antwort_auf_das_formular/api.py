@@ -54,7 +54,6 @@ def create_form_response(request):
         try:
             __create_base_user__(first_name, last_name, email)   
             __add_role_mp__(email)
-            return {'userCreated': True}
         except:
             return MESSAGE_ERROR
     
