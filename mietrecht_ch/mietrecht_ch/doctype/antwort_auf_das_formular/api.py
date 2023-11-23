@@ -51,7 +51,6 @@ def create_form_response(request):
     abo_data = data.get('abo')
 
     if abo_data and abo_data.startswith(("PERI-ABO-", "PERI-3DAY%", "Probe-Abo")):
-        
         try:
             frappe.get_doc('User', email)
             __add_role_mp__(email)
