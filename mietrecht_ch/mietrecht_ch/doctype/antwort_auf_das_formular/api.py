@@ -1,4 +1,5 @@
 import frappe
+from frappe.core.doctype.user.user import sign_up
 from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
 import json
 from frappe import _
@@ -72,11 +73,99 @@ def create_form_response(request):
 
     # Create or update delivery address
     if different_delivery_address:
-        delivery_data = get_address_data(request, 'delivery_address')
+        delivery_data = get_address_data(request)
         doc.update({
             'delivery_' + key: value for key, value in delivery_data.items()
         })
 
+    data = json.loads(request.get('data'))
+    abo_data = data.get('abo')
+    full_name = f"{first_name + ' ' + last_name}"
+
+    if abo_data == "PERI-ABO-%" or abo_data == "PERI-3DAY%" or abo_data == "Probe-Abo":
+        # User creation account
+        # sign_up(email, full_name, None)
+
+        # upadte_sql = """
+        #     UPDATE `tabModule Def` as md
+        #     INNER JOIN `tabUser` as u ON u.email = "benoit.potty@liip.ch"
+        #     SET u.enabled = 0
+        #     WHERE u.enabled = 1
+        #      """
+
+        
+        
+        # result = frappe.db.sql(upadte_sql, as_dict=True)
+        # return
+
+        module_name = 'Accounts'
+
+            # Fetch the user
+        user = frappe.get_doc({
+            "doctype":"User",
+            "email": email,
+            "first_name": first_name,
+            "last_name": last_name,
+            "user_type": "Website User"
+            })
+            # Remove the module permission for the specified module
+        modules = frappe.get_all("Module Def", fields=[])
+        
+        return modules
+        # Print module information
+        for module in modules:
+            print(f"Module Name: {module.module_name}, Label: {module.label}")
+        user.flags.ignore_permissions = True
+        return user
+        user.save()
+        return
+
+        # Remove the module from the roles assigned to the user
+        for role in user_doc.get("roles"):
+            role_doc = frappe.get_doc("Role", role.role)
+            if module_name in role_doc.get("module_def_whitelist"):
+                return True
+                role_doc.remove("module_def_whitelist", {"module_def": module_name})
+                role_doc.save()
+                print(role_doc)
+
+        # Clear cache to apply changes
+        frappe.clear_cache()
+        return
+        # update_query = """
+        #     UPDATE `tabModule Def`
+        #     SET enabled = '0'
+        #     WHERE email IN (SELECT * FROM `tabUser` WHERE email = 'benoit.potty@liip.ch');
+        # """
+        # result = frappe.db.sql(update_query, as_dict=True)
+        # return result
+
+        user = frappe.get_doc({
+        "doctype":"User",
+        "email": email,
+        "first_name": first_name,
+        "last_name": last_name,
+        "user_type": "Website User"
+		})
+
+
+        
+        user.flags.ignore_permissions = True
+        user.flags.ignore_password_policy = True
+        user.insert()
+    
+
+        user_modification = frappe.get_doc('User', email)
+        user_modification.flags.ignore_permissions = True
+        user_modification.remove_roles()
+        user_modification.add_roles('mp_web_user_abo')
+        return user_modification.save()
+        
+    
+
+        
+        
+        
     doc.insert(ignore_permissions=True)
 
     return { 'created': True, 'orderNumber': doc.name }
