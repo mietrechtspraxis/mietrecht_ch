@@ -72,10 +72,11 @@ def create_form_response(request):
 
     # Create or update delivery address
     if different_delivery_address:
-        delivery_data = get_address_data(request, 'delivery_address')
+        delivery_data = get_address_data(request)
         doc.update({
             'delivery_' + key: value for key, value in delivery_data.items()
         })
+    
 
     doc.insert(ignore_permissions=True)
 
