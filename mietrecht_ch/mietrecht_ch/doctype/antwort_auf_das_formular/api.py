@@ -4,6 +4,7 @@ import json
 from frappe import _
 from datetime import datetime
 from frappe.config import get_modules_from_all_apps
+from frappe.exceptions import DoesNotExistError
 
 
 MESSAGE_ERROR = { 'created': False, 'cmsErrorKey' : 'SHOP_ERROR_BESTELLUNG' }
@@ -50,23 +51,28 @@ def create_form_response(request):
     abo_data = data.get('abo')
 
     if abo_data and abo_data.startswith(("PERI-ABO-", "PERI-3DAY%", "Probe-Abo")):
+        
         try:
-            current_user = frappe.get_doc('User', email)
-            if current_user:
-                __add_role_mp__(email)
-            else:
-                __create_base_user__(first_name, last_name, email)   
+            frappe.get_doc('User', email)
+            __add_role_mp__(email)
+        except DoesNotExistError:
+            __create_base_user__(first_name, last_name, email)
+            __add_role_mp__(email)
         except:
-            clean_response()
             return MESSAGE_ERROR
+        finally:
+            clean_response()
+        
     
     doc.insert(ignore_permissions=True)
     
     return { 'created': True, 'orderNumber': doc.name }
 
 def clean_response():
-  if ('_server_messages' in frappe.local.response):
-    del frappe.local.response["_server_messages"]
+  if ('_server_messages' in frappe.response):
+    del frappe.response["_server_messages"]
+  if ('exc_type' in frappe.response):
+    del frappe.response["exc_type"]
 
 def __create_doctype_structure__(request):
     billing_address = request.get('billing_address')
