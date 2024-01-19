@@ -42,15 +42,27 @@ def get_details(name=None):
     frappe.only_for((MP_WEB_USER_ROLE, MP_WEB_ADMIN_ROLE))
     result_data = frappe.get_all('Entscheid',
         fields=[
+            "mp_edition",
+            "mp_edition_start_page",
+            "id_old", #legacy
             "title_de",
             "decision_date",
             "court",
+            "description_de",
+            "title_fr",
+            "description_fr",
+            "article_new",
             "decision_number",
             "official_collection",
-            "description_de",
-            "mp_edition",
-            "mp_edition_start_page"
-            
+            "authority",
+            "ref_die_praxis",
+            "ref_semaine_judiciaire", 
+            "ref_droit_du_bail", 
+            "ref_cahiers_du_bail",
+            "ref_mietrecht_aktuell",
+            "mp_filename",
+            "author",
+            "author_info_de"
         ],
         filters=[
             ["name", "=", name],

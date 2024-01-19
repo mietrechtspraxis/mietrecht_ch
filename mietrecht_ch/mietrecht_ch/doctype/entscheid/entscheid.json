@@ -6,52 +6,63 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "buttons_section",
+  "open_id_old",
+  "open_web",
+  "id_name",
   "grundlegende_informationen_section",
   "type",
-  "decision_number",
-  "source",
-  "column_break_2",
   "court",
-  "decision_date",
+  "decision_number",
   "official_collection",
+  "column_break_2",
+  "decision_date",
+  "authority",
   "should_be_in_offcial_collection",
+  "source",
+  "id_old",
   "titel_und_beschreibung_section",
   "title_de",
   "description_de",
-  "laws",
-  "keywords",
+  "article_new",
   "column_break_3",
   "title_fr",
   "description_fr",
+  "aufsatz_section",
+  "author",
+  "column_break_34",
+  "author_info_de",
+  "author_info_fr",
+  "section_break_old_ref_sys",
+  "table_of_content",
+  "keywords",
+  "laws",
   "section_break_6",
   "mp_edition",
   "mp_edition_start_page",
   "mp_edition_end_page",
-  "mp_edition_part_pdf",
+  "mp_filename",
   "link_label",
   "mp_flash_section",
   "mp_flash",
+  "mp_flash_filename",
   "mp_flash_summary",
-  "mp_flash_pdf",
+  "mp_flash_text",
+  "mp_flash_opinion",
   "section_break_16",
+  "ref_die_praxis",
+  "ref_semaine_judiciaire",
+  "ref_droit_du_bail",
+  "ref_cahiers_du_bail",
+  "ref_mietrecht_aktuell",
   "magazine_hints",
   "other_magazine",
-  "aufsatz_section",
-  "author_de",
-  "author_info_de",
-  "column_break_34",
-  "author_fr",
-  "author_info_fr",
   "gesetze_section",
   "published",
   "article_old",
-  "article_new",
-  "id_old",
   "laws_old",
   "source_old",
-  "keywords_old",
-  "id_name",
-  "authority"
+  "keywords_old"
  ],
  "fields": [
   {
@@ -95,7 +106,7 @@
   },
   {
    "default": "N/A",
-   "description": "BGE Nummer oder Entscheid Nummer",
+   "description": "BGE oder Kanton, N/A f\u00fcr Aufs\u00e4tze und Flash",
    "fieldname": "court",
    "fieldtype": "Select",
    "label": "Gericht",
@@ -121,6 +132,7 @@
   {
    "fieldname": "other_magazine",
    "fieldtype": "Table",
+   "hidden": 1,
    "label": "Andere Zeitschriften",
    "options": "Entscheide Zeitschrift"
   },
@@ -134,12 +146,12 @@
    "description": "Format: 01/2022",
    "fieldname": "mp_flash",
    "fieldtype": "Data",
-   "label": "MP Flash"
+   "label": "mp-Flash"
   },
   {
    "fieldname": "mp_flash_summary",
    "fieldtype": "Text Editor",
-   "label": "MP Flash Summary"
+   "label": "mp-Flash Zusammenfassung"
   },
   {
    "fieldname": "column_break_3",
@@ -149,7 +161,7 @@
    "collapsible": 1,
    "fieldname": "section_break_6",
    "fieldtype": "Section Break",
-   "label": "MP Zeitschrift"
+   "label": "mp Zeitschrift"
   },
   {
    "default": "1900-01-01",
@@ -183,7 +195,7 @@
    "collapsible": 1,
    "fieldname": "mp_flash_section",
    "fieldtype": "Section Break",
-   "label": "MP Flash"
+   "label": "mp-Flash"
   },
   {
    "fieldname": "keywords",
@@ -206,11 +218,6 @@
    "label": "Aufsatz"
   },
   {
-   "fieldname": "author_de",
-   "fieldtype": "Data",
-   "label": "Autor*in (DE)"
-  },
-  {
    "fieldname": "author_info_de",
    "fieldtype": "Data",
    "label": "Autor*in-Infos (DE)"
@@ -220,11 +227,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "author_fr",
-   "fieldtype": "Data",
-   "label": "Autor*in (FR)"
-  },
-  {
    "fieldname": "author_info_fr",
    "fieldtype": "Data",
    "label": "Autor*in-Infos (FR)"
@@ -232,6 +234,7 @@
   {
    "fieldname": "gesetze_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "??? WHAT TO DO WITH THAT\""
   },
   {
@@ -244,22 +247,17 @@
    "description": "Format: 2/2022",
    "fieldname": "mp_edition",
    "fieldtype": "Data",
-   "label": "MP Zeitschrift Ausgabe"
+   "label": "mp Zeitschrift Ausgabe"
   },
   {
    "fieldname": "mp_edition_start_page",
    "fieldtype": "Int",
-   "label": "MP Zeitschrift Seite"
+   "label": "mp Zeitschrift Seite"
   },
   {
    "fieldname": "mp_edition_end_page",
    "fieldtype": "Int",
-   "label": "MP Zeitschrift Seite letzte"
-  },
-  {
-   "fieldname": "mp_edition_part_pdf",
-   "fieldtype": "Attach",
-   "label": "MP Zeitschrift PDF"
+   "label": "mp Zeitschrift Seite letzte"
   },
   {
    "fieldname": "link_label",
@@ -267,13 +265,9 @@
    "label": "Link-Bezeichnung"
   },
   {
-   "fieldname": "mp_flash_pdf",
-   "fieldtype": "Attach",
-   "label": "MP Flash PDF"
-  },
-  {
    "fieldname": "magazine_hints",
    "fieldtype": "HTML",
+   "hidden": 1,
    "options": "<p>\nHier alle Beispiele\n</p>"
   },
   {
@@ -289,8 +283,8 @@
   {
    "fieldname": "id_old",
    "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Alte Id"
+   "label": "Alte Id",
+   "read_only": 1
   },
   {
    "fieldname": "keywords_old",
@@ -304,18 +298,95 @@
    "unique": 1
   },
   {
-   "description": "Informationen zu kantonalen Beh\u00f6rden",
    "fieldname": "authority",
-   "fieldtype": "Small Text",
+   "fieldtype": "Data",
    "label": "Beh\u00f6rde"
   },
   {
+   "description": "Verweis auf Gesetze kanonisch mit Komma getrennt: Art. 31 Ziff. 1 Abs. 2 BMM, Art. 20 altOR",
    "fieldname": "article_new",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "Artikel (neu)"
+  },
+  {
+   "fieldname": "table_of_content",
+   "fieldtype": "Data",
+   "label": "Inhaltsverzeichnis"
+  },
+  {
+   "fieldname": "mp_flash_text",
+   "fieldtype": "Text Editor",
+   "label": "mp-Flash Text"
+  },
+  {
+   "fieldname": "mp_flash_opinion",
+   "fieldtype": "Text Editor",
+   "label": "mp-Flash Kommentar"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_old_ref_sys",
+   "fieldtype": "Section Break",
+   "label": "Altes System der Vereweise"
+  },
+  {
+   "fieldname": "open_id_old",
+   "fieldtype": "Button",
+   "label": "Web alt"
+  },
+  {
+   "fieldname": "ref_die_praxis",
+   "fieldtype": "Data",
+   "label": "Die Praxis"
+  },
+  {
+   "fieldname": "ref_semaine_judiciaire",
+   "fieldtype": "Data",
+   "label": "Semaine judiciale"
+  },
+  {
+   "fieldname": "ref_droit_du_bail",
+   "fieldtype": "Data",
+   "label": "Droit du bail"
+  },
+  {
+   "fieldname": "ref_cahiers_du_bail",
+   "fieldtype": "Data",
+   "label": "Cahiers du bail"
+  },
+  {
+   "fieldname": "ref_mietrecht_aktuell",
+   "fieldtype": "Data",
+   "label": "MietRecht Aktuell"
+  },
+  {
+   "fieldname": "mp_flash_filename",
+   "fieldtype": "Data",
+   "label": "mp-Flash Dateiname"
+  },
+  {
+   "fieldname": "mp_filename",
+   "fieldtype": "Data",
+   "label": "mp Dateiname"
+  },
+  {
+   "fieldname": "buttons_section",
+   "fieldtype": "Section Break",
+   "label": "Buttons"
+  },
+  {
+   "description": "Alle Autor*innen, mehre mit Komma trennen",
+   "fieldname": "author",
+   "fieldtype": "Data",
+   "label": "Autor*in(nen)"
+  },
+  {
+   "fieldname": "open_web",
+   "fieldtype": "Button",
+   "label": "Web neu"
   }
  ],
- "modified": "2023-11-06 16:28:39.531955",
+ "modified": "2024-01-19 18:20:30.755603",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Entscheid",
