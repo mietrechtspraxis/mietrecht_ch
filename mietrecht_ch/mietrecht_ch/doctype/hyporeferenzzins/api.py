@@ -49,10 +49,17 @@ def get_index_by_month(year: Number, month: Number, canton: str = 'CH'):
 
 
 @frappe.whitelist(allow_guest=True)
-def get_interest_value_from_date(fromMonth: Number, fromYear: Number, toMonth: Number, toYear: Number, canton: str = 'CH'):
+def get_interest_value_from_date( fromMonth: Number, fromYear: Number, toMonth: Number, toYear: Number, canton: str = 'CH', fromDay: str = "01", toDay: str = "01"):
+    fromMonth = str(int(fromMonth))
+    fromYear = str(int(fromYear))
+    toMonth = str(int(toMonth))
+    toYear = str(int(toYear))
+    canton = canton[:2]
+    toDay = str(int(toDay))
+    fromDay = str(int(fromDay))
 
     requested_from_date, requested_to_date = buildDatesInChronologicalOrder(
-        fromYear, fromMonth, toYear, toMonth)
+        fromYear, fromMonth, toYear, toMonth, fromDay, toDay)
 
     get_index_from_date = __get_index_by_date__(canton, requested_from_date, 1)
     get_index_to_date = __get_index_by_date__(canton, requested_to_date, 1)
@@ -116,7 +123,7 @@ def __get_index_by_date__(canton, request_date, nbr_result):
     closest_index = execute_query("""SELECT publish_date, interest, canton 
                               FROM tabHypoReferenzzins 
                               WHERE (canton = '{canton}' OR canton = 'CH')
-                              AND publish_date < LAST_DAY('{date}')
+                              AND publish_date <= '{date}'
                               ORDER BY publish_date DESC
                               LIMIT {nbr_result}
                               """
