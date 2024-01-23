@@ -1,4 +1,5 @@
 {
+ "allow_rename": 1,
  "autoname": "format:{base_year}",
  "creation": "2022-03-29 08:05:56.096908",
  "doctype": "DocType",
@@ -14,7 +15,7 @@
    "label": "Basis"
   }
  ],
- "modified": "2022-03-29 08:12:19.347504",
+ "modified": "2024-01-22 12:08:24.950080",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "TeuerungBasis",
