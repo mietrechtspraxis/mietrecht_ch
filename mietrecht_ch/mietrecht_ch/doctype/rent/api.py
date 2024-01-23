@@ -226,17 +226,19 @@ def __get_data_from_manual_input__(payload, total_original, index_basis, affecte
 def hypotekarzins_data(payload, extra_room):
     # Hypothekarzinsen
     previous = payload['hypoReference']['previous']
+    fromDay = previous['day']
     fromYear = previous['year']
     fromMonth = previous['month']
     next = payload['hypoReference']['next']
+    toDay = next['day']
     toYear = next['year']
     toMonth = next['month']
     total_original = payload['rent']['rent'] + extra_room
     input_type = payload['hypoReference']['inputType']
     canton: str = payload['canton']
 
-    old_date_formatted_hypo = buildFullDate(fromYear, fromMonth)
-    new_date_formatted_hypo = buildFullDate(toYear, toMonth)
+    old_date_formatted_hypo = buildFullDate(fromYear, fromMonth, fromDay)
+    new_date_formatted_hypo = buildFullDate(toYear, toMonth, toDay)
 
     if input_type == 'search':
         return __get_data_hypo_from_search_input__(total_original, canton, old_date_formatted_hypo, new_date_formatted_hypo)

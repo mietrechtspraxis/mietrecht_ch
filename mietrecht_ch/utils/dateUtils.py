@@ -5,7 +5,9 @@ DATE_FORMAT = '%Y-%m-%d'
 
 
 def buildFullDate(year, month, day="01"):
-    return year + '-' + str.zfill(month, 2) + '-' + day
+    return "{year}-{month:02}-{day:02}".format(
+        year=int(year), month=int(month), day=int(day)
+    )
 
 
 def swapDateIfNeeded(fromDate, toDate):
