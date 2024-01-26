@@ -77,8 +77,7 @@
    "fieldname": "title_de",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Titel (DE)",
-   "reqd": 1
+   "label": "Titel (DE)"
   },
   {
    "fieldname": "title_fr",
@@ -90,7 +89,6 @@
    "fieldname": "description_de",
    "fieldtype": "Text Editor",
    "label": "Regeste (DE)",
-   "reqd": 1,
    "translatable": 1
   },
   {
@@ -209,7 +207,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Typ",
-   "options": "Entscheid\nFlash\nAufsatz"
+   "options": "Entscheid\nFlash\nAufsatz\nReferenz"
   },
   {
    "collapsible": 1,
@@ -386,7 +384,7 @@
    "label": "Web neu"
   }
  ],
- "modified": "2024-01-19 18:20:30.755603",
+ "modified": "2024-01-26 09:52:17.708311",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Entscheid",
