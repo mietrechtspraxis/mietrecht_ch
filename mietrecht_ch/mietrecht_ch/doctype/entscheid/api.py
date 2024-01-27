@@ -5,7 +5,7 @@ from mietrecht_ch.utils.auth import MP_WEB_ADMIN_ROLE, MP_WEB_USER_ROLE
 MINIMUM_CHARACTER = 4
 
 @frappe.whitelist(allow_guest=True)
-def search_decision(term=None):
+def search_decision_simple(term=None):
 
     if len(term) < MINIMUM_CHARACTER:
         raise BadRequestException(f'The search term must have at least {MINIMUM_CHARACTER} characters.')
@@ -31,10 +31,73 @@ def search_decision(term=None):
             'decision_number': escaped_searched_term,
             'official_collection': escaped_searched_term,
             'article_new': escaped_searched_term
-        }
+        },
+        order_by=""
+        # TODO: zuerst typ (aufsatz, entscheid, flash)
+        # type bge dann alle anderen, dann 
+        # chronologisch umgekehrt
     )
     
     
+    return search_data
+
+@frappe.whitelist(allow_guest=True)
+def search_decision(term=None):
+    if len(term) < MINIMUM_CHARACTER:
+        raise BadRequestException(f'The search term must have at least {MINIMUM_CHARACTER} characters.')
+
+    # Sanitize the input term to prevent SQL injection
+    term = frappe.db.escape('%{}%'.format(term), percent=False)
+
+    # Define the fields to be selected
+    fields = [
+        "`tabEntscheid`.`court`",
+        "`tabEntscheid`.`type`", 
+        "`tabEntscheid`.`title_de`",
+        "`tabEntscheid`.`decision_date`",
+        "`tabEntscheid`.`name`",
+        "`tabEntscheid`.`author`",
+        "`tabEntscheid`.`description_de`",
+        "`tabEntscheid`.`decision_number`",
+        "`tabEntscheid`.`article_new`",
+        "`tabEntscheid`.`mp_edition`"
+    ]
+
+    # Define the filters
+    filters = "(`tabEntscheid`.`type` IN ('Entscheid', 'Aufsatz'))"
+
+    # Define the or_filters
+    or_filters = """
+        (`tabEntscheid`.`title_de` LIKE {term}
+        OR `tabEntscheid`.`mp_edition` LIKE {term}
+        OR `tabEntscheid`.`description_de` LIKE {term}
+        OR `tabEntscheid`.`decision_number` LIKE {term}
+        OR `tabEntscheid`.`official_collection` LIKE {term}
+        OR `tabEntscheid`.`article_new` LIKE {term})
+    """.format(term=term)
+
+    # Define the order by clause with CASE statements
+    order_by = """
+        CASE
+            WHEN `tabEntscheid`.`type` = 'Entscheid' AND `tabEntscheid`.`court` = 'BGE' THEN 1
+            WHEN `tabEntscheid`.`type` = 'Aufsatz' THEN 2
+            ELSE 3
+        END,
+        `tabEntscheid`.`decision_date` DESC
+    """
+
+    # Build the query
+    query = """
+        SELECT {fields}
+        FROM `tabEntscheid`
+        WHERE {filters}
+        AND {or_filters}
+        ORDER BY {order_by}
+    """.format(fields=', '.join(fields), filters=filters, or_filters=or_filters, order_by=order_by)
+
+    # Execute the query
+    search_data = frappe.db.sql(query, as_dict=True)
+
     return search_data
 
 @frappe.whitelist(allow_guest=True)
@@ -42,6 +105,7 @@ def get_details(name=None):
     frappe.only_for((MP_WEB_USER_ROLE, MP_WEB_ADMIN_ROLE))
     result_data = frappe.get_all('Entscheid',
         fields=[
+            "type",
             "mp_edition",
             "mp_edition_start_page",
             "id_old", #legacy
