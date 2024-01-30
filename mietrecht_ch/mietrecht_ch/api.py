@@ -1,4 +1,4 @@
-# THERE IS A COPY IN mietrecht_ch/api.py
+# THIS IS A COPY OF ../api.py
 
 from __future__ import unicode_literals
 import frappe
