@@ -43,6 +43,7 @@ def search_decision_simple(term=None):
 
 @frappe.whitelist(allow_guest=True)
 def search_decision(term=None):
+    term = term.strip()
     if len(term) < MINIMUM_CHARACTER:
         raise BadRequestException(f'The search term must have at least {MINIMUM_CHARACTER} characters.')
 
@@ -64,7 +65,7 @@ def search_decision(term=None):
     ]
 
     # Define the filters
-    filters = "(`tabEntscheid`.`type` IN ('Entscheid', 'Aufsatz'))"
+    filters = "(`tabEntscheid`.`type` IN ('Entscheid', 'Aufsatz', 'Flash'))"
 
     # Define the or_filters
     or_filters = """
