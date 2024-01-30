@@ -85,7 +85,12 @@ def get_jwt(user_details, mp_roles):
   }
 
   token_bytes = jwt.encode(payload, secret, algorithm="HS256")
-
-  token = token_bytes.decode('utf-8') 
+  
+  # this is for backward copatibility with python <3
+  try:
+    token = token_bytes.decode('utf-8') 
+  except:
+    token = token_bytes
+    pass
 
   return token
