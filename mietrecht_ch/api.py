@@ -1,5 +1,3 @@
-# THERE IS A COPY IN mietrecht_ch/api.py
-
 from __future__ import unicode_literals
 import frappe
 from frappe import _
@@ -20,7 +18,8 @@ def healthcheck():
     return answer
 
 
-@frappe.whitelist(allow_guest=True, methods='POST')
+# @frappe.whitelist(allow_guest=True, methods='POST')
+@frappe.whitelist(allow_guest=True)
 def login(user, pwd):
     try:
         login_manager = LoginManager()
