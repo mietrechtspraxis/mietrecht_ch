@@ -18,7 +18,7 @@ def get_all():
 @frappe.whitelist(allow_guest=True)
 def get_by_name(name):
     
-    if len(name) == 0 or name is '':
+    if len(name) == 0 or name == '':
         raise BadRequestException('Name cannot be empty.')
     
     
