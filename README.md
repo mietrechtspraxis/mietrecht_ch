@@ -25,3 +25,5 @@ Site must enable scheduler in order to make cron jobs work. In frappe-bench -> s
 - Updated to 0.0.5
 - Updated to 0.0.6: ERPNextSwiss Dependencies.
 - Updated to 0.0.9: Login feature
+Developed and Reviewed by Liip until Nov 24, 2023.
+- Updated to 0.1
