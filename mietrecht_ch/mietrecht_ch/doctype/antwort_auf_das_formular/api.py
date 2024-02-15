@@ -10,7 +10,7 @@ from frappe.exceptions import DoesNotExistError
 MESSAGE_ERROR = { 'created': False, 'cmsErrorKey' : 'SHOP_ERROR_BESTELLUNG' }
 MP_ABO_ROLE = "mp_web_user_abo"
 
-@frappe.whitelist(allow_guest=True, methods=['POST'])
+@frappe.whitelist(allow_guest=True)
 def create_form_answer():
     try:
         request = __return_json_data__()
@@ -21,7 +21,7 @@ def create_form_answer():
         clean_response()
         return MESSAGE_ERROR
     except Exception as e:
-        return f"An error occurred: {str(e)}"
+        return "An error occurred: {0}".format(str(e))
 
 def create_form_response(request):
     email = request.get('email')
