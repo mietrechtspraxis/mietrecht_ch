@@ -5,6 +5,15 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "status",
+  "customer",
+  "contact",
+  "kunde_nicht_vorhanden",
+  "cb_1",
+  "mp_abo",
+  "sales_order",
+  "formular_verarbeiten",
+  "section_0",
   "email",
   "conversion_date",
   "login_expiration_date",
@@ -106,6 +115,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "collapsible": 1,
    "fieldname": "product_break_section",
    "fieldtype": "Section Break"
   },
@@ -139,6 +149,7 @@
    "label": "Lieferung Strasse"
   },
   {
+   "collapsible": 1,
    "fieldname": "info_break",
    "fieldtype": "Section Break"
   },
@@ -193,9 +204,64 @@
    "fieldtype": "Date",
    "label": "Login Ablaufdatum",
    "read_only": 1
+  },
+  {
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Open\nClosed"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_0",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Kunde",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "contact",
+   "fieldtype": "Link",
+   "label": "Kontakt",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Bitte vor der Verarbeitung zwingend die Adressdaten \u00fcberpr\u00fcfen",
+   "fieldname": "formular_verarbeiten",
+   "fieldtype": "Button",
+   "label": "Verarbeiten"
+  },
+  {
+   "default": "0",
+   "description": "Bitte \u00fcberpr\u00fcfen",
+   "fieldname": "kunde_nicht_vorhanden",
+   "fieldtype": "Check",
+   "label": "Kunde nicht vorhanden"
+  },
+  {
+   "fieldname": "mp_abo",
+   "fieldtype": "Link",
+   "label": "MP Abo",
+   "options": "mp Abo"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Bestellung",
+   "options": "Sales Order"
   }
  ],
- "modified": "2024-02-23 09:50:46.601302",
+ "modified": "2024-02-26 11:32:21.608287",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",
@@ -214,7 +280,7 @@
    "write": 1
   }
  ],
- "sort_field": "modified",
+ "sort_field": "status",
  "sort_order": "DESC",
  "track_changes": 1
 }

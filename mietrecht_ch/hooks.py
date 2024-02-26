@@ -108,14 +108,14 @@ doctype_js = {
 # ---------------
 
 scheduler_events = {
-    "cron": {
-        "59 23 * * *": [
-            "mietrecht_ch.tasks.ebook_cron"
-        ]
-    },
-    "all": [
-        "mietrecht_ch.tasks.all"
-    ],
+    # "cron": {
+    #     "59 23 * * *": [
+    #         "mietrecht_ch.tasks.ebook_cron"
+    #     ]
+    # },
+    # "all": [
+    #     "mietrecht_ch.tasks.all"
+    # ],
     "daily": [
         "mietrecht_ch.tasks.daily"
     ],
