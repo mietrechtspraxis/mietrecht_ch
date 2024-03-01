@@ -107,28 +107,28 @@ doctype_js = {
 # Scheduled Tasks
 # ---------------
 
-scheduler_events = {
-    # "cron": {
-    #     "59 23 * * *": [
-    #         "mietrecht_ch.tasks.ebook_cron"
-    #     ]
-    # },
-    # "all": [
-    #     "mietrecht_ch.tasks.all"
-    # ],
-    "daily": [
-        "mietrecht_ch.tasks.daily"
-    ],
-    "hourly": [
-        "mietrecht_ch.tasks.hourly"
-    ],
-    "weekly": [
-        "mietrecht_ch.tasks.weekly"
-    ],
-    "monthly": [
-        "mietrecht_ch.tasks.monthly"
-    ]
-}
+# scheduler_events = {
+#     "cron": {
+#         "59 23 * * *": [
+#             "mietrecht_ch.tasks.ebook_cron"
+#         ]
+#     },
+#     "all": [
+#         "mietrecht_ch.tasks.all"
+#     ],
+#     "daily": [
+#         "mietrecht_ch.tasks.daily"
+#     ],
+#     "hourly": [
+#         "mietrecht_ch.tasks.hourly"
+#     ],
+#     "weekly": [
+#         "mietrecht_ch.tasks.weekly"
+#     ],
+#     "monthly": [
+#         "mietrecht_ch.tasks.monthly"
+#     ]
+# }
 
 # Testing
 # -------

@@ -7,11 +7,14 @@
  "field_order": [
   "status",
   "customer",
-  "contact",
   "kunde_nicht_vorhanden",
+  "kontakt_nicht_vorhanden",
+  "abweichender_kontakt_nicht_vorhanden",
   "cb_1",
   "mp_abo",
   "sales_order",
+  "delivery_note",
+  "sales_invoice",
   "formular_verarbeiten",
   "section_0",
   "email",
@@ -21,6 +24,7 @@
   "type",
   "abo_type",
   "info_break",
+  "contact",
   "gender",
   "first_name",
   "last_name",
@@ -31,6 +35,7 @@
   "zip_and_city",
   "different_delivery_section",
   "different_delivery_address",
+  "second_contact",
   "delivery_gender",
   "delivery_first_name",
   "delivery_last_name",
@@ -259,9 +264,43 @@
    "fieldtype": "Link",
    "label": "Bestellung",
    "options": "Sales Order"
+  },
+  {
+   "fieldname": "delivery_note",
+   "fieldtype": "Link",
+   "label": "Lieferschein",
+   "options": "Delivery Note"
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Rechnung",
+   "options": "Sales Invoice"
+  },
+  {
+   "default": "0",
+   "description": "Bitte \u00fcberpr\u00fcfen",
+   "fieldname": "kontakt_nicht_vorhanden",
+   "fieldtype": "Check",
+   "label": "Kontakt nicht vorhanden"
+  },
+  {
+   "depends_on": "eval:doc.different_delivery_address",
+   "fieldname": "second_contact",
+   "fieldtype": "Link",
+   "label": "Abweichender Kontakt",
+   "options": "Contact"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.different_delivery_address",
+   "description": "Bitte \u00fcberpr\u00fcfen",
+   "fieldname": "abweichender_kontakt_nicht_vorhanden",
+   "fieldtype": "Check",
+   "label": "Abweichender Kontakt nicht vorhanden"
   }
  ],
- "modified": "2024-02-26 11:32:21.608287",
+ "modified": "2024-03-01 14:28:07.369154",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",

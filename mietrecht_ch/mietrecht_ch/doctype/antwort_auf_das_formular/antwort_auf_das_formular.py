@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 import json
-from frappe.utils.data import add_days, today
+from frappe.utils.data import add_days, today, now
 from frappe.utils import cint
 from mietrecht_ch.mietrecht_ch.doctype.antwort_auf_das_formular.api import __add_role_mp__, __create_base_user__
 from frappe.exceptions import DoesNotExistError
@@ -46,10 +46,14 @@ class AntwortaufdasFormular(Document):
             contact = create_contact(self)
             self.contact = contact
         
+        if self.different_delivery_address and not self.second_contact:
+            contact = create_contact(self, True)
+            self.second_contact = contact
+        
         if self.type == 'abo':
             mp_abo = create_mp_abo(self)
         elif self.type == 'shop':
-            mp_abo = create_sales_order(self)
+            mp_abo = create_sales_order(self, self.different_delivery_address)
         else:
             frappe.throw("Im Moment können nur Abo- und Shop-Bestellungen verarbeitet werden.")
 
@@ -90,7 +94,7 @@ def create_mp_abo(formular):
 
     return
 
-def create_sales_order(formular):
+def create_sales_order(formular, different_delivery_address=False):
     data = json.loads(formular.data)
     products = data.get('products')
 
@@ -101,20 +105,44 @@ def create_sales_order(formular):
             "qty": value
         })
     
+    # Sales Order
     so = frappe.get_doc({
         "doctype": "Sales Order",
         "customer": formular.customer,
         "customer_address": frappe.db.get_value("Contact", formular.contact, "address"),
+        "shipping_address_name": frappe.db.get_value("Contact", formular.second_contact, "address") if different_delivery_address else None,
         "contact_person": formular.contact,
         "items": items,
         "delivery_date": today()
     })
     so.insert()
-
+    so.submit()
     formular.sales_order = so.name
+    attach_pdf(formular, so)
+
+    # Delivery Note
+    from erpnext.selling.doctype.sales_order.sales_order import make_delivery_note
+    dn = make_delivery_note(so.name)
+    if different_delivery_address:
+        dn.contact_person = formular.second_contact
+    dn.save()
+    dn.submit()
+    formular.delivery_note = dn.name
+    attach_pdf(formular, dn)
+
+    # Sales Invoice
+    from erpnext.selling.doctype.sales_order.sales_order import make_sales_invoice
+    sinv = make_sales_invoice(so.name)
+    sinv.save()
+    sinv.submit()
+    formular.sales_invoice = sinv.name
+    attach_pdf(formular, sinv)
+
     formular.conversion_date = today()
     formular.status = 'Closed'
     formular.save()
+
+    
 
     return
 
@@ -133,13 +161,13 @@ def create_customer(formular):
 
     return customer.name
 
-def create_contact(formular):
+def create_contact(formular, second=False):
     # contact
     contact = frappe.get_doc({
         "doctype": "Contact",
-        'first_name': formular.first_name,
-        'last_name': formular.last_name,
-        'salutation': formular.gender,
+        'first_name': formular.first_name if not second else formular.delivery_first_name,
+        'last_name': formular.last_name if not second else formular.delivery_last_name,
+        'salutation': formular.gender if not second else formular.delivery_gender,
         'links': [
             {
                 'link_doctype': 'Customer',
@@ -150,7 +178,7 @@ def create_contact(formular):
     contact.insert()
 
     # address
-    contact.address = create_address(formular)
+    contact.address = create_address(formular, second)
 
     # mp web user
     if formular.email:
@@ -164,16 +192,22 @@ def create_contact(formular):
 
     return contact.name
 
-def create_address(formular):
+def create_address(formular, second=False):
+    postfach = 0
+    if not second:
+        postfach = 1 if formular.po_box else 0
+    else:
+        postfach = 1 if formular.delivery_po_box else 0
+    
     address = frappe.get_doc({
         "doctype": "Address",
-        'address_title': formular.customer,
-        'zusatz': formular.additional_info,
-        'strasse': formular.street,
-        'address_line1': formular.street,
-        'postfach': 1 if formular.po_box else 0,
-        'plz': formular.zip_and_city.split(" ")[0],
-        'city': formular.zip_and_city.replace(formular.zip_and_city.split(" ")[0] + " ", ""),
+        'address_title': formular.customer if not second else "Lieferung: {0}".format(formular.customer),
+        'zusatz': formular.additional_info if not second else formular.delivery_additional_info,
+        'strasse': formular.street if not second else formular.delivery_street,
+        'address_line1': formular.street if not second else formular.delivery_street,
+        'postfach': postfach,
+        'plz': formular.zip_and_city.split(" ")[0] if not second else formular.delivery_zip_and_city.split(" ")[0],
+        'city': formular.zip_and_city.replace(formular.zip_and_city.split(" ")[0] + " ", "") if not second else formular.delivery_zip_and_city.replace(formular.delivery_zip_and_city.split(" ")[0] + " ", ""),
         'links': [
             {
                 'link_doctype': 'Customer',
@@ -203,4 +237,31 @@ def create_mp_web_user(formular):
         frappe.throw("{0}".format(err))
     finally:
         return user.name
+
+def attach_pdf(formular, doc_record):
+    # erstellung Rechnungs PDF
+    from PyPDF2 import PdfWriter
+    from frappe.utils.pdf import get_file_data_from_writer
+    output = PdfWriter()
+
+    output = frappe.get_print(doc_record.doctype, doc_record.name, 'Standard', as_pdf = True, output = output, ignore_zugferd=True)
+    
+    file_name = "{docname}_{datetime}".format(docname=doc_record.name, datetime=now().replace(" ", "_"))
+    file_name = file_name.split(".")[0]
+    file_name = file_name.replace(":", "-")
+    file_name = file_name + ".pdf"
+    
+    filedata = get_file_data_from_writer(output)
+    
+    _file = frappe.get_doc({
+        "doctype": "File",
+        "file_name": file_name,
+        "folder": "Home/Attachments",
+        "is_private": 1,
+        "content": filedata,
+        "attached_to_doctype": 'Antwort auf das Formular',
+        "attached_to_name": formular.name
+    })
+    
+    _file.save(ignore_permissions=True)
 

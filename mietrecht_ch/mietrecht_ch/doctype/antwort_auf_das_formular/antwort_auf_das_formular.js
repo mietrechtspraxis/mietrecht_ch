@@ -6,8 +6,12 @@ frappe.ui.form.on('Antwort auf das Formular', {
         if (cur_frm.is_dirty()) {
             frappe.msgprint("Bitte speichern Sie das Formular zuerst")
         } else {
-            if((!cur_frm.doc.kunde_nicht_vorhanden)&&(!cur_frm.doc.customer || !cur_frm.doc.contact)) {
+            if((!cur_frm.doc.kunde_nicht_vorhanden)&&(!cur_frm.doc.customer)) {
                 frappe.msgprint("Bitte prüfen ob der entsprechende Kunde existiert.");
+            } else if((!cur_frm.doc.kontakt_nicht_vorhanden)&&(!cur_frm.doc.contact)) {
+                frappe.msgprint("Bitte prüfen ob der entsprechende Kontakt existiert.");
+            } else if((!cur_frm.doc.abweichender_kontakt_nicht_vorhanden)&&(!cur_frm.doc.second_contact)&&(cur_frm.doc.different_delivery_address)) {
+                frappe.msgprint("Bitte prüfen ob der entsprechende, abweichende, Kontakt existiert.");
             } else if(cur_frm.doc.status != 'Open') {
                 frappe.msgprint("Das Formular wurde bereits verarbeitet.");
             } else {
