@@ -240,9 +240,9 @@ def create_mp_web_user(formular):
 
 def attach_pdf(formular, doc_record):
     # erstellung Rechnungs PDF
-    from PyPDF2 import PdfWriter
+    from PyPDF2 import PdfFileWriter
     from frappe.utils.pdf import get_file_data_from_writer
-    output = PdfWriter()
+    output = PdfFileWriter()
 
     output = frappe.get_print(doc_record.doctype, doc_record.name, 'Standard', as_pdf = True, output = output, ignore_zugferd=True)
     
