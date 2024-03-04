@@ -260,6 +260,10 @@ def attach_pdf(formular, doc_record):
     printformat = "Standard"
     if doc_record.doctype == 'Sales Invoice':
         printformat = "Verlagsprodukte"
+    elif doc_record.doctype == 'Sales Order':
+        printformat = "Verlagsprodukte SO"
+    elif doc_record.doctype == 'Delivery Note':
+        printformat = "Verlagsprodukte DN"
     
     output = frappe.get_print(doc_record.doctype, doc_record.name, printformat, as_pdf = True, output = output, ignore_zugferd=True)
     
