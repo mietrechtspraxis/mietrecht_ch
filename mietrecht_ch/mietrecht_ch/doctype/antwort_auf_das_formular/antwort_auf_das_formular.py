@@ -10,6 +10,7 @@ from frappe.utils.data import add_days, today, now
 from frappe.utils import cint
 from mietrecht_ch.mietrecht_ch.doctype.antwort_auf_das_formular.api import __add_role_mp__, __create_base_user__
 from frappe.exceptions import DoesNotExistError
+from mietrechtspraxis.mietrechtspraxis.doctype.mp_abo.mp_abo import get_price
 
 class AntwortaufdasFormular(Document):
     def validate(self):
@@ -102,7 +103,8 @@ def create_sales_order(formular, different_delivery_address=False):
     for key, value in products.items():
         items.append({
             "item_code": key,
-            "qty": value
+            "qty": value,
+            "rate": get_price(key, formular.customer)
         })
     
     # Sales Order
