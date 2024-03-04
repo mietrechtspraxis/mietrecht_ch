@@ -10,7 +10,7 @@ from frappe.utils.data import add_days, today, now
 from frappe.utils import cint
 from mietrecht_ch.mietrecht_ch.doctype.antwort_auf_das_formular.api import __add_role_mp__, __create_base_user__
 from frappe.exceptions import DoesNotExistError
-from mietrechtspraxis.mietrechtspraxis.doctype.mp_abo.mp_abo import get_price
+from mietrechtspraxis.mietrechtspraxis.utils.qrr_reference import get_qrr_reference
 
 class AntwortaufdasFormular(Document):
     def validate(self):
@@ -57,6 +57,14 @@ class AntwortaufdasFormular(Document):
             mp_abo = create_sales_order(self, self.different_delivery_address)
         else:
             frappe.throw("Im Moment können nur Abo- und Shop-Bestellungen verarbeitet werden.")
+    
+    def check_grand_total(self):
+        if self.sales_order:
+            data = json.loads(self.data)
+            grand_total = data.get('total')
+            so = frappe.get_doc("Sales Order", self.sales_order)
+            if so.grand_total != grand_total:
+                frappe.throw("Achtung, der Totalbetrag stimmt nicht überein!")
 
 
 def get_abo_mapper():
@@ -104,7 +112,8 @@ def create_sales_order(formular, different_delivery_address=False):
         items.append({
             "item_code": key,
             "qty": value,
-            "rate": get_price(key, formular.customer)
+            "rate": get_price(key),
+            "price_list_rate": get_price(key)
         })
     
     # Sales Order
@@ -115,7 +124,8 @@ def create_sales_order(formular, different_delivery_address=False):
         "shipping_address_name": frappe.db.get_value("Contact", formular.second_contact, "address") if different_delivery_address else None,
         "contact_person": formular.contact,
         "items": items,
-        "delivery_date": today()
+        "delivery_date": today(),
+        "taxes_and_charges": "Gemischte MWST - mp"
     })
     so.insert()
     so.submit()
@@ -136,6 +146,8 @@ def create_sales_order(formular, different_delivery_address=False):
     from erpnext.selling.doctype.sales_order.sales_order import make_sales_invoice
     sinv = make_sales_invoice(so.name)
     sinv.save()
+    sinv.esr_reference = get_qrr_reference(sales_invoice=sinv.name, customer=formular.customer)
+    sinv.save(ignore_permissions=True)
     sinv.submit()
     formular.sales_invoice = sinv.name
     attach_pdf(formular, sinv)
@@ -143,8 +155,6 @@ def create_sales_order(formular, different_delivery_address=False):
     formular.conversion_date = today()
     formular.status = 'Closed'
     formular.save()
-
-    
 
     return
 
@@ -209,6 +219,7 @@ def create_address(formular, second=False):
         'address_line1': formular.street if not second else formular.delivery_street,
         'postfach': postfach,
         'plz': formular.zip_and_city.split(" ")[0] if not second else formular.delivery_zip_and_city.split(" ")[0],
+        'pincode': formular.zip_and_city.split(" ")[0] if not second else formular.delivery_zip_and_city.split(" ")[0],
         'city': formular.zip_and_city.replace(formular.zip_and_city.split(" ")[0] + " ", "") if not second else formular.delivery_zip_and_city.replace(formular.delivery_zip_and_city.split(" ")[0] + " ", ""),
         'links': [
             {
@@ -246,7 +257,11 @@ def attach_pdf(formular, doc_record):
     from frappe.utils.pdf import get_file_data_from_writer
     output = PdfFileWriter()
 
-    output = frappe.get_print(doc_record.doctype, doc_record.name, 'Standard', as_pdf = True, output = output, ignore_zugferd=True)
+    printformat = "Standard"
+    if doc_record.doctype == 'Sales Invoice':
+        printformat = "Verlagsprodukte"
+    
+    output = frappe.get_print(doc_record.doctype, doc_record.name, printformat, as_pdf = True, output = output, ignore_zugferd=True)
     
     file_name = "{docname}_{datetime}".format(docname=doc_record.name, datetime=now().replace(" ", "_"))
     file_name = file_name.split(".")[0]
@@ -267,3 +282,25 @@ def attach_pdf(formular, doc_record):
     
     _file.save(ignore_permissions=True)
 
+def get_price(item_code):
+    prices = frappe.db.sql("""SELECT
+                                    `price_list_rate`
+                                FROM `tabItem Price`
+                                WHERE `selling` = 1
+                                AND `item_code` = '{item_code}'
+                                AND (
+                                    `valid_from` IS NULL
+                                    OR
+                                    `valid_from` <= CURDATE()
+                                )
+                                AND (
+                                    `valid_upto` IS NULL
+                                    OR
+                                    `valid_upto` >= CURDATE()
+                                )
+                           """.format(item_code=item_code), as_dict=True)
+    frappe.log_error("{0}".format(prices), "holla die waldfee")
+    if prices:
+        return prices[0].price_list_rate
+    else:
+        return None

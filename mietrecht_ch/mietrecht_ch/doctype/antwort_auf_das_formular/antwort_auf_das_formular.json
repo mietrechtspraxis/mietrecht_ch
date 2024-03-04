@@ -6,7 +6,6 @@
  "engine": "InnoDB",
  "field_order": [
   "status",
-  "customer",
   "kunde_nicht_vorhanden",
   "kontakt_nicht_vorhanden",
   "abweichender_kontakt_nicht_vorhanden",
@@ -24,6 +23,7 @@
   "type",
   "abo_type",
   "info_break",
+  "customer",
   "contact",
   "gender",
   "first_name",
@@ -300,7 +300,7 @@
    "label": "Abweichender Kontakt nicht vorhanden"
   }
  ],
- "modified": "2024-03-01 14:28:07.369154",
+ "modified": "2024-03-04 15:35:11.085341",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",
