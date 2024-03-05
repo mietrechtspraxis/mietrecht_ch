@@ -47,14 +47,14 @@ class AntwortaufdasFormular(Document):
             contact = create_contact(self)
             self.contact = contact
         
-        if self.different_delivery_address and not self.second_contact:
+        if cint(self.different_delivery_address) == 1 and not self.second_contact:
             contact = create_contact(self, True)
             self.second_contact = contact
         
         if self.type == 'abo':
             mp_abo = create_mp_abo(self)
         elif self.type == 'shop':
-            mp_abo = create_sales_order(self, self.different_delivery_address)
+            mp_abo = create_sales_order(self, cint(self.different_delivery_address))
         else:
             frappe.throw("Im Moment können nur Abo- und Shop-Bestellungen verarbeitet werden.")
     
@@ -117,40 +117,52 @@ def create_sales_order(formular, different_delivery_address=False):
         })
     
     # Sales Order
-    so = frappe.get_doc({
-        "doctype": "Sales Order",
-        "customer": formular.customer,
-        "customer_address": frappe.db.get_value("Contact", formular.contact, "address"),
-        "shipping_address_name": frappe.db.get_value("Contact", formular.second_contact, "address") if different_delivery_address else None,
-        "contact_person": formular.contact,
-        "items": items,
-        "delivery_date": today(),
-        "taxes_and_charges": "Gemischte MWST - mp"
-    })
-    so.insert()
-    so.submit()
-    formular.sales_order = so.name
-    attach_pdf(formular, so)
+    try:
+        so = frappe.get_doc({
+            "doctype": "Sales Order",
+            "customer": formular.customer,
+            "customer_address": frappe.db.get_value("Contact", formular.contact, "address"),
+            "shipping_address_name": frappe.db.get_value("Contact", formular.second_contact, "address") if different_delivery_address == 1 else None,
+            "contact_person": formular.contact,
+            "items": items,
+            "delivery_date": today(),
+            "taxes_and_charges": "Gemischte MWST - mp"
+        })
+        so.insert()
+        so.submit()
+        formular.sales_order = so.name
+        attach_pdf(formular, so)
+    except Exception as so_err:
+        frappe.log_error("{0}".format(so_err), 'AADF: Sales Order')
+        pass
 
     # Delivery Note
-    from erpnext.selling.doctype.sales_order.sales_order import make_delivery_note
-    dn = make_delivery_note(so.name)
-    if different_delivery_address:
-        dn.contact_person = formular.second_contact
-    dn.save()
-    dn.submit()
-    formular.delivery_note = dn.name
-    attach_pdf(formular, dn)
+    try:
+        from erpnext.selling.doctype.sales_order.sales_order import make_delivery_note
+        dn = make_delivery_note(so.name)
+        if different_delivery_address == 1:
+            dn.contact_person = formular.second_contact
+        dn.save()
+        dn.submit()
+        formular.delivery_note = dn.name
+        attach_pdf(formular, dn)
+    except Exception as dn_err:
+        frappe.log_error("{0}".format(dn_err), 'AADF: Delivery Note')
+        pass
 
     # Sales Invoice
-    from erpnext.selling.doctype.sales_order.sales_order import make_sales_invoice
-    sinv = make_sales_invoice(so.name)
-    sinv.save()
-    sinv.esr_reference = get_qrr_reference(sales_invoice=sinv.name, customer=formular.customer)
-    sinv.save(ignore_permissions=True)
-    sinv.submit()
-    formular.sales_invoice = sinv.name
-    attach_pdf(formular, sinv)
+    try:
+        from erpnext.selling.doctype.sales_order.sales_order import make_sales_invoice
+        sinv = make_sales_invoice(so.name)
+        sinv.save()
+        sinv.esr_reference = get_qrr_reference(sales_invoice=sinv.name, customer=formular.customer)
+        sinv.save(ignore_permissions=True)
+        sinv.submit()
+        formular.sales_invoice = sinv.name
+        attach_pdf(formular, sinv)
+    except Exception as sinv_err:
+        frappe.log_error("{0}".format(err), 'AADF: Sales Invoice')
+        pass
 
     formular.conversion_date = today()
     formular.status = 'Closed'
@@ -170,6 +182,7 @@ def create_customer(formular):
         'customer_type': 'Individual' if not formular.company else 'Company'
     })
     customer.insert()
+    frappe.db.commit()
 
     return customer.name
 
@@ -188,6 +201,7 @@ def create_contact(formular, second=False):
         ]
     })
     contact.insert()
+    frappe.db.commit()
 
     # address
     contact.address = create_address(formular, second)
@@ -201,6 +215,7 @@ def create_contact(formular, second=False):
         row.is_primary = 1
     
     contact.save(ignore_permissions=True)
+    frappe.db.commit()
 
     return contact.name
 
@@ -229,6 +244,7 @@ def create_address(formular, second=False):
         ]
     })
     address.insert()
+    frappe.db.commit()
 
     return address.name
 
