@@ -319,7 +319,6 @@ def get_price(item_code):
                                     `valid_upto` >= CURDATE()
                                 )
                            """.format(item_code=item_code), as_dict=True)
-    frappe.log_error("{0}".format(prices), "holla die waldfee")
     if prices:
         return prices[0].price_list_rate
     else:
