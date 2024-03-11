@@ -71,7 +71,10 @@ def get_abo_mapper():
     abo_mapper = {
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "jahres_abo")): 'Jahres-Abo',
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "gratis_abo")): 'Gratis-Abo',
-        '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "probe_abo")): 'Probe-Abo'
+        '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "probe_abo")): 'Probe-Abo',
+        '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "jahres_abo_digital")): 'Jahres-Abo Digital',
+        '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "gratis_abo_digital")): 'Gratis-Abo Digital',
+        '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "probe_abo_digital")): 'Probe-Abo Digital'
     }
 
     return abo_mapper
@@ -87,12 +90,27 @@ def get_login_expiration(abo_type):
         return frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "login_ablauf")
 
 def create_mp_abo(formular):
+    digital = False
+    type = formular.abo_type
+    if "Digital" in formular.abo_type:
+        type = formular.abo_type.replace(" Digital", "")
+        digital = 1
+    
     mp_abo = frappe.get_doc({
         "doctype": "mp Abo",
-        "type": formular.abo_type,
         "invoice_recipient": formular.customer,
         "recipient_contact": formular.contact,
-        "recipient_address": frappe.db.get_value("Contact", formular.contact, "address")
+        "recipient_address": frappe.db.get_value("Contact", formular.contact, "address"),
+        "recipient": [
+            {
+                "abo_type": type,
+                "digital": cint(digital),
+                "magazines_qty_mr": 0 if digital else 1,
+                "magazines_recipient": formular.customer,
+                "recipient_contact": formular.contact,
+                "recipient_address": frappe.db.get_value("Contact", formular.contact, "address")
+            }
+        ]
     })
     mp_abo.insert()
     

@@ -202,7 +202,7 @@
    "fieldname": "abo_type",
    "fieldtype": "Select",
    "label": "Abo Typ",
-   "options": "Undefiniert\nJahres-Abo\nGratis-Abo\nProbe-Abo"
+   "options": "Undefiniert\nJahres-Abo\nGratis-Abo\nProbe-Abo\nJahres-Abo Digital\nGratis-Abo Digital\nProbe-Abo Digital"
   },
   {
    "fieldname": "login_expiration_date",
@@ -300,7 +300,7 @@
    "label": "Abweichender Kontakt nicht vorhanden"
   }
  ],
- "modified": "2024-03-04 15:35:11.085341",
+ "modified": "2024-03-11 12:52:09.644778",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",
