@@ -35,18 +35,18 @@ class CMSActions(Document):
 
         
 def not_empty_string_allowed(field):
-	pattern = r'(https?://|/)'
+	pattern = r'(https?://|/|mailto:)'
 
 	if field is not None and len(field) != 0:
 
 		match = re.search(pattern, str(field))
   
 		if not match:
-			frappe.throw("The 'Url' or 'File Url' field must start with https:// - http:// or /")
+			frappe.throw("The 'Url' or 'File Url' field must start with https:// - http:// - / or mailto:")
 		return field
 
 def check_start(string):
-    if string.startswith("http") or string.startswith("https"):
+    if string.startswith("http") or string.startswith("https") or string.startswith("mailto"):
         return True
     else:
         return False
