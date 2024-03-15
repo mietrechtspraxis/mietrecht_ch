@@ -1,12 +1,12 @@
 import frappe
 from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
 from mietrecht_ch.utils.auth import MP_WEB_ADMIN_ROLE, MP_WEB_USER_ROLE
+from frappe.model.document import Document
 
 MINIMUM_CHARACTER = 4
 
 @frappe.whitelist(allow_guest=True)
 def search_decision_simple(term=None):
-
     if len(term) < MINIMUM_CHARACTER:
         raise BadRequestException(f'The search term must have at least {MINIMUM_CHARACTER} characters.')
     
@@ -43,12 +43,16 @@ def search_decision_simple(term=None):
 
 @frappe.whitelist(allow_guest=True)
 def search_decision(term=None):
+    '''
+    v01
+    '''
     term = term.strip()
     if len(term) < MINIMUM_CHARACTER:
         raise BadRequestException(f'The search term must have at least {MINIMUM_CHARACTER} characters.')
 
     # Sanitize the input term to prevent SQL injection
     term = frappe.db.escape('%{}%'.format(term), percent=False)
+
 
     # Define the fields to be selected
     fields = [
@@ -80,8 +84,8 @@ def search_decision(term=None):
     # Define the order by clause with CASE statements
     order_by = """
         CASE
-            WHEN `tabEntscheid`.`type` = 'Entscheid' AND `tabEntscheid`.`court` = 'BGE' THEN 1
-            WHEN `tabEntscheid`.`type` = 'Aufsatz' THEN 2
+            WHEN `tabEntscheid`.`type` = 'Aufsatz' THEN 1
+            WHEN `tabEntscheid`.`court` = 'BGE' THEN 2
             ELSE 3
         END,
         `tabEntscheid`.`decision_date` DESC
@@ -94,12 +98,33 @@ def search_decision(term=None):
         WHERE {filters}
         AND {or_filters}
         ORDER BY {order_by}
+        LIMIT 200
     """.format(fields=', '.join(fields), filters=filters, or_filters=or_filters, order_by=order_by)
 
     # Execute the query
     search_data = frappe.db.sql(query, as_dict=True)
 
+    # Get result count
+    number_of_results = len(search_data)
+
+    # Log the search term
+    log_search_term(term,number_of_results)
+
     return search_data
+
+def log_search_term(term,number_of_results):
+    try:
+        # Create a new SearchLog document
+        search_log = frappe.get_doc({
+            "doctype": "SearchLog",
+            "search_term": term[2:-2],
+            "result_count": number_of_results,
+            "source": frappe.local.request_ip
+        })
+        search_log.insert(ignore_permissions=True)  # Use ignore_permissions=True if needed
+        frappe.db.commit()  # Ensure the transaction is committed
+    except Exception as e:
+        frappe.log_error(title="Failed to log search term", message=str(e))
 
 @frappe.whitelist(allow_guest=True)
 def get_details(name=None):
