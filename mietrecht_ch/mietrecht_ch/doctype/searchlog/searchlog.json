@@ -1,0 +1,55 @@
+{
+ "creation": "2024-03-15 17:47:41.779883",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "search_term",
+  "result_count",
+  "source",
+  "session"
+ ],
+ "fields": [
+  {
+   "fieldname": "search_term",
+   "fieldtype": "Data",
+   "label": "search_term"
+  },
+  {
+   "fieldname": "result_count",
+   "fieldtype": "Int",
+   "label": "result_count"
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Data",
+   "label": "source"
+  },
+  {
+   "fieldname": "session",
+   "fieldtype": "Data",
+   "label": "session"
+  }
+ ],
+ "modified": "2024-03-15 21:26:26.033219",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "SearchLog",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
