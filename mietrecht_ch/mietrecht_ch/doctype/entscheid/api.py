@@ -2,6 +2,7 @@ import frappe
 from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
 from mietrecht_ch.utils.auth import MP_WEB_ADMIN_ROLE, MP_WEB_USER_ROLE
 from frappe.model.document import Document
+from datetime import datetime
 
 MINIMUM_CHARACTER = 4
 
@@ -45,6 +46,7 @@ def search_decision_simple(term=None):
 def search_decision(term=None):
     '''
     v01
+    v02 suche nach datum
     '''
     term = term.strip()
     if len(term) < MINIMUM_CHARACTER:
@@ -53,6 +55,21 @@ def search_decision(term=None):
     # Sanitize the input term to prevent SQL injection
     term = frappe.db.escape('%{}%'.format(term), percent=False)
 
+    # Check if the term is a date in the format dd.mm.yyyy
+
+    def term_is_date(term, formats=None):
+        term = term[2:-2]
+
+        if formats is None:
+            formats = ['%d.%m.%Y','%Y-%m-%d']
+        
+        for date_format in formats:
+            try:
+                parsed_date = datetime.strptime(term, date_format)
+                return parsed_date.strftime('%Y-%m-%d')  
+            except ValueError:
+                continue 
+        return False  
 
     # Define the fields to be selected
     fields = [
@@ -71,15 +88,23 @@ def search_decision(term=None):
     # Define the filters
     filters = "(`tabEntscheid`.`type` IN ('Entscheid', 'Aufsatz', 'Flash'))"
 
-    # Define the or_filters
-    or_filters = """
-        (`tabEntscheid`.`title_de` LIKE {term}
-        OR `tabEntscheid`.`mp_edition` LIKE {term}
-        OR `tabEntscheid`.`description_de` LIKE {term}
-        OR `tabEntscheid`.`decision_number` LIKE {term}
-        OR `tabEntscheid`.`official_collection` LIKE {term}
-        OR `tabEntscheid`.`article_new` LIKE {term})
-    """.format(term=term)
+    # Spezialfall Suche nach Datum
+    decision_date = term_is_date(term)
+    if decision_date:
+        # Define the or_filters
+        or_filters = """
+            (`tabEntscheid`.`decision_date` = '{decision_date}')
+        """.format(decision_date=decision_date)
+    else:
+        # Define the or_filters
+        or_filters = """
+            (`tabEntscheid`.`title_de` LIKE {term}
+            OR `tabEntscheid`.`mp_edition` LIKE {term}
+            OR `tabEntscheid`.`description_de` LIKE {term}
+            OR `tabEntscheid`.`decision_number` LIKE {term}
+            OR `tabEntscheid`.`official_collection` LIKE {term}
+            OR `tabEntscheid`.`article_new` LIKE {term})
+        """.format(term=term)
 
     # Define the order by clause with CASE statements
     order_by = """
