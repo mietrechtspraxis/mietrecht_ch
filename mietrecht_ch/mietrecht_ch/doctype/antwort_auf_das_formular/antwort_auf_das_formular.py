@@ -70,9 +70,11 @@ class AntwortaufdasFormular(Document):
 def get_abo_mapper():
     abo_mapper = {
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "jahres_abo")): 'Jahres-Abo',
+        '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "jahres_legi_abo")): 'Jahres-Legi-Abo',
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "gratis_abo")): 'Gratis-Abo',
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "probe_abo")): 'Probe-Abo',
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "jahres_abo_digital")): 'Jahres-Abo Digital',
+        '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "jahres_legi_abo_digital")): 'Jahres-Legi-Abo Digital',
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "gratis_abo_digital")): 'Gratis-Abo Digital',
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "probe_abo_digital")): 'Probe-Abo Digital'
     }
