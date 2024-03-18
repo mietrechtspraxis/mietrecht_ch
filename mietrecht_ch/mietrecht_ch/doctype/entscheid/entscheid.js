@@ -9,8 +9,10 @@ frappe.ui.form.on('Entscheid', {
 		var baseUrl
 		if (window.location.hostname == "mietrecht.localhost") {
 			baseUrl = 'http://localhost:4200/entscheide/';
-		} else if (window.location.hostname == 'erpnext.staging.mietrecht.ch' ) {
-			baseUrl = 'https://staging.mietrecht.ch/entscheide/';
+		} else if (window.location.hostname == 'mp.libracore.ch' ) {
+			baseUrl = 'https://staging2.mietrecht.ch/entscheide/';
+		} else if (window.location.hostname == 'mp-test.libracore.ch') {
+			baseUrl = 'https://staging2.mietrecht.ch/entscheide/';
 		} else {
 			baseUrl = 'https://mietrecht.ch/entscheide/';
 		}
