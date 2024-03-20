@@ -11,13 +11,17 @@
  ],
  "fields": [
   {
+   "bold": 1,
    "fieldname": "search_term",
    "fieldtype": "Data",
-   "label": "search_term"
+   "in_list_view": 1,
+   "label": "search_term",
+   "search_index": 1
   },
   {
    "fieldname": "result_count",
    "fieldtype": "Int",
+   "in_list_view": 1,
    "label": "result_count"
   },
   {
@@ -31,7 +35,7 @@
    "label": "session"
   }
  ],
- "modified": "2024-03-15 21:26:26.033219",
+ "modified": "2024-03-20 21:17:34.199319",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "SearchLog",
@@ -50,6 +54,6 @@
    "write": 1
   }
  ],
- "sort_field": "modified",
+ "sort_field": "creation",
  "sort_order": "DESC"
 }

@@ -218,10 +218,9 @@ def get_data():
                 },
                 {
                     "type": "doctype",
-                    "name": "Entscheid",
-                    "label": _("Neuer Entscheid"),
-                    "description": _("Neuer Entscheid"),
-                    "link": _("Form/Entscheid/New Entscheid 1")
+                    "name": "SearchLog",
+                    "label": _("Entscheidsuche (Protokoll)"),
+                    "description": _("Entscheidsuche"),
                 }
             ]
         },
