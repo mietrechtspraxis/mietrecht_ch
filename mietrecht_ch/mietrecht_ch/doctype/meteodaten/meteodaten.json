@@ -1,0 +1,108 @@
+{
+ "allow_rename": 1,
+ "creation": "2024-03-20 22:04:03.453668",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "stn",
+  "time",
+  "time_1",
+  "xno000m0",
+  "xno012m0",
+  "xcddndm0",
+  "xcd000m0",
+  "xdy0ndm0",
+  "xhd000m0",
+  "xhs012m0"
+ ],
+ "fields": [
+  {
+   "fieldname": "stn",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "stn",
+   "options": "Meteostationen",
+   "reqd": 1
+  },
+  {
+   "description": "Heizgradzahl 12/20 (SIA: Heizgradtage); Monatssumme",
+   "fieldname": "xno000m0",
+   "fieldtype": "Data",
+   "label": "xno000m0"
+  },
+  {
+   "description": "Heizgradtage ATD12; Monatssumme",
+   "fieldname": "xno012m0",
+   "fieldtype": "Data",
+   "label": "xno012m0"
+  },
+  {
+   "description": "K\u00fchltage; Monatssumme",
+   "fieldname": "xcddndm0",
+   "fieldtype": "Data",
+   "label": "xcddndm0"
+  },
+  {
+   "description": "K\u00fchlgradzahl (CDD nach USA); Monatssumme",
+   "fieldname": "xcd000m0",
+   "fieldtype": "Data",
+   "label": "xcd000m0"
+  },
+  {
+   "description": "Nummer Heiztage; Monatssumme",
+   "fieldname": "xdy0ndm0",
+   "fieldtype": "Data",
+   "label": "xdy0ndm0"
+  },
+  {
+   "description": "Grad Celsius Heizgradzahl (HDD: Heating Degree Day, nach USA); Monatsumme",
+   "fieldname": "xhd000m0",
+   "fieldtype": "Data",
+   "label": "xhd000m0"
+  },
+  {
+   "description": "Grad Celsius Heizgradtage ATD12; Monatssumme, homogen",
+   "fieldname": "xhs012m0",
+   "fieldtype": "Data",
+   "label": "xhs012m0"
+  },
+  {
+   "description": "Den ersten des Monats eingeben, z.B. 01.12.2023 f\u00fcr den Dezember 2023 bzw. 202312",
+   "fieldname": "time",
+   "fieldtype": "Date",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Zeit",
+   "reqd": 1
+  },
+  {
+   "fieldname": "time_1",
+   "fieldtype": "Data",
+   "label": "Zeit (Quelle)"
+  }
+ ],
+ "modified": "2024-03-21 00:12:52.501761",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "Meteodaten",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "time",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

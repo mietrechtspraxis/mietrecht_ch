@@ -10,6 +10,18 @@ def get_data():
             "items": [
                 {
                     "type": "doctype",
+                    "name": "Meteostationen",
+                    "label": _("Meteostationen"),
+                    "description": _("Meteostationen")
+                },
+                {
+                    "type": "doctype",
+                    "name": "Meteodaten",
+                    "label": _("Meteodaten"),
+                    "description": _("Meteodaten")
+                },
+                {
+                    "type": "doctype",
                     "name": "Heizolpreise",
                     "label": _("Heizölpreise Liste"),
                     "description": _("Heizölpreise Liste")
@@ -160,6 +172,7 @@ def get_data():
                     "label": _("Wetterstationen"),
                     "description": _("Wetterstationen")
                 },
+
                 #{
                 #    "type": "doctype",
                 #    "name": "Wetterstationen",

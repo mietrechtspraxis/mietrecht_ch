@@ -1,0 +1,75 @@
+{
+ "autoname": "field:stn",
+ "creation": "2024-03-20 21:32:34.640578",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "stn",
+  "stationsname",
+  "wigos_id",
+  "breite_laenge",
+  "km_koordinaten",
+  "hoehe"
+ ],
+ "fields": [
+  {
+   "bold": 1,
+   "fieldname": "stn",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "stn",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "stationsname",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Stationsname"
+  },
+  {
+   "fieldname": "wigos_id",
+   "fieldtype": "Data",
+   "label": "WIGOS-ID"
+  },
+  {
+   "fieldname": "breite_laenge",
+   "fieldtype": "Data",
+   "label": "Breite/L\u00e4nge"
+  },
+  {
+   "fieldname": "km_koordinaten",
+   "fieldtype": "Data",
+   "label": "KM-Koordinaten"
+  },
+  {
+   "fieldname": "hoehe",
+   "fieldtype": "Int",
+   "label": "H\u00f6he"
+  }
+ ],
+ "modified": "2024-03-20 21:47:56.557806",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "Meteostationen",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
