@@ -8,6 +8,7 @@ from frappe.model.document import Document
 from frappe.utils import get_datetime_str, formatdate
 
 class AkkumulierteTemperaturdifferenzen(Document):
-	def autoname(self):
-		_date = formatdate(get_datetime_str(self.monat), "yyyy-MM")
-		self.name = "atd-{}-{}".format(_date, self.loc)
+	#def autoname(self):
+	#	_date = formatdate(get_datetime_str(self.monat), "yyyy-MM")
+	#	self.name = "atd-{}-{}".format(_date, self.loc)
+	pass
