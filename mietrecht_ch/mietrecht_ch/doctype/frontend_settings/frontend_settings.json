@@ -1,0 +1,38 @@
+{
+ "creation": "2024-03-24 00:22:17.170509",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "file_path_pdf"
+ ],
+ "fields": [
+  {
+   "description": "z.B. https://www.mietrecht.ch/documents/Dokumente/Entscheide/",
+   "fieldname": "file_path_pdf",
+   "fieldtype": "Data",
+   "label": "Volltext PDFs Pfad"
+  }
+ ],
+ "issingle": 1,
+ "modified": "2024-03-24 00:23:59.111584",
+ "modified_by": "Administrator",
+ "module": "mietrecht-ch",
+ "name": "frontend settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

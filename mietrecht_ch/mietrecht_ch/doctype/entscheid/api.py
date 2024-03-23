@@ -3,6 +3,8 @@ from mietrecht_ch.models.exceptions.mietrechtException import BadRequestExceptio
 from mietrecht_ch.utils.auth import MP_WEB_ADMIN_ROLE, MP_WEB_USER_ROLE
 from frappe.model.document import Document
 from datetime import datetime
+import requests
+import re
 
 MINIMUM_CHARACTER = 4
 
@@ -198,4 +200,53 @@ def get_details(name=None):
         return new_dict
     
     return None
+    
+@frappe.whitelist(allow_guest=True)
+def serve_file(file_name,download=False):
+    frappe.only_for((MP_WEB_USER_ROLE, MP_WEB_ADMIN_ROLE))
+
+    def sanitize_filename(filename):
+        """
+        Sanitizes the filename by removing potentially dangerous characters
+        and sequences. This function is conservative and designed to ensure
+        safety and compatibility across different systems.
+        """
+        # Remove directory navigation attempts
+        filename = re.sub(r'\.\./|\.\.\\', '', filename)
+        
+        # Remove characters that are not letters, numbers, underscores, hyphens, or periods.
+        filename = re.sub(r'[^\w\-\.]', '', filename)
+        filename = filename[:255]
+        
+        return filename
+
+    frontend_settings = frappe.get_doc("frontend settings")
+    file_path_pdf = frontend_settings.file_path_pdf
+
+    file_name = sanitize_filename(file_name)
+
+    file_url = file_path_pdf + file_name
+
+    try:
+        # Fetch the file from the remote server
+        response = requests.get(file_url, stream=True)
+        
+        # Check if the request was successful
+        if response.status_code == 200:
+            # Set the filename and content type in the response
+            file_name = file_url.split('/')[-1]
+            frappe.local.response.filename = file_name
+            frappe.local.response.filecontent = response.content
+            #frappe.local.response.headers["Content-Disposition"] = 'inline; filename="{0}"'.format(file_name)
+
+            if download == False:
+                frappe.local.response.type = 'pdf' #"download" 
+            else: 
+                frappe.local.response.type = "download" 
+        else:
+            frappe.local.response.http_status_code = 404
+            return {'error': 'File not found on remote server'}
+    except Exception as e:
+        frappe.local.response.http_status_code = 500
+        return {'error': str(e)} 
     
