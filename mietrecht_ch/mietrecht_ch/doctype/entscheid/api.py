@@ -176,6 +176,10 @@ def get_details(name=None):
             "ref_cahiers_du_bail",
             "ref_mietrecht_aktuell",
             "mp_filename",
+            "mp_flash",
+            "mp_flash_summary",
+            "mp_flash_text",
+            "mp_flash_filename",
             "author",
             "author_info_de"
         ],
