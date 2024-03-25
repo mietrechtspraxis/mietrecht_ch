@@ -86,8 +86,7 @@ def get_abo_mapper():
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "probe_abo")): 'Probe-Abo',
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "jahres_abo_digital")): 'Jahres-Abo Digital',
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "jahres_legi_abo_digital")): 'Jahres-Legi-Abo Digital',
-        '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "gratis_abo_digital")): 'Gratis-Abo Digital',
-        '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "probe_abo_digital")): 'Probe-Abo Digital'
+        '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "gratis_abo_digital")): 'Gratis-Abo Digital'
     }
 
     return abo_mapper
@@ -97,8 +96,6 @@ def get_login_expiration(abo_type):
         return frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "login_ablauf_reg_abo")
     elif abo_type == 'Gratis-Abo':
         return 365
-    elif abo_type == 'Probe-Abo':
-        return frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "login_ablauf_probe_abo")
     else:
         return frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "login_ablauf")
 
