@@ -39,6 +39,17 @@ class AntwortaufdasFormular(Document):
             self.login_expiration_date = add_days(self.creation or today(), int(login_expiration))
     
     def formular_verarbeiten(self):
+        if not self.first_name and not self.company:
+            frappe.throw("Es muss entweder ein Vorname oder eine Firma hinterlegt sein.")
+        if not self.street:
+            frappe.throw("Es muss eine Strasse angegeben werden.")
+        if cint(self.different_delivery_address) == 1:
+            if not self.delivery_first_name and not self.delivery_company:
+                frappe.throw("Es muss entweder ein Vorname oder eine Firma hinterlegt sein.")
+            if not self.delivery_zip_and_city:
+                frappe.throw("Es müssen PLZ und Ort angegeben werden.")
+            if not self.delivery_street:
+                frappe.throw("Es muss eine Strasse angegeben werden.")
         if not self.customer:
             customer = create_customer(self)
             self.customer = customer
@@ -208,11 +219,19 @@ def create_customer(formular):
 
 def create_contact(formular, second=False):
     # contact
+    if not second:
+        salutation = formular.gender
+        first_name = formular.first_name or formular.company
+    else:
+        salutation = formular.delivery_gender
+        first_name = formular.delivery_first_name or formular.delivery_company
+    salutation = None if salutation == 'keines von beiden' else salutation
+
     contact = frappe.get_doc({
         "doctype": "Contact",
-        'first_name': formular.first_name if not second else formular.delivery_first_name,
+        'first_name': first_name,
         'last_name': formular.last_name if not second else formular.delivery_last_name,
-        'salutation': formular.gender if not second else formular.delivery_gender,
+        'salutation': salutation,
         'links': [
             {
                 'link_doctype': 'Customer',
