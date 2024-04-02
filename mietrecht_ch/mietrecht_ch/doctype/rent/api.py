@@ -86,7 +86,7 @@ def __extra_room_validation__(payload):
     if extra_room is None:
         extra_room = 0
         return extra_room
-    return extra_room
+    return float(extra_room)
 
 
 def total_data(rent_pourcentage_change, final_rent_hypo, teuerung_inflation, rent_teuerung, cost_inflation, cost_value):
@@ -407,6 +407,9 @@ def __rent_validation__(payload):
 
 def __canton_validation__(payload):
     # Canton validation
-    canton = payload['canton']
-    data_empty_value(canton, 'canton')
-    data_type_validation_str(canton, 'canton')
+    input_type = payload['hypoReference']['inputType']
+    
+    if input_type == "search":
+        canton = payload['canton']
+        data_empty_value(canton, 'canton')
+        data_type_validation_str(canton, 'canton')
