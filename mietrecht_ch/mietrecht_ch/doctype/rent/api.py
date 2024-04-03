@@ -35,9 +35,9 @@ def compute_rent():
 
     # Inflation
     from_index, at_index, teuerung_inflation, final_rent_calculation, index_basis, affected_date = teuerung_data(
-        payload, extra_room)
+        payload, extra_room, inflation_ratio=40)
     results_teuerung = CalculationValue(
-        from_index, at_index, teuerung_inflation, final_rent_calculation)
+        from_index, at_index, teuerung_inflation, final_rent_calculation) 
 
     # Kostensteigerungen
     start_day_date, end_day_date, cost_inflation, cost_value, flat_rate = general_costs_increase_data(
@@ -163,7 +163,7 @@ def mietzins_data(payload, rent, old_date_formatted_hypo, new_date_formatted_hyp
     return since_date, from_date, original_rent, rounded_updated_value, original_extra_room, rounded_updated_extra_room, total_original, round_total_updated,
 
 
-def teuerung_data(payload, extra_room):
+def teuerung_data(payload, extra_room, inflation_ratio=100):
     # Teuerung
     previous = payload['inflation']['previous']
     fromYear = previous['year']
@@ -174,7 +174,6 @@ def teuerung_data(payload, extra_room):
     basis = payload['inflation']['basis']
     total_original = payload['rent']['rent'] + extra_room
     input_type = payload['inflation']['inputType']
-    inflationRate: int = 100
 
     old_date_formatted_teuerung = buildFullDate(fromYear, fromMonth)
     new_date_formatted_teuerung = buildFullDate(toYear, toMonth)
@@ -187,15 +186,15 @@ def teuerung_data(payload, extra_room):
         affected_date = values_from_sql_query[1]['publish_date']
 
         if input_type == 'search':
-            return __get_data_from_search_input__(total_original, inflationRate, old_date_formatted_teuerung, new_date_formatted_teuerung, values_from_sql_query, index_basis, affected_date)
-        return __get_data_from_manual_input__(payload, total_original, index_basis, affected_date)
+            return __get_data_from_search_input__(total_original, old_date_formatted_teuerung, new_date_formatted_teuerung, values_from_sql_query, index_basis, affected_date, inflation_ratio)
+        return __get_data_from_manual_input__(payload, total_original, index_basis, affected_date, inflation_ratio)
     raise BadRequestException('No data found for the inflation')
 
 
-def __get_data_from_search_input__(total_original, inflationRate, old_date_formatted_teuerung, new_date_formatted_teuerung, values_from_sql_query, index_basis, affected_date):
+def __get_data_from_search_input__(total_original, old_date_formatted_teuerung, new_date_formatted_teuerung, values_from_sql_query, index_basis, affected_date, inflation_ratio):
 
     teuerung_result = __compute_result__(
-        inflationRate, old_date_formatted_teuerung, new_date_formatted_teuerung, values_from_sql_query, rent=None)
+        inflation_ratio, old_date_formatted_teuerung, new_date_formatted_teuerung, values_from_sql_query, rent=None)
     from_index = teuerung_result['oldIndex']['value']
     at_index = teuerung_result['newIndex']['value']
     teuerung_inflation = teuerung_result['inflation']
@@ -207,12 +206,12 @@ def __get_data_from_search_input__(total_original, inflationRate, old_date_forma
     return from_index, at_index, teuerung_inflation, final_rent_calculation, index_basis, affected_date
 
 
-def __get_data_from_manual_input__(payload, total_original, index_basis, affected_date, inflation=100):
+def __get_data_from_manual_input__(payload, total_original, index_basis, affected_date, inflation_ratio=100):
     from_index = payload['inflation']['previous']['index']
     at_index = payload['inflation']['next']['index']
 
     teuerung_inflation_not_rounded = __round_inflation_number__(
-        from_index, at_index, inflation)
+        from_index, at_index, inflation_ratio)
     teuerung_inflation = __rounding_value__(teuerung_inflation_not_rounded)
 
     calculation_rent_teuerung = __rent_calculation__(
