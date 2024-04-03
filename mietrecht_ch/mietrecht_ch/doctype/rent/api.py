@@ -21,8 +21,8 @@ def compute_rent():
     payload = json.loads(frappe.request.data)
 
     # Leider müssen wir hier strings in float konvertieren... :-(
-    payload['inflation']['previous']['index'] = float(payload['inflation']['previous']['index'])
-    payload['inflation']['next']['index'] = float(payload['inflation']['next']['index'])
+    payload['inflation']['previous']['index'] = float(payload['inflation']['previous']['index']) if payload['inflation']['previous']['index'] else None
+    payload['inflation']['next']['index'] = float(payload['inflation']['next']['index']) if payload['inflation']['previous']['index'] else None
     # payload['rent']['extraRoom'] = float(payload['rent']['extraRoom'])
     
         
