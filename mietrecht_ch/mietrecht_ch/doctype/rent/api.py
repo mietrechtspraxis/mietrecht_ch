@@ -24,8 +24,6 @@ def compute_rent():
     payload['inflation']['previous']['index'] = float(payload['inflation']['previous']['index']) if payload['inflation']['previous']['index'] else None
     payload['inflation']['next']['index'] = float(payload['inflation']['next']['index']) if payload['inflation']['previous']['index'] else None
     # payload['rent']['extraRoom'] = float(payload['rent']['extraRoom'])
-    
-        
     #formatted_payload = json.dumps(payload, indent=4)
     #frappe.log_error(formatted_payload, "compute_rent()")
 
@@ -93,7 +91,7 @@ def compute_rent():
 
 def __extra_room_validation__(payload):
     extra_room = payload['rent']['extraRoom']
-    if extra_room is None:
+    if not extra_room:
         extra_room = 0
         return extra_room
     return float(extra_room)
@@ -117,6 +115,7 @@ def general_costs_increase_data(payload, extra_room):
     toYear = next['year']
     toMonth = next['month']
     flat_rate = payload['generalCostsIncrease']['flatRate']
+    
     total_original = payload['rent']['rent'] + extra_room
 
     old_date_formatted = buildFullDate(fromYear, fromMonth)
@@ -124,26 +123,49 @@ def general_costs_increase_data(payload, extra_room):
 
     # Create function to get the last day
     start_day_date = date_with_different_day(old_date_formatted, 1)
+    start_day_date = date_with_month_ahead(start_day_date, 1)
+
     end_day_date = date_with_different_day(new_date_formatted, 31)
 
     # Create new datetime parsed from a string
     new_start_date = datetime.strptime(start_day_date, "%Y-%m-%d")
     new_end_date = datetime.strptime(end_day_date, "%Y-%m-%d")
 
-    # Start date in second
-    start_seconds = get_seconds_from_date(new_start_date)
+    if flat_rate == 10:
+        cost_inflation, end_day_date = general_costs_increase_teuerung(payload)
+    else:
+        # Start date in second
+        start_seconds = get_seconds_from_date(new_start_date)
 
-    # End date in second
-    end_seconds = get_seconds_from_date(new_end_date)
+        # End date in second
+        end_seconds = get_seconds_from_date(new_end_date)
 
-    # Data calculation
-    cost_inflation = round((end_seconds - start_seconds + 86400) /
-                           (86400 * 30.4375), 0)/12
+        # Data calculation
+        cost_inflation = round((end_seconds - start_seconds + 86400) /
+                               (86400 * 30.4375), 0)/12
 
-    cost_inflation = __rounding_value__(float(flat_rate) * cost_inflation)
+        cost_inflation = __rounding_value__(float(flat_rate) * cost_inflation)
 
     cost_value = __rounding_value__(total_original * cost_inflation * 0.01)
     return start_day_date, end_day_date, cost_inflation, cost_value, flat_rate
+
+
+def general_costs_increase_teuerung(payload):
+    total_original = payload['rent']['rent']
+
+    previous = payload['generalCostsIncrease']['previous']
+    next = payload['generalCostsIncrease']['next']
+
+    fromYear = previous['year']
+    fromMonth = previous['month']
+
+    toYear = next['year']
+    toMonth = next['month']
+    
+    basis = payload['inflation']['basis']
+
+    _, _, teuerung, _ , _, affected_date  =  teuerung_between_dates(fromYear, fromMonth, toYear, toMonth, basis, total_original, inflation_ratio=10)
+    return teuerung, affected_date
 
 
 def get_seconds_from_date(date):
@@ -176,17 +198,23 @@ def mietzins_data(payload, rent, old_date_formatted_hypo, new_date_formatted_hyp
 def teuerung_data(payload, extra_room, inflation_ratio=100):
     # Teuerung
     previous = payload['inflation']['previous']
-    fromYear = previous['year']
-    fromMonth = previous['month']
     next = payload['inflation']['next']
-    toYear = next['year']
-    toMonth = next['month']
-    basis = payload['inflation']['basis']
     total_original = payload['rent']['rent'] + extra_room
     input_type = payload['inflation']['inputType']
 
     if input_type == 'manual':
         return __get_data_from_manual_input__(payload, total_original, "0000-00-00", "0000-00-00", inflation_ratio)
+
+    fromYear = previous['year']
+    fromMonth = previous['month']
+
+    toYear = next['year']
+    toMonth = next['month']
+    basis = payload['inflation']['basis']
+    
+    return teuerung_between_dates(fromYear, fromMonth, toYear, toMonth, basis, total_original, inflation_ratio)
+
+def teuerung_between_dates(fromYear, fromMonth, toYear, toMonth, basis, total_original, inflation_ratio):
 
     old_date_formatted_teuerung = buildFullDate(fromYear, fromMonth)
     new_date_formatted_teuerung = buildFullDate(toYear, toMonth)
