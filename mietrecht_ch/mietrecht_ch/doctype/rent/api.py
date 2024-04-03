@@ -19,6 +19,16 @@ from mietrecht_ch.utils.validationTypeUtils import data_type_validation_int, dat
 def compute_rent():
 
     payload = json.loads(frappe.request.data)
+
+    # Leider müssen wir hier strings in float konvertieren... :-(
+    payload['inflation']['previous']['index'] = float(payload['inflation']['previous']['index'])
+    payload['inflation']['next']['index'] = float(payload['inflation']['next']['index'])
+    # payload['rent']['extraRoom'] = float(payload['rent']['extraRoom'])
+    
+        
+    #formatted_payload = json.dumps(payload, indent=4)
+    #frappe.log_error(formatted_payload, "compute_rent()")
+
     extra_room = __extra_room_validation__(payload)
     rent = payload['rent']['rent']
     inflation_rate = 100
@@ -175,6 +185,9 @@ def teuerung_data(payload, extra_room, inflation_ratio=100):
     total_original = payload['rent']['rent'] + extra_room
     input_type = payload['inflation']['inputType']
 
+    if input_type == 'manual':
+        return __get_data_from_manual_input__(payload, total_original, "0000-00-00", "0000-00-00", inflation_ratio)
+
     old_date_formatted_teuerung = buildFullDate(fromYear, fromMonth)
     new_date_formatted_teuerung = buildFullDate(toYear, toMonth)
 
@@ -184,10 +197,9 @@ def teuerung_data(payload, extra_room, inflation_ratio=100):
     if values_from_sql_query and len(values_from_sql_query) == 2:
         index_basis = values_from_sql_query[1]['base_year']
         affected_date = values_from_sql_query[1]['publish_date']
-
-        if input_type == 'search':
-            return __get_data_from_search_input__(total_original, old_date_formatted_teuerung, new_date_formatted_teuerung, values_from_sql_query, index_basis, affected_date, inflation_ratio)
-        return __get_data_from_manual_input__(payload, total_original, index_basis, affected_date, inflation_ratio)
+        
+        return __get_data_from_search_input__(total_original, old_date_formatted_teuerung, new_date_formatted_teuerung, values_from_sql_query, index_basis, affected_date, inflation_ratio)
+        
     raise BadRequestException('No data found for the inflation')
 
 
@@ -225,11 +237,11 @@ def __get_data_from_manual_input__(payload, total_original, index_basis, affecte
 def hypotekarzins_data(payload, extra_room):
     # Hypothekarzinsen
     previous = payload['hypoReference']['previous']
-    fromDay = previous['day']
+    fromDay = previous['day'] if previous['day'] else 1
     fromYear = previous['year']
     fromMonth = previous['month']
     next = payload['hypoReference']['next']
-    toDay = next['day']
+    toDay = next['day'] if next['day'] else 1
     toYear = next['year']
     toMonth = next['month']
     total_original = payload['rent']['rent'] + extra_room
