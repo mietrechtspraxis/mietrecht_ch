@@ -8,4 +8,4 @@ def __round_inflation_number__(old_index_value, new_index_value, percentage_of_i
 
 
 def __rounding_value__(value):
-    return round(value, 2)
+    return round(value, 3)
