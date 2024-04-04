@@ -27,4 +27,4 @@ def __rent_pourcentage_calculation__(first_hypo_value, second_hypo_value):
     if (first_hypo_value == max_value):
         rent_mortage_value = -rent_mortage_value/(1 + rent_mortage_value)
 
-    return round(rent_mortage_value * 100, 2)
+    return round(rent_mortage_value * 100, 4)
