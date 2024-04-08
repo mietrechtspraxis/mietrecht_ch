@@ -244,8 +244,9 @@ def create_contact(formular, second=False):
 
     # mp web user
     if formular.email:
-        mp_web_user = create_mp_web_user(formular)
-        contact.mp_web_user = mp_web_user
+        if formular.type == 'abo':
+            mp_web_user = create_mp_web_user(formular)
+            contact.mp_web_user = mp_web_user
         row = contact.append('email_ids', {})
         row.email_id = formular.email
         row.is_primary = 1
