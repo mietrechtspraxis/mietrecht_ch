@@ -86,7 +86,8 @@ def get_abo_mapper():
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "probe_abo")): 'Probe-Abo',
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "jahres_abo_digital")): 'Jahres-Abo Digital',
         '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "jahres_legi_abo_digital")): 'Jahres-Legi-Abo Digital',
-        '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "gratis_abo_digital")): 'Gratis-Abo Digital'
+        '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "gratis_abo_digital")): 'Gratis-Abo Digital',
+        '{0}'.format(frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "probe_abo_digital")): 'Probe-Abo Digital'
     }
 
     return abo_mapper
@@ -96,18 +97,25 @@ def get_login_expiration(abo_type):
         return frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "login_ablauf_reg_abo")
     elif abo_type == 'Gratis-Abo':
         return 365
+    elif abo_type == 'Probe-Abo':
+        return frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "login_ablauf_probe_abo")
     else:
         return frappe.db.get_value("mp Abo Settings", "mp Abo Settings", "login_ablauf")
 
 def create_mp_abo(formular):
     digital = False
     type = formular.abo_type
+    end_date = None
     if "Digital" in formular.abo_type:
         type = formular.abo_type.replace(" Digital", "")
         digital = 1
+    if 'Probe-Abo' in type:
+        end_date = add_days(today(), int(get_login_expiration(type)))
     
     mp_abo = frappe.get_doc({
         "doctype": "mp Abo",
+        "end_date": end_date,
+        "status": 'Active' if 'Probe-Abo' not in type else 'Active terminated',
         "invoice_recipient": formular.customer,
         "recipient_contact": formular.contact,
         "recipient_address": frappe.db.get_value("Contact", formular.contact, "address"),
@@ -244,7 +252,7 @@ def create_contact(formular, second=False):
 
     # mp web user
     if formular.email:
-        if formular.type == 'abo':
+        if formular.type == 'abo' and ' Digital' in formular.abo_type:
             mp_web_user = create_mp_web_user(formular)
             contact.mp_web_user = mp_web_user
         row = contact.append('email_ids', {})
