@@ -12,7 +12,7 @@ from mietrecht_ch.utils.hyporeferenzzinsUtils import __rent_pourcentage_calculat
 from mietrecht_ch.models.exceptions.mietrechtException import BadRequestException
 from mietrecht_ch.utils.inflation import __round_inflation_number__
 from mietrecht_ch.utils.validationUtils import data_empty_value
-from mietrecht_ch.utils.validationTypeUtils import data_type_validation_int, data_type_validation_str, data_type_validation_float_and_int
+from mietrecht_ch.utils.validationTypeUtils import data_type_validation_str, data_type_validation_float_and_int
 
 
 @frappe.whitelist(allow_guest=True)
@@ -24,10 +24,12 @@ def compute_rent():
     payload['inflation']['previous']['index'] = float(payload['inflation']['previous']['index']) if payload['inflation']['previous']['index'] else None
     payload['inflation']['next']['index'] = float(payload['inflation']['next']['index']) if payload['inflation']['previous']['index'] else None
     # payload['rent']['extraRoom'] = float(payload['rent']['extraRoom'])
+    
     #formatted_payload = json.dumps(payload, indent=4)
     #frappe.log_error(formatted_payload, "compute_rent()")
 
     extra_room = __extra_room_validation__(payload)
+    payload['rent']['rent'] = float(payload['rent']['rent'])
     rent = payload['rent']['rent']
     inflation_rate = 100
     canton = payload['canton']
@@ -441,7 +443,7 @@ def __rent_validation__(payload):
     rent_rent = rent['rent']
     data_empty_value(rent, 'rent')
     data_empty_value(rent_rent, 'rent_rent')
-    data_type_validation_int(rent_rent, 'rent_rent')
+    data_type_validation_float_and_int(rent_rent, 'rent_rent')
 
 
 def __canton_validation__(payload):
