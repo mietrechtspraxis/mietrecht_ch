@@ -202,7 +202,7 @@ def get_data():
             ]
         },
         {
-            "label": _("PAK"),
+            "label": _("E-Book"),
             "icon": "fa fa-money",
             "items": [
                 {
@@ -263,27 +263,14 @@ def get_data():
                 {
                     "type": "doctype",
                     "name": "CMS Content",
-                    "label": _("CMS Content"),
+                    "label": _("CMS Content ✍️"),
                     "description": _("CMS Content")
                 },
                 {
                     "type": "doctype",
-                    "name": "CMS Content",
-                    "label": _("Neue CMS Content"),
-                    "description": _("Form/CMS Content/New CMS Content 0")
-                },
-                {
-                    "type": "doctype",
                     "name": "CMS Actions",
-                    "label": _("CMS Aktionen"),
+                    "label": _("CMS Link und Datei (🔗) und Button (🆒)"),
                     "description": _("CMS Aktionen")
-                },
-                {
-                    "type": "doctype",
-                    "name": "CMS Actions",
-                    "label": _("Neue CMS Aktionen"),
-                    "description": _("Neue CMS Aktionen"),
-                    "link": _("Form/CMS Actions/New CMS Aktionen 0")
                 }
             ]
         },
@@ -307,21 +294,14 @@ def get_data():
             ]
         },
         {
-            "label": _("Kurse und Seminare"),
+            "label": _("Kurse und Weiterbildungen"),
             "icon": "fa fa-money",
             "items": [
                 {
                     "type": "doctype",
                     "name": "Kurse und Seminare",
-                    "label": _("Kurse und Seminare"),
-                    "description": _("Kurse und Seminare")
-                },
-                {
-                    "type": "doctype",
-                    "name": "Kurse und Seminare",
-                    "label": _("Neue Kurse und Seminare"),
-                    "description": _("New Kurse und Seminare"),
-                    "link": _("Form/Kurse und Seminare/New Kurse und Seminare 0")
+                    "label": _("Kurse und Weiterbildungen"),
+                    "description": _("Kurse und Weiterbildungen")
                 }
             ]
         },
@@ -345,21 +325,14 @@ def get_data():
             ]
         },
         {
-            "label": _("Antwort auf das Formular"),
-            "icon": "fa fa-money",
+            "label": _("Bestellungen: Shop und Abo"),
+            "icon": "fa fa-check-square",
             "items": [
                 {
                     "type": "doctype",
                     "name": "Antwort auf das Formular",
                     "label": _("Antwort auf das Formular"),
-                    "description": _("Antwort auf das Formular")
-                },
-                {
-                    "type": "doctype",
-                    "name": "Antwort auf das Formular",
-                    "label": _("Neue Antwort auf das Formular"),
-                    "description": _("New Antwort auf das Formular"),
-                    "link": _("Form/Antwort auf das Formular/New Antwort auf das Formular 0")
+                    "description": _("Antwort auf das Formular"),
                 }
             ]
         }
