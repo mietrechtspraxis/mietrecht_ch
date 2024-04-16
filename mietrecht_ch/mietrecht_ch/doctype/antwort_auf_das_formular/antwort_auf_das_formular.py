@@ -264,14 +264,14 @@ def create_contact(formular, second=False):
 
     return contact.name
 
-def create_address(formular, second=False):
+def get_address_dict(formular, second=False):
     postfach = 0
     if not second:
         postfach = 1 if formular.po_box else 0
     else:
         postfach = 1 if formular.delivery_po_box else 0
     
-    address = frappe.get_doc({
+    address_dict = {
         "doctype": "Address",
         'address_title': formular.customer if not second else "Lieferung: {0}".format(formular.customer),
         'zusatz': formular.additional_info if not second else formular.delivery_additional_info,
@@ -287,11 +287,40 @@ def create_address(formular, second=False):
                 'link_name': formular.customer
             }
         ]
-    })
-    address.insert()
-    frappe.db.commit()
+    }
+    return address_dict
+
+def create_address(formular, second=False):
+    address = check_existing_address(formular, second)
+    if not address:
+        address_dict = get_address_dict(formular, second)
+        address = frappe.get_doc(address_dict)
+        address.insert()
+        frappe.db.commit()
 
     return address.name
+
+def check_existing_address(formular, second=False):
+    try:
+        search_dict = get_address_dict(formular, second)
+        to_remove = ['address_title', 'links']
+
+        for key in search_dict:
+            if not search_dict[key]:
+                to_remove.append(key)
+
+        for key in to_remove:
+            del search_dict[key]
+
+        existing_addresses = frappe.db.exists(search_dict)
+        for existing_address in existing_addresses:
+            address = frappe.get_doc("Address", existing_address[0])
+            for link in address.links:
+                if link.link_doctype == 'Customer' and link.link_name == formular.customer:
+                    return address
+        return False
+    except:
+        return False
 
 def create_mp_web_user(formular):
     try:
