@@ -76,7 +76,8 @@
   {
    "fieldname": "email",
    "fieldtype": "Data",
-   "label": "Email"
+   "label": "Email",
+   "options": "Email"
   },
   {
    "default": "andere",
@@ -300,7 +301,7 @@
    "label": "Abweichender Kontakt nicht vorhanden"
   }
  ],
- "modified": "2024-03-11 12:52:09.644778",
+ "modified": "2024-04-17 09:31:55.774304",
  "modified_by": "Administrator",
  "module": "mietrecht-ch",
  "name": "Antwort auf das Formular",
