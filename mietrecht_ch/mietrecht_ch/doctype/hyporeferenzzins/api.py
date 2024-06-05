@@ -19,6 +19,26 @@ KEY_CANTON = 'canton'
 KEY_DATE = 'date'
 KEY_INTEREST = 'interest'
 
+@frappe.whitelist(allow_guest=True)
+def get_index_by_date(date: str, canton: str = 'CH'):
+    try:
+        datetime.strptime(date, '%Y-%m-%d')
+    except ValueError:
+        frappe.throw('Invalid date format')
+
+    if date < '2008-09-10':
+        assert canton != 'CH'
+
+    closest_index = __get_index_by_date__(canton, date, 1)
+    
+    if len(closest_index) == 0:
+        frappe.throw('No data found for the given date')
+    
+    return {
+        'referenzzinssatz': closest_index[0].interest,
+        'gueltig_seit': closest_index[0].publish_date,
+    }
+
 
 @frappe.whitelist(allow_guest=True)
 def get_index_by_month(year: Number, month: Number, canton: str = 'CH'):
