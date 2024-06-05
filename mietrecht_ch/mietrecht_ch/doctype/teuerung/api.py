@@ -16,6 +16,34 @@ from mietrecht_ch.utils.validationTypeUtils import data_type_validation_str
 from itertools import groupby
 
 @frappe.whitelist(allow_guest=True)
+def get_index_by_date_and_basis(date: str, basis: str):
+    try:
+        datetime.strptime(date, DATE_FORMAT)
+    except ValueError:
+        raise ValueError(f"Date is not in the correct format ({DATE_FORMAT})")
+    
+    index = frappe.get_all(
+        'Teuerung',
+        fields=['value', 'publish_date', 'base_year'],
+        filters=[
+            ['publish_date', '<=', date],
+            ['base_year', '=', basis]
+        ],
+        order_by='publish_date desc',
+        limit=1
+    )
+    
+    if len(index) == 0:
+        raise ValueError(f"No data found for the given date {date} and basis {basis}")
+
+    return {
+        'index_wert': index[0]['value'],
+        'datum': index[0]['publish_date'],
+        'basis': index[0]['base_year']
+    }
+    
+
+@frappe.whitelist(allow_guest=True)
 def get_indexes_by_basis(basis):
     
     if basis is not None and len(basis) != 0:
