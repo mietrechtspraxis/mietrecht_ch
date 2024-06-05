@@ -26,8 +26,8 @@ def get_index_by_date(date: str, canton: str = 'CH'):
     except ValueError:
         frappe.throw('Invalid date format')
 
-    if date < '2008-09-10':
-        assert canton != 'CH'
+    if date < '2008-09-10' and canton == 'CH':
+        frappe.throw('Kanton ist erforderlich für Daten vor 10.09.2008')
 
     closest_index = __get_index_by_date__(canton, date, 1)
     
