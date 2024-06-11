@@ -26,7 +26,7 @@ def get_index_by_date_and_basis(date: str, basis: str):
         'Teuerung',
         fields=['value', 'publish_date', 'base_year'],
         filters=[
-            ['publish_date', '<=', date],
+            ['publish_date', '<', date],
             ['base_year', '=', basis]
         ],
         order_by='publish_date desc',
