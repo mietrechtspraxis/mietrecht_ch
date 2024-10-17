@@ -325,13 +325,13 @@ def __result_of_all_data_with_rent__(old_date_formatted, new_date_formatted, ren
 
 
 def __calculation_variation__(rent, rounded_inflation):
-    calculation_variation = (int(rent) * rounded_inflation) / 100
+    calculation_variation = (float(rent) * rounded_inflation) / 100
     rounded_calculation_variation = __rounding_value__(calculation_variation)
     return rounded_calculation_variation
 
 
 def __calculation_new_rent__(rent, calculation_variation):
-    calculation_new_rent = int(rent) + calculation_variation
+    calculation_new_rent = float(rent) + calculation_variation
     rounded_calclulation_new_rent = __rounding_value__(calculation_new_rent)
     return rounded_calclulation_new_rent
 
