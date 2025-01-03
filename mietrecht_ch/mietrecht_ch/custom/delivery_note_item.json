@@ -1,0 +1,31 @@
+{
+ "custom_fields": [],
+ "custom_perms": [],
+ "doctype": "Delivery Note Item",
+ "property_setters": [
+  {
+   "_assign": null,
+   "_comments": null,
+   "_liked_by": null,
+   "_user_tags": null,
+   "creation": "2021-11-02 18:58:36.786701",
+   "default_value": null,
+   "doc_type": "Delivery Note Item",
+   "docstatus": 0,
+   "doctype_or_field": "DocField",
+   "field_name": "barcode",
+   "idx": 0,
+   "modified": "2021-11-02 18:58:36.786701",
+   "modified_by": "joel.mesmer@libracore.com",
+   "name": "Delivery Note Item-barcode-hidden",
+   "owner": "joel.mesmer@libracore.com",
+   "parent": null,
+   "parentfield": null,
+   "parenttype": null,
+   "property": "hidden",
+   "property_type": "Check",
+   "value": "1"
+  }
+ ],
+ "sync_on_migrate": 1
+}

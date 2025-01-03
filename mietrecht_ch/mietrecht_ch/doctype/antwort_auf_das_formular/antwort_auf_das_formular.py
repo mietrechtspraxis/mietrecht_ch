@@ -178,6 +178,8 @@ def create_sales_order(formular, different_delivery_address=False):
         dn = make_delivery_note(so.name)
         if different_delivery_address == 1:
             dn.contact_person = formular.second_contact
+            if formular.delivery_company == '' or not formular.delivery_company:
+                dn.ignore_customer_company = 1
         dn.save()
         dn.submit()
         formular.delivery_note = dn.name
@@ -197,7 +199,7 @@ def create_sales_order(formular, different_delivery_address=False):
         formular.sales_invoice = sinv.name
         attach_pdf(formular, sinv)
     except Exception as sinv_err:
-        frappe.log_error("{0}".format(err), 'AADF: Sales Invoice')
+        frappe.log_error("{0}".format(sinv_err), 'AADF: Sales Invoice')
         pass
 
     formular.conversion_date = today()
