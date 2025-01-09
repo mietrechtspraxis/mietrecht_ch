@@ -13,6 +13,7 @@ def get_all():
         'Aktualisierungsdaten', 
         fields=['index_date' ,'update_date'],
         filters = [
-             ["update_date", ">=", threeDaysAgo],
-        ]
+             ["update_date", ">", today],
+        ],
+        order_by='index_date asc'
     )
