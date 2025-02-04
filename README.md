@@ -1,3 +1,7 @@
+# moved
+
+This repo has moved to https://git.libracore.io/libracore/mietrecht_ch
+
 ## mietrecht-ch
 
 Backend to mietrecht.ch
